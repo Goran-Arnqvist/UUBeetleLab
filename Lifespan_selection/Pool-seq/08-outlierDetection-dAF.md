@@ -1375,3 +1375,104 @@ dim(sig_GenomRanges_df)
 #[1] 587   6
 
 ```
+
+## Calculate centered moving averages (rolling mean) of dAF for various window sizes
+
+```R
+# Choosing the size and step of centered moving averages
+# By: Angela P. Fuentes-Pardo
+# Date: 2021-04-05
+# Updated: 2026-08-24
+
+### Plot adjusted to Megabases on the x axis
+
+# Clean environment space
+rm(list=ls())
+
+# Set input parameters
+# For debugging
+working_dir <- '~/Dropbox/PostDoc_UU/Projects/Beetles/PopGen_poolseq/analysis/08-2-outlier-detection_dAF/rolling-mean'
+dAF_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/PopGen_poolseq/analysis/08-2-outlier-detection_dAF/Summary_dAF.List_paired_comparisons_OTT_2020-09-01.OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.Neff.AF.txt'
+Hp_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/PopGen_poolseq/analysis/07-1-popgen-stats/Hp-ZHp/Expected_Hp_OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.Neff.AF.RDS'
+
+# Set working directory
+setwd(working_dir)
+
+# -------------------------------------------------------------------------------------
+# Data loading and preprocessing
+# -------------------------------------------------------------------------------------
+library(data.table)
+
+# Load the dAF file of various paired contrasts as a dataframe ----------------------
+dAF_df <- fread(dAF_file, data.table = FALSE, header = TRUE, sep = '\t', stringsAsFactors = FALSE)
+head(dAF_df)
+dim(dAF_df)
+
+# Subset df to the loci columns and the contrast of interest
+dAF_df <- dAF_df[, c("SNP","CHR","BP","dAF_EI.II.III.IV_vs_LV.VI.VII.VIII")]
+rownames(dAF_df) <- dAF_df$SNP
+dAF_df$SNP <- NULL
+head(dAF_df)
+dim(dAF_df)
+
+# -------------------------------------------------------------------------------------
+# Calculate centered moving averages of dAF for various window sizes
+# -------------------------------------------------------------------------------------
+# Sources: http://uc-r.github.io/ts_moving_averages, https://www.storybench.org/how-to-calculate-a-rolling-average-in-r/
+# The most straightforward method is called a simple moving average. For this method, we choose a number of nearby points
+# and average them to estimate the trend. When calculating a simple moving average, it is beneficial to use an odd number
+# of points so that the calculation is symmetric. To compute moving averages on our data we can leverage the rollmean
+# function from the zoo package
+library(tidyverse)
+library(zoo)
+
+dAF_ma <- as_tibble(dAF_df) %>%
+  dplyr::select(CHR, BP, dAF = dAF_EI.II.III.IV_vs_LV.VI.VII.VIII) %>%
+  mutate(BP_Mb = BP / 1e6,  # convert base-pair position to megabases for plotting
+         dAF_ma100 = rollmean(dAF, k = 101, fill = NA),  #, na.rm = TRUE
+         dAF_ma500 = rollmean(dAF, k = 501, fill = NA),
+         dAF_ma1000 = rollmean(dAF, k = 1001, fill = NA),
+         dAF_ma5000 = rollmean(dAF, k = 5001, fill = NA),
+         dAF_ma10000 = rollmean(dAF, k = 10001, fill = NA))
+
+# Plot the rolling average for the various number of SNPs tested and compare the actual data to the different moving average smoothers.
+#library(gtools)
+chr_list <- sort(unique(dAF_ma$CHR))
+chr_list <- chr_list[1:10]
+chr_list
+#chr_list <- mixedsort(unique(dAF_df$CHROM))
+
+for(Chr in chr_list) {
+  #Chr <- "9"
+  tmp <- dAF_ma[dAF_ma$CHR == Chr, ]
+  startBase <- tmp[tmp$BP == min(tmp$BP), "BP"]
+  endBase <- tmp[tmp$BP == max(tmp$BP), "BP"]
+  
+  # Rename the facet labels
+  newLabels <- as_labeller(
+    c(`dAF_ma10000` = "10000 SNPs", `dAF_ma5000` = "5000 SNPs",`dAF_ma1000` = "1000 SNPs",
+      `dAF_ma500` = "500 SNPs",`dAF_ma100` = "100 SNPs", `dAF` = "each SNP"))
+  
+  # Make the plot
+  p2 <- tmp %>%
+    gather(metric, value, -CHR, -BP, -BP_Mb) %>%
+    mutate_at(vars(metric), funs(factor(., levels=c("dAF_ma10000","dAF_ma5000","dAF_ma1000","dAF_ma500","dAF_ma100","dAF")))) %>% # convert to factor
+    ggplot(aes(BP_Mb, value, color = metric)) +
+    #geom_point(size = 0.3) +
+    geom_line() +
+    theme_bw() +
+    xlab("Position (Mb)") + ylab("dAF (rolling mean)") +
+    facet_wrap(~metric, ncol=1, strip.position = "left", labeller = newLabels) +
+    ggtitle(paste0("Chromosome: ", Chr)) +
+    theme(plot.title = element_text(hjust = 0.5),
+          strip.text = element_text(size = 7), axis.text.x = element_text(size = 6), axis.text.y = element_text(size = 6))
+  #coord_cartesian(xlim = c(startBase,endBase)), ylim = c(0, 1))
+  
+  # Save the plot as a pdf file
+  png(paste0("Rolling_averages_various_sizes_OTT_16pools_dAF_EI.II.III.IV_vs_LV.VI.VII.VIII_Chr_",Chr,"_Mbp.png"), bg = "white",
+      width = 180, height = 120, units = "mm", res = 600)
+  print(p2)
+  dev.off()
+  
+}
+```
