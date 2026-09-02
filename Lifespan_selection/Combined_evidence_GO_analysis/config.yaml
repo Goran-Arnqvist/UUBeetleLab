@@ -1,0 +1,64 @@
+# Shared configuration for the 7_multigo_analyses analysis.
+
+# ---------------------------------------------------------------------------
+# Analysis parameters
+# ---------------------------------------------------------------------------
+params:
+  # polars thread count.
+  threads: 9
+  # p-norm exponent for within-category aggregation of per-layer Z-scores.
+  # Even power does not matter since negative Z-scores are capped to 0 first.
+  power_factor: 3.0
+  # Number of gene-label permutations for the empirical null.
+  n_permutations: 10000
+  # BH FDR alpha
+  alpha: 0.05
+  # GO term size filter (gene-set size), applied before the permutation null.
+  minimum_genes_in_go_term: 5
+  maximum_genes_in_go_term: 500
+  # RNG seed.
+  seed: 42
+
+
+column_categories:
+  early:
+    selection:
+      - consistently_selected_genes_early
+      - cnv_early
+    DEG:
+      - degs_female_abdomen
+      - degs_male_abdomen
+      - degs_female_head_and_thorax
+      - degs_male_head_and_thorax
+  late:
+    selection:
+      - consistently_selected_genes_late
+      - cnv_late
+    DEG:
+      - degs_female_abdomen
+      - degs_male_abdomen
+      - degs_female_head_and_thorax
+      - degs_male_head_and_thorax
+
+# ---------------------------------------------------------------------------
+# Inputs
+# ---------------------------------------------------------------------------
+inputs:
+  incidence_matrix: /path/to/file
+  # subdir 5 - gene -> GO term map (columns: GID, GO).
+  go_annotations: /path/to/file
+  # external - GO DAG (term names + namespaces), goatools GODag format.
+  go_dag: /path/to/file
+
+# ---------------------------------------------------------------------------
+# Outputs
+# ---------------------------------------------------------------------------
+outputs:
+  # Permutation-null scores (Early/Late), written once the 10k-permutation
+  # run completes. {n_permutations} / {power_factor} are filled from params.
+  permuted_scores_early: /path/to/file_{n_permutations}_{power_factor}.parquet
+  permuted_scores_late: /path/to/file_{n_permutations}_{power_factor}.parquet
+  # Final per-regime x per-GO-category (BP/MF/CC) ranked tables.
+  # {regime} in {"early", "late"}; {category} in {"BP", "MF", "CC"}.
+  results_dir: /path/to/dir
+  results_filename_template: /path/to/file_{regime}_{category}_power{power_factor}_f{n_permutations}.tsv
