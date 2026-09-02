@@ -1,0 +1,92 @@
+# Shared configuration for Functional_analysis
+
+# ---------------------------------------------------------------------------
+# Genome layout
+# ---------------------------------------------------------------------------
+genome:
+  # NCBI assembly accession for A. obtectus.
+  assembly_accession: GCA_963669975.1
+  # CNV ORA (05) universe: all 10 chromosome-scale scaffolds.
+  chromosome_accessions_all:
+    - CAVLJG010000001.1
+    - CAVLJG010000002.1
+    - CAVLJG010000003.1
+    - CAVLJG010000004.1
+    - CAVLJG010000005.1
+    - CAVLJG010000006.1
+    - CAVLJG010000007.1
+    - CAVLJG010000008.1
+    - CAVLJG010000009.1
+    - CAVLJG010000010.1
+  # Sweep ORA (03) universe: CAVLJG010000002.1 is excluded, leaving 9 scaffolds to match the selective sweep analysis.
+  chromosome_accessions_sweeps:
+    - CAVLJG010000001.1
+    - CAVLJG010000003.1
+    - CAVLJG010000004.1
+    - CAVLJG010000005.1
+    - CAVLJG010000006.1
+    - CAVLJG010000007.1
+    - CAVLJG010000008.1
+    - CAVLJG010000009.1
+    - CAVLJG010000010.1
+
+# ---------------------------------------------------------------------------
+# Inputs 
+# ---------------------------------------------------------------------------
+inputs:
+  # EggNOG-mapper annotations on the RefSeq CDS (the EggNOG GO source merged
+  # into the universe).
+  eggnog_refseq_annotations: /path/to/file
+  # Prebuilt gffutils FeatureDB of the NCBI GFF 
+  gff_feature_db: /path/to/db
+  interpro2go: /path/to/file
+  # GO ontology used by GOATools for the obsolete-term remap 
+  go_basic_obo: /path/to/file
+  # CDS regions BED  converted from the GFF 
+  cds_regions_bed: /path/to/file
+  # Per-replicate selective-sweep calls, one BED per sample.
+  sweep_calls_dir: /path/to/dir
+  # Blacklist / exclusion BEDs 
+  exclusion_beds:
+    low_coverage: /path/to/file
+    high_coverage: /path/to/file
+    low_quality: /path/to/file
+    near_gap: /path/to/file
+  # CNV candidate-gene lists 
+  cnv_gene_lists:
+    early_deletions: /path/to/file
+    late_deletions: /path/to/file
+    early_gain: /path/to/file
+    late_gain: /path/to/file
+
+# ---------------------------------------------------------------------------
+# Parameters (values unchanged from the original notebooks)
+# ---------------------------------------------------------------------------
+params:
+  # bedtools intersect -F: min fraction of the CDS feature that an exclusion
+  # interval must cover for a gene to be flagged / a sweep gene to be kept.
+  blacklist_overlap_fraction: 0.1
+  # A gene is "consistently selected" if it is hit in more than this many replicates
+  selection_event_threshold: 6
+
+# ---------------------------------------------------------------------------
+# Outputs of 01_build_go_annotation.py (also the inputs to 02 / 03 / 04)
+# ---------------------------------------------------------------------------
+outputs:
+  results_dir: /path/to/file
+  # Intermediate InterPro-only gene2go tables.
+  cds_regions_fixed_bed: /path/to/file
+  interpro_only_gene2go: /path/to/file
+  interpro_only_gene2go_updated: /path/to/file
+  eggnog_go_universe: /path/to/file
+  # The three tables that go into the annotation database
+  go_universe: /path/to/file
+  chromosome_annotation: /path/to/file
+  quality_annotations: /path/to/file
+  # Per-replicate sweep gene lists (blacklist-filtered)
+  per_replicate_genes_dir: /path/to/file
+  # Consistently-selected gene lists, per regime.
+  consistently_selected_dir: /path/to/file
+  consistently_selected_early: /path/to/file
+  consistently_selected_late: /path/to/file
+
