@@ -1,0 +1,70 @@
+# ---------------------------------------------------------------------------
+# Genome layout
+# ---------------------------------------------------------------------------
+genome:
+  autosomes: [1, 2, 3, 4, 5, 6, 7, 8, 9]   # chromosomes mapped in script 01
+  chromosome_x: 10                          # X is encoded as chromosome 10
+  # Small assembled scaffolds are encoded as chromosomes 11..54.
+  scaffold_first: 11
+  scaffold_last: 54
+  scaffold_segmentation_chromosome: 12
+  bin_size: 100_000                          # 100 kb QTL bins
+
+# ---------------------------------------------------------------------------
+# PELT changepoint segmentation +
+# ---------------------------------------------------------------------------
+segmentation:
+  model: l1                  # Cost function for ruptures package
+  penalty: 2                 # beta penalty term 
+  jump: 1                    # consider every bin as a candidate changepoint
+  min_size: 1                # minimum segment size (filtered downstream instead)
+  min_distance_bp: 1000000   # drop biologically implausible recombinations (interference)
+  biological_length_threshold: 10  # Segment shorter than this flagged improbable
+
+# ---------------------------------------------------------------------------
+# Imputation (segment -> modal genotype)
+# ---------------------------------------------------------------------------
+imputation:
+  na_threshold: 0.7                        # skip a chromosome/individual above this NaN fraction
+  scaffold12_na_threshold: 0.8             # looser threshold for  low-quality scaffold 12
+  heuristic_agreement_threshold: 0.3       # small scaffolds: impute row if mode agreement exceeds this
+  heuristic_mode_strategy: skip            # how to break multi-modal ties: first | random | skip
+
+# ---------------------------------------------------------------------------
+# Recombination-map construction (per-pedigree individual-missingness filters)
+# ---------------------------------------------------------------------------
+recombination_map:
+  autosome_filter_individuals_threshold_AB: 0.45
+  autosome_filter_individuals_threshold_CD: 0.63
+  x_filter_individuals_threshold: 0.7
+  scaffold12_filter_individuals_threshold_AB: 0.5
+  scaffold12_filter_individuals_threshold_CD: 0.8
+  max_workers: 10            # ProcessPoolExecutor workers for the autosome map run
+
+# ---------------------------------------------------------------------------
+# Script 01 — autosomes (chromosomes 1-9)
+# ---------------------------------------------------------------------------
+autosomes:
+  input_calls: /path/to/file
+  id_column: id_column        # row id col in this CSV
+  individual_label: Individual      # name of the id column written to the output
+  # Final imputed genotypes (.xsls).
+  imputed_output: /path/to/file
+  # Combined-pedigree recombination map per chromosome 
+  recombination_map_output: /path/to/file
+
+# ---------------------------------------------------------------------------
+# Script 02 — X chromosome + small scaffolds
+# ---------------------------------------------------------------------------
+chrx_scaffolds:
+  # Same calls as above but carrying sex columns (Sex_coverage, Sex_morph);
+  # the individual id column here is `ID` (differs from the autosome file).
+  input_calls: /path/to/file
+  id_column: id_column
+  individual_label: id_column
+  # Imputed X-only genotypes (CSV).
+  x_imputed_output: /path/to/file
+  # Imputed X + small-scaffold genotypes (CSV).
+  x_scaffolds_imputed_output: /path/to/file
+  # Combined-pedigree X recombination map (CSV; published as HTML in the original).
+  x_recombination_map_output: /path/to/file
