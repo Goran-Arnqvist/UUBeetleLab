@@ -1,0 +1,445 @@
+---
+title: "Correlation Between CNVs and Selective Signatures for Poolseq Dataset"
+output: html_notebook
+---
+
+-   **Author:** Athanasios Toros
+
+-   **Date:** 2025-12-05
+
+# Setup
+
+```{r}
+
+library(GenomicRanges)
+library(rtracklayer)
+library(GenometriCorr)
+library(tools)
+library(ggplot2)
+library(gridExtra)
+
+# install.packages(c("future", "future.apply"))
+library(future)
+library(future.apply)
+
+# Paths, chromosome accessions/lengths and parameters are kept in config.yaml.
+config <- yaml::read_yaml("config.yaml")
+
+sig_dir        <- config$correlation$paths$selective_signatures_dir
+merged_cnv_dir <- config$correlation$paths$merged_cnv_calls_dir
+merged_sig_dir <- config$correlation$paths$merged_selective_signatures_dir
+
+# Threads to use
+plan(multisession, workers = 8)
+setwd(config$correlation$paths$working_dir)
+```
+
+```{r}
+# Load unmerged per-sample selective signatures (used by the fragmentation
+# sweep below to choose a merge distance).
+
+all_files <- list.files(
+  path = sig_dir,
+  pattern = "\\.bed$",
+  full.names = TRUE
+)
+
+not_consistently_selected <- all_files[
+  !grepl("consistently", basename(all_files))
+]
+
+sample_names <- sub("_selective_signatures\\.bed$", "", basename(not_consistently_selected))
+
+per_sample <- setNames(
+  lapply(seq_along(not_consistently_selected), function(i) {
+    gr <- import.bed(not_consistently_selected[i])
+    gr$sample_id <- sample_names[i]   # reusable in plots, etc.
+    gr
+  }),
+  sample_names
+)
+```
+
+# Genometricorr
+
+
+```{r}
+
+library(GenomicRanges)
+library(rtracklayer)
+# specific library for arranging multiple plots
+
+# ==============================================================================
+# 1. Merge Function (Standard)
+# ==============================================================================
+merge_track <- function(gr, threshold) {
+  mcols(gr) <- NULL
+  # min.gapwidth = threshold + 1 mimics bedtools merge -d
+  merged_gr <- GenomicRanges::reduce(gr, min.gapwidth = threshold + 1)
+  return(merged_gr)
+}
+
+# ==============================================================================
+# 2. Bulk Merge (Standard)
+# ==============================================================================
+merge_list_of_tracks <- function(gr_list, threshold) {
+  lapply(gr_list, function(x) merge_track(x, threshold))
+}
+
+# ==============================================================================
+# 3. Parameter Sweep Function (Optimized)
+# ==============================================================================
+analyze_fragmentation_thresholds <- function(gr_list, thresholds) {
+
+  results_list <- vector("list", length(thresholds))
+  message(paste("Starting sweep across", length(thresholds), "thresholds..."))
+
+  for (i in seq_along(thresholds)) {
+    thresh <- thresholds[i]
+
+    # Calculate stats per sample for this threshold
+    stats <- vapply(gr_list, function(gr) {
+      merged <- merge_track(gr, thresh)
+
+      n_intervals <- length(merged)
+      # Calculate total genomic width in Megabases (Mb) for readability
+      total_width_mb <- sum(width(merged)) / 1e6
+
+      rm(merged) # Memory cleanup
+      return(c(count = n_intervals, coverage = total_width_mb))
+    }, FUN.VALUE = c(count = 0, coverage = 0))
+
+    # Aggregate results
+    results_list[[i]] <- data.frame(
+      threshold = thresh,
+      avg_intervals = mean(stats["count", ]),
+      sd_intervals  = sd(stats["count", ]),
+      avg_coverage  = mean(stats["coverage", ]),
+      sd_coverage   = sd(stats["coverage", ])
+    )
+
+    if(i %% 5 == 0) message(paste("Processed threshold:", thresh))
+    gc(verbose = FALSE)
+  }
+
+  do.call(rbind, results_list)
+}
+
+# ==============================================================================
+# 4. Dual Plotting Function (Intervals + Coverage)
+# ==============================================================================
+#' Plots Count and Coverage side-by-side to identify the optimal window
+plot_fragmentation_diagnostics <- function(stats_df) {
+
+  # --- Plot 1: The Knee (Fragmentation) ---
+  p1 <- ggplot(stats_df, aes(x = threshold, y = avg_intervals)) +
+    geom_line(color = "#2980b9", size = 1) +
+    geom_point(color = "#2980b9", size = 2) +
+    geom_errorbar(aes(ymin = avg_intervals - sd_intervals,
+                      ymax = avg_intervals + sd_intervals),
+                  width = 0.1 * max(stats_df$threshold), alpha = 0.3) +
+    theme_minimal() +
+    labs(
+      title = "Metric A: Fragmentation",
+      subtitle = "Look for the 'Knee' (where drop stabilizes)",
+      y = "Avg Interval Count",
+      x = "Merge Distance (bp)"
+    )
+
+  # --- Plot 2: The Explosion (Over-merging) ---
+  p2 <- ggplot(stats_df, aes(x = threshold, y = avg_coverage)) +
+    geom_line(color = "#c0392b", size = 1) +
+    geom_point(color = "#c0392b", size = 2) +
+    geom_errorbar(aes(ymin = avg_coverage - sd_coverage,
+                      ymax = avg_coverage + sd_coverage),
+                  width = 0.1 * max(stats_df$threshold), alpha = 0.3) +
+    theme_minimal() +
+    labs(
+      title = "Metric B: Total Genomic Footprint",
+      subtitle = "Look for the 'Spike' (avoid large increases)",
+      y = "Total Size (Mb)",
+      x = "Merge Distance (bp)"
+    )
+
+  # Arrange side by side
+  grid.arrange(p1, p2, ncol = 2)
+}
+
+
+```
+
+```{r}
+n_points <- 100
+thresholds_linear <- as.integer(round(seq(
+  from = 0,
+  to   = 10000,
+  length.out = n_points
+)))
+
+stats <- analyze_fragmentation_thresholds(per_sample, thresholds_linear)
+plot_fragmentation_diagnostics(stats)
+```
+
+### Reload Merged Genome Tracks
+
+Merged using:
+
+``` bash
+cut -f1-3 {} |
+  sort -k1,1 -k2,2n |
+  bedtools merge -d 10000 -i - |
+  sort -k1,1 -k2,2n \
+    > {/.}_merged_10kb_distance.bed
+```
+
+```{r}
+# Load the 10 kb-merged tracks that feed the final batch correlation.
+CNV_calls <- list(
+    early_deletions = import.bedGraph(file.path(merged_cnv_dir, "A_obtectus_early_deletions_cnv_calls_merged_10kb_distance.bed")),
+    early_gains     = import.bedGraph(file.path(merged_cnv_dir, "A_obtectus_early_gain_cnv_calls_merged_10kb_distance.bed")),
+    late_deletions  = import.bedGraph(file.path(merged_cnv_dir, "A_obtectus_late_deletions_cnv_calls_merged_10kb_distance.bed")),
+    late_gains      = import.bedGraph(file.path(merged_cnv_dir, "A_obtectus_late_gain_cnv_calls_merged_10kb_distance.bed"))
+  )
+
+consistently_selected = list(
+    early = import.bed(file.path(merged_sig_dir, "consistently_selected_regions_early_merged_10kb_distance.bed")),
+    late  = import.bed(file.path(merged_sig_dir, "consistently_selected_regions_late_merged_10kb_distance.bed")))
+```
+
+### Correlations between Genomic Tracks
+
+```{r}
+# Chromosome X (...0002.1) is excluded to preserve a valid permutation null
+# (also filtered out from the Pool-HMM run). Accessions and lengths come from config.
+chromosome_lengths <- unlist(config$correlation$chromosome_lengths)
+included_chroms <- names(chromosome_lengths)
+```
+
+```{r}
+calculate_pair_correlation <- function(query_gr, ref_gr, included_chroms, chromosome_lengths, permutations = 100) {
+
+
+  # 2. Run GenometriCorrelation
+  # We use awhole.only=TRUE to get a global correlation score
+  res <- GenometriCorrelation(
+    query = query_gr,
+    reference = ref_gr,
+    chromosomes.to.proceed = included_chroms,
+    chromosomes.length = chromosome_lengths,
+    awhole.only = TRUE,
+    permut.number = permutations,
+    keep.distributions = FALSE,
+    showProgressBar = FALSE
+  )
+
+  # 3. Extract Results from the 'awhole' slot
+  # The result is an S4 object, acting like a list.
+  # We extract the ECDF correlation (a robust measure) and the Projection Test P-value.
+
+  res_stats <- res[["awhole"]]
+
+  print(res_stats)
+
+  return(list(
+    correlation = res_stats$relative.distances.ecdf.area.correlation,
+    correlation.pval = res_stats$relative.distances.ecdf.deviation.area.p.value,
+    correlation.pval.ks = res_stats$relative.distances.ks.p.value,
+    jaccard = res_stats$jaccard.measure,
+    jaccard.pval = res_stats$jaccard.measure.p.value
+  ))
+}
+```
+
+```{r}
+run_batch_correlation_parallel <- function(track_list_1,
+                                           track_list_2,
+                                           included_chroms,
+                                           chromosome_lengths,
+                                           permutations = 100) {
+  # 1. Create a grid of all index pairs to process
+  # This "flattens" the nested loops so we can distribute work evenly
+  combinations <- expand.grid(
+    i = seq_along(track_list_1),
+    j = seq_along(track_list_2),
+    KEEP.OUT.ATTRS = FALSE
+  )
+
+  # Helper function (defined inside, so it ships to workers automatically)
+  get_track_name <- function(gr, list_name, index) {
+    if (!is.null(gr$sample_id))
+      return(unique(gr$sample_id)[1])
+    if (!is.null(names(list_name)))
+      return(names(list_name)[index])
+    return(paste0("Track_", index))
+  }
+
+  # 2. Run the calculation in parallel
+  # future_lapply replaces the loop. It splits the work across available workers.
+  results_list <- future_lapply(seq_len(nrow(combinations)), function(k) {
+    # Get indices for this specific job
+    i <- combinations$i[k]
+    j <- combinations$j[k]
+
+    t1 <- track_list_1[[i]]
+    t2 <- track_list_2[[j]]
+
+    name1 <- get_track_name(t1, track_list_1, i)
+    name2 <- get_track_name(t2, track_list_2, j)
+
+    # Run the external correlation function
+    # Ensure 'calculate_pair_correlation' is loaded in your global environment
+    metrics <- calculate_pair_correlation(t1, t2, included_chroms, chromosome_lengths, permutations = permutations)
+
+    # Return the single row data frame
+    return(
+      data.frame(
+        Track1 = name1,
+        Track2 = name2,
+        Correlation = metrics$correlation,
+        P_value = metrics$correlation.pval,
+        Jaccard = metrics$jaccard,
+        Jaccard_pval = metrics$jaccard.pval,
+        stringsAsFactors = FALSE
+      )
+    )
+
+  }, future.seed = TRUE) # future.seed = TRUE ensures reproducibility if random numbers are used
+
+  # 3. Combine all results into one data frame
+  return(do.call(rbind, results_list))
+}
+```
+
+```{r}
+visualize_correlations <- function(corr_data,
+                                   corr_col = "Correlation",
+                                   pval_col = "p_value",
+                                   title = "Lorem Ipsum",
+                                   subtitle = "",
+                                   title_x_axis = "x-axis",
+                                   title_y_axis = "y-axis",
+                                   title_colorscale = "Genometric\nCorrelation",
+                                   infer_limits = FALSE,
+                                   limit_min = -1,
+                                   limit_max = 1) {
+  # Determine limits
+  if (infer_limits) {
+    vals <- corr_data[[corr_col]]
+    vals <- vals[is.finite(vals)]
+    if (length(vals) == 0) {
+      L <- 1
+    } else {
+      L <- max(abs(vals), na.rm = TRUE)
+      if (L == 0)
+        L <- 1e-6
+    }
+    lim <- c(-L, L)
+  } else {
+    lim <- c(limit_min, limit_max)
+  }
+
+  ggplot(corr_data, aes(x = Track1, y = Track2, fill = .data[[corr_col]])) +
+    geom_tile(color = "white") +
+    geom_text(aes(label = .data[[pval_col]]), color = "black", size = 3) +
+    scale_fill_gradient2(
+      low = "blue",
+      high = "red",
+      mid = "white",
+      midpoint = 0,
+      limits = lim,
+      space = "Lab",
+      name = title_colorscale
+    ) +
+    theme_minimal() +
+    theme(
+      axis.text.x = element_text(
+        size = 10
+      ),
+      axis.text.y = element_text(size = 10),
+      panel.grid.major = element_blank()
+    ) +
+    labs(
+      title = title,
+      subtitle = subtitle,
+      x = title_x_axis,
+      y = title_y_axis
+    ) +
+    coord_fixed()
+}
+
+```
+
+```{r}
+
+cnv_calls.corr.consistently_selected.res = run_batch_correlation_parallel(CNV_calls, consistently_selected , included_chroms, chromosome_lengths, permutations = config$correlation$params$permutations)
+
+
+```
+
+```{r}
+write.csv2(
+  cnv_calls.corr.consistently_selected.res,
+  file = "./genometricorr_results_consistently_selected_x_CNV_200_perms.csv",
+  row.names = F,
+)
+```
+
+```{r}
+plot = visualize_correlations(
+  cnv_calls.corr.consistently_selected.res,
+  title = "ECDF-Based Correlation Between CNV Calls and Consistently Selected Regions",
+  subtitle = "Fill = ECDF correlation; Label = Permutation-derived p-values",
+  title_x_axis = "Copy Number Variant Calls",
+  title_y_axis = "Consistent Selective Sweep Regions",
+  title_colorscale = "ECDF correlation",
+  corr_col = "Correlation",
+  pval_col = "P_value"
+)
+
+ggsave(
+  filename = "jaccard_consistently_selected_x_CNV_200_perms.png",
+  plot     = plot,
+  width    = 10,
+  height   = 8,
+  dpi      = 600
+)
+ggsave(
+  filename = "jaccard_consistently_selected_x_CNV_200_perms.svg",
+  plot     = plot,
+  width    = 10,
+  height   = 8,
+  dpi      = 600
+)
+
+print(plot)
+```
+
+```{r}
+plot = visualize_correlations(
+  cnv_calls.corr.consistently_selected.res,
+  corr_col   = "Jaccard",
+  pval_col   = "Jaccard_pval",
+  infer_limits = TRUE,
+  title = "Heatmap of Jaccard Distance",
+  subtitle = "Fill = Jaccard similarity; Label = Permutation-derived p-values",
+  title_x_axis = "Copy Number Variant Calls",
+  title_y_axis = "Consistent Selective Sweep Regions",
+  title_colorscale = "Jaccard similarity"
+)
+
+ggsave(
+  filename = "jaccard_consistently_selected_x_CNV_200_perms.png",
+  plot     = plot,
+  width    = 10,
+  height   = 8,
+  dpi      = 600
+)
+ggsave(
+  filename = "jaccard_consistently_selected_x_CNV_200_perms.svg",
+  plot     = plot,
+  width    = 10,
+  height   = 8,
+  dpi      = 600
+)
+print(plot)
+```

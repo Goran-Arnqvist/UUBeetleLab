@@ -1,0 +1,128 @@
+# Shared configuration for the 2_cnv_calling analyses.
+# Author: Athanasios Toros
+# Email: athanasiostoros@gmail.com
+#
+# Consumed by:
+#   cnv_pipeline.py                 -> genome, pipeline.*
+#   cnv_segment_cbs.R               -> CBS CLI defaults (documented in-script)
+#   analyze_cnv_calls.py            -> genome, analysis.*
+#   cnv_pipeline_figures.py         -> figures.*
+#   correlation_cnv_selective_sweeps.Rmd -> correlation.*
+#   calculate_depth_of_coverage.batch    -> mosdepth.* (passed as CLI flags)
+
+# ---------------------------------------------------------------------------
+# Genome for GenBank assembly GCA_963669975.1
+# ---------------------------------------------------------------------------
+genome:
+  # Allowed chromosomes: GenBank accessions of the A. obtectus HiC assembly.
+  allowed_chromosomes:
+    - CAVLJG010000001.1
+    - CAVLJG010000002.1
+    - CAVLJG010000003.1
+    - CAVLJG010000004.1
+    - CAVLJG010000005.1
+    - CAVLJG010000006.1
+    - CAVLJG010000007.1
+    - CAVLJG010000008.1
+    - CAVLJG010000009.1
+    - CAVLJG010000010.1
+  # Sex chromosome accession; treated separately during CNV scaling and
+  # excluded from the CNV<->sweep correlation.
+  chromosome_x: CAVLJG010000002.1
+
+# ---------------------------------------------------------------------------
+# CNV calling pipeline (cnv_pipeline.py)
+# ---------------------------------------------------------------------------
+pipeline:
+  paths:
+    # Directory of per-sample 100 bp mosdepth output (*.regions.bed.gz).
+    coverage_dir: /path/to/dir
+    # Output directory for all pipeline products (must contain a for_plotting/ subdir).
+    working_dir: /path/to/dir
+    # Per-bin GC content (chrom, start, end, gc_content) for 100 bp bins.
+    gc_content_file: /path/to/file
+    # Per-bin mappability map (chrom, start, end, mappability) for 100 bp bins.
+    mappability_file: /path/to/file
+    # Aberrant-coverage exclusion BEDs (blacklist). 
+    exclusion_low_coverage_regions: /path/to/file
+    exclusion_high_coverage_regions: /path/to/file
+    # Bin<->CBS-segment index map produced externally by cnv_segment_cbs.R
+    segmentation_indices_file: /path/to/file
+  params:
+    # filters for abnormal GC content bins
+    gc_lower_quantile: 0.05          
+    mappability_lower_bound: 0.10    # drop bins below this mappability
+    median_coverage_threshold: 0.15  # drop bins with low median coverage in either regime
+    alpha_threshold: 0.05            # permutation-test significance cutoff
+    fold_change_threshold: 1.5       # segment log2 fold-change cutoff
+    modwt_level: 5                   # stationary wavelet transform levels
+    modwt_wavelet: haar              # wavelet basis
+    save_results: true               
+
+# ---------------------------------------------------------------------------
+# Post-call analysis (analyze_cnv_calls.py)
+# ---------------------------------------------------------------------------
+analysis:
+  paths:
+    # Output directory for gene lists / intersection products.
+    working_dir: results/functional_analysis/differentiated_cnv_calls
+    # Directory holding the final CNV-call TSV produced by cnv_pipeline.py.
+    data_dir: results/cnv_calls
+    # CDS regions as a BED (chrom, start, end, gene_id) derived from the GTF.
+    gtf_cds_annotation: annotation/a_obtectus_genomic_CDS_regions.bed
+    # Saved scatter of CNV length vs population copy number.
+    length_copy_number_scatter: results/plots/cnv/scatter_plot_length_copy_number.svg
+  params:
+    call_deletion_threshold: 1.5         # scaled CN below this => deletion
+    call_gain_threshold: 2.5             # scaled CN above this => gain
+    gene_with_cnv_overlap_threshold: 0.5 # bedtools -F overlap fraction
+    deletion_filter_threshold: 1         # population-level deletion magnitude filter
+    gain_filter_threshold: 1             # population-level gain magnitude filter
+    save_results: false                
+
+# ---------------------------------------------------------------------------
+# Pipeline-illustration figures (cnv_pipeline_figures.py)
+# ---------------------------------------------------------------------------
+figures:
+  paths:
+    # Output directory
+    working_dir: /path/to/dir
+    # Parquet intermediate exports
+    filtered_coverage: /path/to/file
+    mappability_corrected_coverage: /path/to/file
+    denoised_coverage: /path/to/file
+
+# ---------------------------------------------------------------------------
+# CNV <-> selective-sweep correlation (correlation_cnv_selective_sweeps.Rmd)
+# ---------------------------------------------------------------------------
+correlation:
+  paths:
+    # Working directory the Rmd sets via setwd().
+    working_dir: /path/to/dir
+    # Unmerged per-sample selective-signature BEDs (for the fragmentation sweep).
+    selective_signatures_dir: /path/to/dir
+    # 10 kb-merged tracks feeding the final batch correlation.
+    merged_cnv_calls_dir: /path/to/dir
+    merged_selective_signatures_dir: /path/to/dir
+  params:
+    permutations: 200       # GenometriCorr interval-permutation count for the batch run
+  # Chromosomes used in the correlation (chr X / ...0002.1 excluded to preserve
+  # a valid permutation null), with their lengths in bp.
+  chromosome_lengths:
+    CAVLJG010000001.1: 128021113
+    CAVLJG010000003.1: 126082896
+    CAVLJG010000004.1: 117235856
+    CAVLJG010000005.1: 116575500
+    CAVLJG010000006.1: 108704056
+    CAVLJG010000007.1: 96635042
+    CAVLJG010000008.1: 94445115
+    CAVLJG010000009.1: 89471000
+    CAVLJG010000010.1: 74866084
+
+# ---------------------------------------------------------------------------
+# mosdepth coverage calculation (calculate_depth_of_coverage.batch)
+# ---------------------------------------------------------------------------
+mosdepth:
+  window_size: 100   # --by
+  mapq: 20           # -Q
+  include_flag: 3852 # --include-flag
