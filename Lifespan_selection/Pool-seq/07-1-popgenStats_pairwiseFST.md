@@ -20,7 +20,7 @@ Below, there is the custom python script that converts the AD file to the SYNC f
 
 """
 Created on Jan. 10, 2018. Modified on: Dec. 27, 2019, Uppsala University.
-@author: Angela P. Fuentes-Pardo, based on a draft script made by Gavin Douglas. E-mail: apfuentesp@gmail.com.
+@author: Angela P. Fuentes-Pardo, based on a draft script made by Gavin Douglas. E-mail: <REDACTED_EMAIL>.
 
 **Description**:
 This script converts a CSV file - with allele depths per sample - into a so called 'synchronized' format, required by Popoolation2
@@ -165,7 +165,7 @@ The R script that calculates and plot pairwise-FST values is called `07-1-calcul
 # Code version: 1.0.0 (Sept. 2018)                                          #
 # Created by: Angela P. Fuentes-Pardo, Dalhousie University                 #
 # Modifications made on: March 25, 2021, Uppsala University                 #
-# e-mail: apfuentesp@gmail.com                                              #
+# e-mail: <REDACTED_EMAIL>                                              #
 #                                                                           #
 # Paper of poolfstat: Hivert et al. (2018)                                  #
 # https://doi.org/10.1534/genetics.118.300900                               #
@@ -181,8 +181,8 @@ cat(args, sep='\n')
 
 ## Assign these arguments to variables.
 library(stringr)
-working_dir <- args[1]  # /proj/snic2020-16-14/private/HorseMackerel/analysis/07-popgen-stats/pairwiseFST
-input_file <- args[2]  # /scratch/12289794/HOM_12_pools.SNPs.hf.strictDP.sync
+working_dir <- args[1]  # <REDACTED_PATH>
+input_file <- args[2]  # <REDACTED_PATH>
 poolNames <- str_split(args[3], ',') # c('1a_West_Ireland_2016','1b_Southwest_Ireland_2016','2_West-Southwest_Ireland_2017','3_Southern_NorthSea_2016','4_Southern_NorthSea_2017','5a_Northern_Portugal_2016','5b_Southern_Portugal_2016','6a_Northern_Portugal_2017','6b_Southern_Portugal_2017','7_NorthAfrica_Mauritania_2016','8_Northern_SpanishShelf_2016','9_Mediterranean_AlboranSea_2018')
 poolNames <- poolNames[[1]]
 poolSizes <- str_split(args[4], ',')  # c(100,90,124,192,140,128,60,96,96,114,192,98)
@@ -197,8 +197,8 @@ popOrder <- str_split(args[10], ',')  # c('3_Southern_NorthSea_2016','4_Southern
 popOrder <- popOrder[[1]]
 
 ## For debugging.
-working_dir <- '~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/07-1-popgen-stats/pairwiseFST'
-input_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/07-1-popgen-stats/pairwiseFST/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.sync'
+working_dir <- '<REDACTED_PATH>'
+input_file <- '<REDACTED_PATH>'
 poolNames <- c('EI-F','EI-M','EII-F','EII-M','EIII-F','EIII-M','EIV-F','EIV-M','LV-F','LV-M','LVI-F','LVI-M','LVII-F','LVII-M','LVIII-F','LVIII-M')
 poolSizes <- c(96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96)
 minCovPerPool <- 10
@@ -266,7 +266,7 @@ filename <- file_path_sans_ext(basename(path_to_file))
 saveRDS(pooldata, file=paste0('pooldata_Robject.',filename,'.rds'))
 
 # Read previously created pooldata object
-#pooldata <- readRDS('~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/07-1-popgen-stats/pairwiseFST/pooldata_Robject.OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.rds')
+#pooldata <- readRDS('<REDACTED_PATH>')
 
 #---------------------------------------------------
 # Calculate global FST
@@ -473,24 +473,24 @@ dev.off()
 
 I will run these 2 scripts for the 3 filtered files in parallel using a job array. For this, I need to create a file listing the path to AD uncorrected files `list_AD_files.16pools.txt`:
 ```bash
-ls -lh /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF | grep "AD.txt" | awk '{print "/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/"$9}' > /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/07-popgen-stats/pairwiseFST/list_AD_files.16pools.txt
+ls -lh <REDACTED_PATH> | grep "AD.txt" | awk '{print "<REDACTED_PATH>"$9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/07-popgen-stats/pairwiseFST/list_AD_files.16pools.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMean1SD.AD.txt
-/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMode1half.AD.txt
-/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.txt
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 
 **Note:** The script that converts a *CSV file into SYNC format does not handle NAs*. Since the number of NAs is zero, this won't be something to care out. Commonly, lines with NAs are skipped from each of the AD files:
 ```bash
-cat /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMean1SD.AD.txt | grep "NA" | wc -l
+cat <REDACTED_PATH> | grep "NA" | wc -l
 0
 
-cat /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMode1half.AD.txt | grep "NA" | wc -l
+cat <REDACTED_PATH> | grep "NA" | wc -l
 0
 
-cat /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.txt | grep "NA" | wc -l
+cat <REDACTED_PATH> | grep "NA" | wc -l
 0
 ```
 
@@ -498,15 +498,15 @@ Bash script `07-csv2sync-pairwiseFST.sh`:
 
 ```bash
 #!/bin/bash
-#SBATCH -A snic2020-15-137
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 6
 #SBATCH -t 10:00:00
 #SBATCH -J pwFST
 #SBATCH -e pwFST_%J_%A_%a.err
 #SBATCH -o pwFST_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-3
 
 # Load required programs.
@@ -517,8 +517,8 @@ module load R_packages/3.6.1
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/07-popgen-stats/pairwiseFST'
-INPUT_FILES='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/07-popgen-stats/pairwiseFST/list_AD_files.16pools.txt'
+WORK_DIR='<REDACTED_PATH>'
+INPUT_FILES='<REDACTED_PATH>'
 POOL_NAMES='EI-F,EI-M,EII-F,EII-M,EIII-F,EIII-M,EIV-F,EIV-M,LV-F,LV-M,LVI-F,LVI-M,LVII-F,LVII-M,LVIII-F,LVIII-M'
 POOL_SIZES='96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96'
 MINCOVPERPOOL='10'
@@ -528,8 +528,8 @@ OUTPUTSNPVALUES='FALSE'
 COLORLOWHIGH='gray90,gray50' # 'blue,yellow'
 POP_ORDER='EI-F,EI-M,EII-F,EII-M,EIII-F,EIII-M,EIV-F,EIV-M,LV-F,LV-M,LVI-F,LVI-M,LVII-F,LVII-M,LVIII-F,LVIII-M'
 # Programs.
-SYNC_CODE='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/code/utility-code/csv2sync.py'
-R_CODE='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/code/utility-code/07-1-calculate-pairwiseFST.R'
+SYNC_CODE='<REDACTED_PATH>'
+R_CODE='<REDACTED_PATH>'
 
 cd $WORK_DIR
 
@@ -540,7 +540,7 @@ OUTFILE_PREFIX=$(basename "$INPUT_FILENAME" .txt)
 echo This is array job: $SLURM_ARRAY_TASK_ID
 echo -e This is the INPUT target: ${INPUT_target}
 
-# Copy required files to the hard drive of the node in Uppmax.
+# Copy required files to the hard drive of the node in <REDACTED_HPC_SITE>.
 cp $INPUT_PATH* $SNIC_TMP  # With *, the VCF file and its index are copied.
 
 # Go to the SNIC_TMP (working) directory.
@@ -575,7 +575,7 @@ INPUTSYNC_FILENAME=$(basename "$INPUT_FILENAME" .txt)
 Rscript $R_CODE $WORK_DIR $INPUTSYNC_FILENAME.sync $POOL_NAMES $POOL_SIZES $MINCOVPERPOOL $MAXCOVPERPOOL $MAF $OUTPUTSNPVALUES $COLORLOWHIGH $POP_ORDER
 
 ```
-Submitted batch job 4351241 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-00:31:00**
 
 

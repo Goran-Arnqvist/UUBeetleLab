@@ -6,10 +6,10 @@
 - [Overview](#overview)
 - [1. Read mapping with BWA](#1-read-mapping-with-bwa)
 	- [Original scripts](#original-scripts)
-	- [Adapted scripts to Uppmax](#adapted-scripts-to-uppmax)
+	- [Adapted scripts to <REDACTED_HPC_SITE>](#adapted-scripts-to-<REDACTED_HPC_SITE>)
 - [2. Split BAM files into separate individuals](#2-split-bam-files-into-separate-individuals)
 	- [Original scripts](#original-scripts)
-	- [Adapted scripts to Uppmax](#adapted-scripts-to-uppmax)
+	- [Adapted scripts to <REDACTED_HPC_SITE>](#adapted-scripts-to-<REDACTED_HPC_SITE>)
 	- [2.2 Fix sample labeling](#22-fix-sample-labeling)
 	- [2.3 Rename BAM files](#23-rename-bam-files)
 - [3. Generate read mapping stats](#3-generate-read-mapping-stats)
@@ -64,63 +64,63 @@ A two-step process:
 
 - Read placement, using the `-C` switch to include the extra comment tags
 ```bash
-bwa mem -C -t 50 <helera1_demo_dir>/Heliconius_erato_demophoon_v1.fa \ $file ${file/R1_001/R2_001} \ -R "@RG\tID:$fbname\tSM:$fbname\tLB:$fbname\tPL:Illumina.HiSeq3000.2x150" | samtools view -bh - > /tmp/mkucka/$fbname.erato.bam
+bwa mem -C -t 50 <helera1_demo_dir>/Heliconius_erato_demophoon_v1.fa \ $file ${file/R1_001/R2_001} \ -R "@RG\tID:$fbname\tSM:$fbname\tLB:$fbname\tPL:Illumina.HiSeq3000.2x150" | samtools view -bh - > <REDACTED_PATH>
 
-samtools sort \ -@ 50 -l 9 \ -T /tmp/mkucka/$fbname.tmpsort \ -o /tmp/mkucka/$fbname.erato.sorted.bam \ /tmp/mkucka/$fbname.erato.bam
+samtools sort \ -@ 50 -l 9 \ -T <REDACTED_PATH> \ -o <REDACTED_PATH> \ <REDACTED_PATH>
 ```
 
 - MarkDuplicates, using BX-aware options
 ```bash
-java -Xmx12g -XX:ParallelGCThreads=64 -jar <picard_dir>/picard.jar MarkDuplicates \ I=$file \ O=/tmp/mkucka/$fbname.pMarkdup.bam \ M=$dir/$fbname.pMarkdup.metrics \ CREATE_INDEX=TRUE READ_ONE_BARCODE_TAG=BX READ_TWO_BARCODE_TAG=BX VALIDATION_STRINGENCY=LENIENT
+java -Xmx12g -XX:ParallelGCThreads=64 -jar <picard_dir>/picard.jar MarkDuplicates \ I=$file \ O=<REDACTED_PATH> \ M=$dir/$fbname.pMarkdup.metrics \ CREATE_INDEX=TRUE READ_ONE_BARCODE_TAG=BX READ_TWO_BARCODE_TAG=BX VALIDATION_STRINGENCY=LENIENT
 ```
 
-### Adapted scripts to Uppmax
+### Adapted scripts to <REDACTED_HPC_SITE>
 
 - Create the file list:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files
+cd <REDACTED_PATH>
 
-find /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads -name *R1_001.cutadapt.fastq.gz -type f > /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/file_R1.list
+find <REDACTED_PATH> -name *R1_001.cutadapt.fastq.gz -type f > <REDACTED_PATH>
 ```
 Explore file
 ```bash
 cat file_R1.list
 
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleK_S130_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleC_S122_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleA_S120_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleG_S126_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleJ_S129_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleD_S123_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleE_S124_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleN_S133_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleM_S132_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleL_S131_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleH_S127_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleI_S128_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleB_S121_L004_tag_R1_001.cutadapt.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/VF-3324-BeetleF_S125_L004_tag_R1_001.cutadapt.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 
 Script `03-1-read_mapping.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 10
 #SBATCH -t 3-00:00:00
 #SBATCH -J read_map
 #SBATCH -e read_map_%J_%A_%a.err
 #SBATCH -o read_map_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-14
 
 # Set environment variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files'
-REF_FASTA='/proj/snic2020-6-128/private/a_obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
+OUTPUT_DIR='<REDACTED_PATH>'
+REF_FASTA='<REDACTED_PATH>'
 FILE_LIST=$OUTPUT_DIR/file_R1.list
-PICARD_JAR='/sw/apps/bioinfo/picard/2.23.4/rackham/picard.jar'
+PICARD_JAR='<REDACTED_PATH>'
 
 # For a given job in the array, set the correspondent sample files
 FILE_PATH=$(sed -n "$SLURM_ARRAY_TASK_ID"p $FILE_LIST)
@@ -136,7 +136,7 @@ INPUT_DIR=$(dirname $FILE_PATH)
 # Number of cores to use
 N_CORES='10'
 
-# Load packages in Uppmax
+# Load packages in <REDACTED_HPC_SITE>
 module load bioinfo-tools bwa/0.7.17 samtools/1.14 picard/2.23.4
 
 # Go to the working directory
@@ -181,29 +181,29 @@ if [ -d Markdup-metrics ]; then echo "Markdup-metrics"; else mkdir Markdup-metri
 mv $FBNAME.pMarkdup.metrics Markdup-metrics
 
 ```
-Submitted batch job 6962250 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 01-08:37:37**
 
 Files generated:
 ```bash
 total 1.6T
--rw-rw-r--  1 angela snic2020-6-128  47G Sep 28 02:22 VF-3324-BeetleA_S120_L004_tag.bam
--rw-rw-r--  1 angela snic2020-6-128 3.5M Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.bai
--rw-rw-r--  1 angela snic2020-6-128  31G Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.bam
--rw-rw-r--  1 angela snic2020-6-128 4.0K Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.metrics
--rw-rw-r--  1 angela snic2020-6-128  29G Sep 28 03:38 VF-3324-BeetleA_S120_L004_tag.sorted.bam
-drwxrwsr-x  2 angela snic2020-6-128  28K Sep 28 03:38 VF-3324-BeetleA_S120_L004_tag.tmpsort/
--rw-rw-r--  1 angela snic2020-6-128  53G Sep 29 04:39 VF-3324-BeetleB_S121_L004_tag.bam
--rw-rw-r--  1 angela snic2020-6-128 3.6M Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.bai
--rw-rw-r--  1 angela snic2020-6-128  35G Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.bam
--rw-rw-r--  1 angela snic2020-6-128 3.9K Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.metrics
--rw-rw-r--  1 angela snic2020-6-128  32G Sep 29 06:08 VF-3324-BeetleB_S121_L004_tag.sorted.bam
-drwxrwsr-x  2 angela snic2020-6-128  32K Sep 29 06:08 VF-3324-BeetleB_S121_L004_tag.tmpsort/
--rw-rw-r--  1 angela snic2020-6-128  49G Sep 28 03:14 VF-3324-BeetleC_S122_L004_tag.bam
--rw-rw-r--  1 angela snic2020-6-128 3.5M Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.bai
--rw-rw-r--  1 angela snic2020-6-128  32G Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.bam
--rw-rw-r--  1 angela snic2020-6-128 4.0K Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.metrics
--rw-rw-r--  1 angela snic2020-6-128  30G Sep 28 04:43 VF-3324-BeetleC_S122_L004_tag.sorted.bam
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  47G Sep 28 02:22 VF-3324-BeetleA_S120_L004_tag.bam
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 3.5M Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.bai
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  31G Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.bam
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 4.0K Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.metrics
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  29G Sep 28 03:38 VF-3324-BeetleA_S120_L004_tag.sorted.bam
+drwxrwsr-x  2 angela <REDACTED_PROJECT_CODE>  28K Sep 28 03:38 VF-3324-BeetleA_S120_L004_tag.tmpsort/
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  53G Sep 29 04:39 VF-3324-BeetleB_S121_L004_tag.bam
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 3.6M Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.bai
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  35G Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.bam
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 3.9K Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.metrics
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  32G Sep 29 06:08 VF-3324-BeetleB_S121_L004_tag.sorted.bam
+drwxrwsr-x  2 angela <REDACTED_PROJECT_CODE>  32K Sep 29 06:08 VF-3324-BeetleB_S121_L004_tag.tmpsort/
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  49G Sep 28 03:14 VF-3324-BeetleC_S122_L004_tag.bam
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 3.5M Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.bai
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  32G Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.bam
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 4.0K Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.metrics
+-rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  30G Sep 28 04:43 VF-3324-BeetleC_S122_L004_tag.sorted.bam
 ```
 
 
@@ -243,49 +243,49 @@ rm *.sam.gz
 
 ```
 
-### Adapted scripts to Uppmax
+### Adapted scripts to <REDACTED_HPC_SITE>
 
 - Create a `bam.list` file:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data
+cd <REDACTED_PATH>
 
-find /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files -name *_L004_tag.pMarkdup.bam -type f > /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/pool_bam.list
+find <REDACTED_PATH> -name *_L004_tag.pMarkdup.bam -type f > <REDACTED_PATH>
 ```
 Explore file:
 ```bash
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/pool_bam.list
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleD_S123_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleF_S125_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleB_S121_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleE_S124_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleJ_S129_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleK_S130_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleA_S120_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleG_S126_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleL_S131_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleC_S122_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleH_S127_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleM_S132_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleI_S128_L004_tag.pMarkdup.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/VF-3324-BeetleN_S133_L004_tag.pMarkdup.bam
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 
 Script `03-2-split_BAMs.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 2
 #SBATCH -t 1-00:00:00
 #SBATCH -J split_BAMs
 #SBATCH -e split_BAMs_%J_%A_%a.err
 #SBATCH -o split_BAMs_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-14
 
 # Set environment variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample'
+OUTPUT_DIR='<REDACTED_PATH>'
 FILE_LIST=$OUTPUT_DIR/pool_bam.list
 
 # For a given job in the array, set the correspondent sample files
@@ -300,7 +300,7 @@ FBNAME=$(basename $FILE_PATH _L004_tag.pMarkdup.bam)
 # Get directory path
 INPUT_DIR=$(dirname $FILE_PATH)
 
-# Load programs in Uppmax
+# Load programs in <REDACTED_HPC_SITE>
 module load bioinfo-tools samtools/1.14
 
 # Make a directory for the plate
@@ -338,9 +338,9 @@ mv *.bam* ../
 #rm -R $FBNAME
 
 ```
-Submitted batch job 30089569 > job 1, run for testing
+Submitted batch job <REDACTED_JOB_ID> > job 1, run for testing
 **Runtime: 00-06:38:46**
-Submitted batch job 30096109 > jobs 2-14
+Submitted batch job <REDACTED_JOB_ID> > jobs 2-14
 **Runtime: 00-10:21:49**
 
 All runs ended successfully.
@@ -364,7 +364,7 @@ ls D*.bam | wc -l
 ```
 Hmmm. A total of 97 BAM files were generated per plate with codes from D00 to D96, but there should be 96 (as per 96-well plates). Frank clarified that `D00` corresponds to ambiguous reads, equivalent to barcode assignments that are not clearly assigned to a single D01-D96 barcode. So, he recommends to leave those the D00 files out (I moved them to a separate dir):
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample
+cd <REDACTED_PATH>
 
 mkdir ambiguous-D00
 
@@ -415,7 +415,7 @@ Göran indicated that four of five sorted out then - due to lab book to Excel fi
 
 I made a back-up copy of all BAM files with the original naming in the directory `original_bams_TO_DELETE`:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample
+cd <REDACTED_PATH>
 
 ls *.bam | wc -l
 1344
@@ -489,7 +489,7 @@ done < rename_bam_files_key.txt
 
 Then, run it with:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample
+cd <REDACTED_PATH>
 bash rename_bam_files_with_key.sh
 ```
 One error message:
@@ -499,7 +499,7 @@ mv: cannot stat ‘D01-N704.bam.bai’: No such file or directory
 I confirmed the bam file exists but not the index file:
 ```bash
 ll *D01_N704*
--rw-rw-r-- 1 angela snic2020-6-128 1.3M Sep 29 20:30 DC12_2.D01_N704.bam
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE> 1.3M Sep 29 20:30 DC12_2.D01_N704.bam
 ```
 Very tiny file, maybe this explains why there is not index file, I will continue with the read map stats.
 
@@ -508,54 +508,54 @@ Very tiny file, maybe this explains why there is not index file, I will continue
 
 - Create a `bam_sample.list` file, while excluding the bam files from other subdirectories:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample
+cd <REDACTED_PATH>
 ls *.bam | wc -l
 1342
 
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data
+cd <REDACTED_PATH>
 
 # Create a text file listing all the sample bam files, while excluding bam files within subdirectories
-find /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample -name *.bam \
-! -path "/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/ambiguous-D00/*" \
-! -path "/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/test_rename/*" \
-! -path "/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/original_bams_TO_DELETE/*" \
--type f > /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/bam_sample.list
+find <REDACTED_PATH> -name *.bam \
+! -path "<REDACTED_PATH>" \
+! -path "<REDACTED_PATH>" \
+! -path "<REDACTED_PATH>" \
+-type f > <REDACTED_PATH>
 ```
 
 Explore the generated file:
 ```bash
-head /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/bam_sample.list
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA7_33.D05_N701.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB7_18.D29_N709.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA12_28.D02_N703.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA8_7.D19_N712.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC10_23.D82_N714.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB7_19.D40_N705.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/CD2_18.D06_N708.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/CD11_26.D53_N706.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA12_15.D61_N712.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB1_29.D47_N705.bam
+head <REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 
 # Verify the number of rows is correct
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/bam_sample.list | wc -l
+cat <REDACTED_PATH> | wc -l
 1342  # good! This is the expected number of files for (14 plates x 96) - 2 = 1342
 ```
 
 Script `03-3_qualimap_1-1000.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 4
 #SBATCH -t 20:00:00
 #SBATCH -J qualimap
 #SBATCH -e qualimap_%J_%A_%a.err
 #SBATCH -o qualimap_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-1000
 
 # Set environment variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample'
+OUTPUT_DIR='<REDACTED_PATH>'
 FILE_LIST=${OUTPUT_DIR}/bam_sample.list
 
 # For a given job in the array, set the correspondent sample files
@@ -569,9 +569,9 @@ echo -e This is the FILE: ${FILE_PATH}
 
 #### Generate mapping quality summary statistics
 
-# Setup packages in Uppmax
+# Setup packages in <REDACTED_HPC_SITE>
 module load bioinfo-tools QualiMap/2.2.1
-unset DISPLAY  # Turn display off to avoid problems with X11 in Uppmax
+unset DISPLAY  # Turn display off to avoid problems with X11 in <REDACTED_HPC_SITE>
 
 if [ -d $OUTPUT_DIR/Qualimap_stats ]; then echo "Qualimap_stats/ exists"; else mkdir $OUTPUT_DIR/Qualimap_stats; fi
 
@@ -588,7 +588,7 @@ module load samtools/1.14
 samtools stats -@ 4 $FILE_PATH > $OUTPUT_DIR/Samtools_stats/$FBNAME.stat
 
 ```
-Submitted batch job 30260684
+Submitted batch job <REDACTED_JOB_ID>
 **Runtime: 00-04:03:00**
 
 
@@ -596,7 +596,7 @@ Submitted batch job 30260684
 
 The job array `#SBATCH -a 1001-1342` did not work in slurm. Thus, I created a new file listing the bam files from 1001 to 1342:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample
+cd <REDACTED_PATH>
 
 bam_sample.list
 
@@ -610,30 +610,30 @@ wc -l bam_sample_1001-1342.list
 # Check which file is in position 1001
 head -n 1001 bam_sample.list
 ...
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA6_24.D59_N701.bam
+<REDACTED_PATH>
 
 # Verify this file is the first one in the subsetted file
 head bam_sample_1001-1342.list
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA6_24.D59_N701.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC14_34.D59_N707.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB10_33.D39_N702.bam
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 
 Script `03-3_qualimap_1001-1342.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 4
 #SBATCH -t 20:00:00
 #SBATCH -J qualimap
 #SBATCH -e qualimap_%J_%A_%a.err
 #SBATCH -o qualimap_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-342
 
 # Set environment variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample'
+OUTPUT_DIR='<REDACTED_PATH>'
 FILE_LIST=${OUTPUT_DIR}/bam_sample_1001-1342.list
 
 # For a given job in the array, set the correspondent sample files
@@ -647,9 +647,9 @@ echo -e This is the FILE: ${FILE_PATH}
 
 #### Generate mapping quality summary statistics
 
-# Setup packages in Uppmax
+# Setup packages in <REDACTED_HPC_SITE>
 module load bioinfo-tools QualiMap/2.2.1
-unset DISPLAY  # Turn display off to avoid problems with X11 in Uppmax
+unset DISPLAY  # Turn display off to avoid problems with X11 in <REDACTED_HPC_SITE>
 
 if [ -d $OUTPUT_DIR/Qualimap_stats ]; then echo "Qualimap_stats/ exists"; else mkdir $OUTPUT_DIR/Qualimap_stats; fi
 
@@ -667,20 +667,20 @@ samtools stats -@ 4 $FILE_PATH > $OUTPUT_DIR/Samtools_stats/$FBNAME.stat
 
 ```
 **Runtime: 00-00:14:00**
-Submitted batch job 30316710
+Submitted batch job <REDACTED_JOB_ID>
 
 Examine error messages:
 ```bash
 head qualimap_*.err
-==> qualimap_30260684_30260684_1000.err <==
+==> qualimap_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_1000.err <==
 
-==> qualimap_30260858_30260684_1.err <==
+==> qualimap_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_1.err <==
 -------------------------------------------------------------------------------
 The following dependent module(s) are not currently loaded: java/sun_jdk1.8.0_92 (required by: R/3.3.2)
 -------------------------------------------------------------------------------
 
 
-==> qualimap_30317604_30316710_46.err <==
+==> qualimap_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_46.err <==
 Failed to run bamqc
 java.lang.RuntimeException: The BAM file is empty or corrupt
 	at org.bioinfo.ngs.qc.qualimap.process.BamStatsAnalysis.run(BamStatsAnalysis.java:520)
@@ -688,18 +688,18 @@ java.lang.RuntimeException: The BAM file is empty or corrupt
 	at org.bioinfo.ngs.qc.qualimap.main.NgsSmartTool.run(NgsSmartTool.java:190)
 	at org.bioinfo.ngs.qc.qualimap.main.NgsSmartMain.main(NgsSmartMain.java:111)
 
-[E::hts_hopen] Failed to open file /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC12_2.D01_N704.bam
-[E::hts_open_format] Failed to open file "/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC12_2.D01_N704.bam" : Exec format error
-samtools stats: failed to open "/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC12_2.D01_N704.bam": Exec format error
+[E::hts_hopen] Failed to open file <REDACTED_PATH>
+[E::hts_open_format] Failed to open file "<REDACTED_PATH>" : Exec format error
+samtools stats: failed to open "<REDACTED_PATH>": Exec format error
 ```
 
 
 Generate a single Qualimap report for all samples using MultiQC:
 ```bash
-# Load program in Uppmax
+# Load program in <REDACTED_HPC_SITE>
 module load bioinfo-tools MultiQC/1.12
 
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/Qualimap_stats
+cd <REDACTED_PATH>
 
 multiqc .
 
@@ -707,7 +707,7 @@ multiqc .
 Stdout:
 ```
 |           multiqc | MultiQC Version v1.13 now available!
-|           multiqc | Search path : /crex/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/Qualimap_stats
+|           multiqc | Search path : <REDACTED_PATH>
 |         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 67050/67050  
 |          qualimap | Found 1341 BamQC reports
 |           multiqc | Compressing plot data

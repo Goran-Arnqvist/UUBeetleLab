@@ -17,34 +17,34 @@ Perform SNP calling for each chromosome separately and for all unplaced scaffold
 ### Input files
 - List of BAM files:
 ```bash
-cp /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/OTT_bam.list /proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files
+cp <REDACTED_PATH> <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/OTT_bam.list
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EI-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EII-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EIII-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EIII-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EII-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EI-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EIV-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EIV-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LV-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVI-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVII-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVIII-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVIII-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVII-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVI-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LV-M.sort.MarkDup.RG.bam
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 
 ```
 
 - List of chromosomes:
 ```bash
-cat /proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta | grep ">chr" | sort -V | sed -e 's/>//g' > /proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/chr.list
+cat <REDACTED_PATH> | grep ">chr" | sort -V | sed -e 's/>//g' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/chr.list
+cat <REDACTED_PATH>
 chr_1
 chr_2
 chr_3
@@ -59,15 +59,15 @@ chr_10
 Create script `04-1-SNPcalling-UG-chr.sh`. This script is a job array that scatter the run by chromosome (26 in the case of herring):
 ```bash
 #!/bin/bash
-#SBATCH -A snic2017-7-378
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 4
 #SBATCH -t 7-00:00:00
 #SBATCH -J SNPcall_UG
 #SBATCH -e SNPcall_UG_%J_%A_%a.err
 #SBATCH -o SNPcall_UG_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-10
 # Note that the number of jobs to split in the array should be the total number of chromosomes
 
@@ -77,13 +77,13 @@ module load GATK/3.8-0
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files'
-REF_FILE='/proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
+WORK_DIR='<REDACTED_PATH>'
+REF_FILE='<REDACTED_PATH>'
 OUTFILE_PREFIX='OTT_16_pools'
-BAM_LIST='/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/OTT_bam.list'
-CHR_LIST='/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/chr.list'
+BAM_LIST='<REDACTED_PATH>'
+CHR_LIST='<REDACTED_PATH>'
 # Programs.
-GATK_JAR='/sw/apps/bioinfo/GATK/3.8-0/GenomeAnalysisTK.jar'
+GATK_JAR='<REDACTED_PATH>'
 
 echo This is array job: $SLURM_ARRAY_TASK_ID
 CHR_target=$(sed -n "$SLURM_ARRAY_TASK_ID"p $CHR_LIST)
@@ -101,7 +101,7 @@ java -Xmx30G -jar $GATK_JAR \
 -o $OUTFILE_PREFIX.${CHR_target}.vcf
 
 ```
-Submitted batch job 4346611 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-21:09:00**
 
 *For unplaced scaffolds:*
@@ -109,9 +109,9 @@ Same BAM files list.
 
 - List of unplaced scaffolds:
 ```bash
-cat /proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta | grep ">scaffold" | sort -V | sed -e 's/>//g' > /proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/scaffold.list
+cat <REDACTED_PATH> | grep ">scaffold" | sort -V | sed -e 's/>//g' > <REDACTED_PATH>
 
-head /proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/scaffold.list
+head <REDACTED_PATH>
 
 scaffold_11
 scaffold_12
@@ -124,7 +124,7 @@ scaffold_18
 scaffold_19
 scaffold_20
 
-tail /proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/scaffold.list
+tail <REDACTED_PATH>
 scaffold_3793
 scaffold_3794
 scaffold_3795
@@ -140,15 +140,15 @@ scaffold_3802
 Create script `04-1-SNPcalling-UG-scaff.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2017-7-378
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 4
 #SBATCH -t 10-00:00:00
 #SBATCH -J SNPcall_UG
 #SBATCH -e SNPcall_UG_%J_%A_%a.err
 #SBATCH -o SNPcall_UG_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 
 # Load required software.
 module load bioinfo-tools
@@ -156,13 +156,13 @@ module load GATK/3.8-0
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files'
-REF_FILE='/proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
+WORK_DIR='<REDACTED_PATH>'
+REF_FILE='<REDACTED_PATH>'
 OUTFILE_PREFIX='OTT_16_pools'
-BAM_LIST='/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/OTT_bam.list'
-SCAFFOLD_LIST='/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/scaffold.list'
+BAM_LIST='<REDACTED_PATH>'
+SCAFFOLD_LIST='<REDACTED_PATH>'
 # Programs.
-GATK_JAR='/sw/apps/bioinfo/GATK/3.8-0/GenomeAnalysisTK.jar'
+GATK_JAR='<REDACTED_PATH>'
 
 # Go to the directory where the VCF file will be stored.
 cd $WORK_DIR
@@ -176,13 +176,13 @@ java -Xmx30G -jar $GATK_JAR \
 -o $OUTFILE_PREFIX.scaff.vcf
 
 ```
-Submitted batch job 4346618 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-16:04:00**
 
 
 All the jobs were completed successfully:
 ```bash
-==> SNPcall_UG_4346618_4346618_4294967294.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>.err <==
 INFO  01:58:38,912 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  01:58:38,912 MicroScheduler -   -> 14846447 reads (5.72% of total) failing BadMateFilter
 INFO  01:58:38,913 MicroScheduler -   -> 11064408 reads (4.26% of total) failing DuplicateReadFilter
@@ -194,7 +194,7 @@ INFO  01:58:38,913 MicroScheduler -   -> 537143 reads (0.21% of total) failing U
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346634_4346611_1.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_1.err <==
 INFO  07:03:47,050 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  07:03:47,050 MicroScheduler -   -> 30038924 reads (5.89% of total) failing BadMateFilter
 INFO  07:03:47,050 MicroScheduler -   -> 15337275 reads (3.01% of total) failing DuplicateReadFilter
@@ -206,7 +206,7 @@ INFO  07:03:47,051 MicroScheduler -   -> 1565054 reads (0.31% of total) failing 
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346635_4346611_2.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_2.err <==
 INFO  07:01:06,128 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  07:01:06,128 MicroScheduler -   -> 29236292 reads (5.42% of total) failing BadMateFilter
 INFO  07:01:06,129 MicroScheduler -   -> 44554272 reads (8.26% of total) failing DuplicateReadFilter
@@ -218,7 +218,7 @@ INFO  07:01:06,129 MicroScheduler -   -> 1565541 reads (0.29% of total) failing 
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346636_4346611_3.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_3.err <==
 INFO  06:35:59,279 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  06:35:59,280 MicroScheduler -   -> 29027249 reads (5.58% of total) failing BadMateFilter
 INFO  06:35:59,280 MicroScheduler -   -> 31340028 reads (6.03% of total) failing DuplicateReadFilter
@@ -230,7 +230,7 @@ INFO  06:35:59,280 MicroScheduler -   -> 1665058 reads (0.32% of total) failing 
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346637_4346611_4.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_4.err <==
 INFO  06:41:40,529 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  06:41:40,529 MicroScheduler -   -> 27321868 reads (5.20% of total) failing BadMateFilter
 INFO  06:41:40,529 MicroScheduler -   -> 26579031 reads (5.06% of total) failing DuplicateReadFilter
@@ -242,7 +242,7 @@ INFO  06:41:40,530 MicroScheduler -   -> 1573134 reads (0.30% of total) failing 
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346638_4346611_5.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_5.err <==
 INFO  06:54:19,930 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  06:54:19,930 MicroScheduler -   -> 27902754 reads (5.52% of total) failing BadMateFilter
 INFO  06:54:19,930 MicroScheduler -   -> 27289354 reads (5.40% of total) failing DuplicateReadFilter
@@ -254,7 +254,7 @@ INFO  06:54:19,931 MicroScheduler -   -> 1607760 reads (0.32% of total) failing 
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346639_4346611_6.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_6.err <==
 INFO  05:19:43,858 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  05:19:43,858 MicroScheduler -   -> 24465686 reads (4.62% of total) failing BadMateFilter
 INFO  05:19:43,858 MicroScheduler -   -> 91795235 reads (17.33% of total) failing DuplicateReadFilter
@@ -266,7 +266,7 @@ INFO  05:19:43,859 MicroScheduler -   -> 1378487 reads (0.26% of total) failing 
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346640_4346611_7.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_7.err <==
 INFO  04:51:20,211 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  04:51:20,211 MicroScheduler -   -> 20119768 reads (4.78% of total) failing BadMateFilter
 INFO  04:51:20,211 MicroScheduler -   -> 22282339 reads (5.29% of total) failing DuplicateReadFilter
@@ -278,7 +278,7 @@ INFO  04:51:20,212 MicroScheduler -   -> 1231772 reads (0.29% of total) failing 
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346641_4346611_8.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_8.err <==
 INFO  04:03:28,108 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  04:03:28,108 MicroScheduler -   -> 23334714 reads (6.44% of total) failing BadMateFilter
 INFO  04:03:28,108 MicroScheduler -   -> 14528142 reads (4.01% of total) failing DuplicateReadFilter
@@ -290,7 +290,7 @@ INFO  04:03:28,109 MicroScheduler -   -> 1200117 reads (0.33% of total) failing 
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346642_4346611_9.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_9.err <==
 INFO  03:19:51,936 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  03:19:51,936 MicroScheduler -   -> 18274636 reads (5.72% of total) failing BadMateFilter
 INFO  03:19:51,936 MicroScheduler -   -> 24600957 reads (7.70% of total) failing DuplicateReadFilter
@@ -302,7 +302,7 @@ INFO  03:19:51,937 MicroScheduler -   -> 953196 reads (0.30% of total) failing U
 ------------------------------------------------------------------------------------------
 Done. ------------------------------------------------------------------------------------------
 
-==> SNPcall_UG_4346643_4346611_10.err <==
+==> SNPcall_UG_<REDACTED_JOB_ID>_<REDACTED_JOB_ID>_10.err <==
 INFO  00:42:28,636 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
 INFO  00:42:28,636 MicroScheduler -   -> 9978395 reads (5.80% of total) failing BadMateFilter
 INFO  00:42:28,636 MicroScheduler -   -> 2470076 reads (1.44% of total) failing DuplicateReadFilter
@@ -323,7 +323,7 @@ As I run UnifiedGenotyper per chromosome, now I will generate a single VCF conta
 
 With this commands I created the lines listing all the chr + scaffolds in ascending order:
 ```bash
-cd /proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files
+cd <REDACTED_PATH>
 ls | grep ".vcf$" | awk '{print $9}' | sort -V | awk '{print "-V "$1" \\"}'
 
 # Note that I manually put the scaff file at the end, after the chromosomes
@@ -343,15 +343,15 @@ ls | grep ".vcf$" | awk '{print $9}' | sort -V | awk '{print "-V "$1" \\"}'
 Create script `04-2-concatenateVCFs-UG.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2017-7-378
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 4
 #SBATCH -t 20:00:00
 #SBATCH -J catVar_UG
 #SBATCH -e catVar_UG_%J_%A_%a.err
 #SBATCH -o catVar_UG_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 
 # Load required software.
 module load bioinfo-tools
@@ -359,11 +359,11 @@ module load GATK/3.8-0
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files'
-REF_FILE='/proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
+WORK_DIR='<REDACTED_PATH>'
+REF_FILE='<REDACTED_PATH>'
 OUTFILE_PREFIX='OTT_16_pools'
 # Programs.
-GATK_JAR='/sw/apps/bioinfo/GATK/3.8-0/GenomeAnalysisTK.jar'
+GATK_JAR='<REDACTED_PATH>'
 
 # Go to the directory where the VCF file will be stored.
 cd $WORK_DIR
@@ -386,19 +386,19 @@ java -Xmx20G -cp $GATK_JAR org.broadinstitute.gatk.tools.CatVariants \
 -out $OUTFILE_PREFIX.UG.rawVar.vcf
 
 ```
-Submitted batch job 4349164 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-00:9:22**
 
 Concatenation of the separate VCF files per chr and scaffold group was completed successfully:
 ```bash
 cat catVar_UG_*.err
 
-You may find GATK files in /sw/data/uppnex/GATK.
+You may find GATK files in <REDACTED_PATH>
 The hg38bundle is pre-release.
 INFO  10:30:15,662 HelpFormatter - -------------------------------------------------------
 INFO  10:30:15,665 HelpFormatter - Program Name: org.broadinstitute.gatk.tools.CatVariants
-INFO  10:30:15,675 HelpFormatter - Program Args: -R /proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta -V OTT_16_pools.chr_1.vcf -V OTT_16_pools.chr_2.vcf -V OTT_16_pools.chr_3.vcf -V OTT_16_pools.chr_4.vcf -V OTT_16_pools.chr_5.vcf -V OTT_16_pools.chr_6.vcf -V OTT_16_pools.chr_7.vcf -V OTT_16_pools.chr_8.vcf -V OTT_16_pools.chr_9.vcf -V OTT_16_pools.chr_10.vcf -V OTT_16_pools.scaff.vcf -assumeSorted -out OTT_16_pools.UG.rawVar.vcf
-INFO  10:30:15,684 HelpFormatter - Executing as angela@s110.uppmax.uu.se on Linux 3.10.0-1160.15.2.el7.x86_64 amd64; Java HotSpot(TM) 64-Bit Server VM 1.8.0_92-b14.
+INFO  10:30:15,675 HelpFormatter - Program Args: -R <REDACTED_PATH> -V OTT_16_pools.chr_1.vcf -V OTT_16_pools.chr_2.vcf -V OTT_16_pools.chr_3.vcf -V OTT_16_pools.chr_4.vcf -V OTT_16_pools.chr_5.vcf -V OTT_16_pools.chr_6.vcf -V OTT_16_pools.chr_7.vcf -V OTT_16_pools.chr_8.vcf -V OTT_16_pools.chr_9.vcf -V OTT_16_pools.chr_10.vcf -V OTT_16_pools.scaff.vcf -assumeSorted -out OTT_16_pools.UG.rawVar.vcf
+INFO  10:30:15,684 HelpFormatter - Executing as <REDACTED_REMOTE_TARGET> on Linux 3.10.0-1160.15.2.el7.x86_64 amd64; Java HotSpot(TM) 64-Bit Server VM 1.8.0_92-b14.
 INFO  10:30:15,685 HelpFormatter - Date/Time: 2021/03/31 10:30:15
 INFO  10:30:15,685 HelpFormatter - -------------------------------------------------------
 INFO  10:30:15,685 HelpFormatter - -------------------------------------------------------

@@ -3,7 +3,7 @@
 <!-- TOC depthFrom:2 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Original code](#original-code)
-- [Adapted code to Uppmax](#adapted-code-to-uppmax)
+- [Adapted code to <REDACTED_HPC_SITE>](#adapted-code-to-<REDACTED_HPC_SITE>)
 - [Merge output files](#merge-output-files)
 - [Plotting in R](#plotting-in-r)
 - [Molecule size](#molecule-size)
@@ -30,7 +30,7 @@ dir=$(dirname $file)
 echo $dir
 
 #marks duplicates
-java -Xmx8g -XX:ParallelGCThreads=10 -jar /fml/chones/local/picard-2.18.25/picard.jar MarkDuplicates \
+java -Xmx8g -XX:ParallelGCThreads=10 -jar <REDACTED_PATH> MarkDuplicates \
        I=$file \
        TMP_DIR=./ \
        O=$dir/$fbname.pMarkdup.bam \
@@ -71,52 +71,52 @@ rm $fbname.dedup.bam
 rm $fbname.dedup.bxsorted.bam
 ```
 
-## Adapted code to Uppmax
+## Adapted code to <REDACTED_HPC_SITE>
 
 Script `03_2_molecule_stats.sh`:
 
 - Make sure the `pool_bam.list` file lists the files you want:
 ```bash
-head /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/bam_sample.list
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA7_33.D05_N701.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB7_18.D29_N709.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA12_28.D02_N703.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA8_7.D19_N712.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC10_23.D82_N714.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB7_19.D40_N705.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/CD2_18.D06_N708.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/CD11_26.D53_N706.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA12_15.D61_N712.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB1_29.D47_N705.bam
+head <REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 
-wc -l /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/bam_sample.list
+wc -l <REDACTED_PATH>
 1342
 ```
 **NOTE:** The original script shared by Marek uses the perl script called `bed_write.full.pl`. In the github page there is a script called `bed_write.pl`. Marek clarified they are the same, just the name is different, so I used the one available in the repository.
 
-Also, I asked people in Uppmax to install the program `datamash`, which is required for Marek's script.
+Also, I asked people in <REDACTED_HPC_SITE> to install the program `datamash`, which is required for Marek's script.
 
-Given that Uppmax only accepts 1000 jobs at a time, I split the files into two, one goes from 1-1000, and the other one from 1001 to 1342.
+Given that <REDACTED_HPC_SITE> only accepts 1000 jobs at a time, I split the files into two, one goes from 1-1000, and the other one from 1001 to 1342.
 
 Script `03-1-molecule_stats_1-1000.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 2
 #SBATCH -t 0-10:00:00
 #SBATCH -J molecStats
 #SBATCH -e molecStats_%J_%A_%a.err
 #SBATCH -o molecStats_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-1000
 
 # Set environment variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample'
-#REF_FASTA='/proj/snic2020-6-128/private/a_obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
+OUTPUT_DIR='<REDACTED_PATH>'
+#REF_FASTA='<REDACTED_PATH>'
 FILE_LIST=$OUTPUT_DIR/bam_sample.list
-PICARD_JAR='/sw/apps/bioinfo/picard/2.23.4/rackham/picard.jar'
-PERL_SCRIPT_PATH='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/code'
+PICARD_JAR='<REDACTED_PATH>'
+PERL_SCRIPT_PATH='<REDACTED_PATH>'
 
 # For a given job in the array, set the correspondent sample files
 FILE_PATH=$(sed -n "$SLURM_ARRAY_TASK_ID"p $FILE_LIST)
@@ -132,7 +132,7 @@ INPUT_DIR=$(dirname $FILE_PATH)
 # Number of cores to use
 N_CORES='2'
 
-# Load packages in Uppmax
+# Load packages in <REDACTED_HPC_SITE>
 module load bioinfo-tools samtools/1.14 picard/2.23.4 perl/5.26.2 datamash/1.8
 
 #### Continuation from the 03-1-read_mapping.sh script ####
@@ -193,24 +193,24 @@ awk '{ print $3-$2"\t"$4"\t"$10"\t"$1"\t"$2"\t"$3 }' $FBNAME.dedup.bxsorted.link
 rm -R $FBNAME.tmpsort
 
 ```
-Submitted batch job 30845657
+Submitted batch job <REDACTED_JOB_ID>
 **Runtime: 00-00:13:00** 3 min per file on average??
 
 Make sure there is a file listing the bam files from 1001 to 1342:
 ```bash
-head /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/bam_sample_1001-1342.list
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA6_24.D59_N701.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC14_34.D59_N707.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB10_33.D39_N702.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC2_15.D64_N712.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC15_31.D70_N705.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB1_30.D86_N702.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/BA2_3.D47_N710.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/AB6_30.D12_N702.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC1_31.D95_N701.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/DC16_31.D60_N706.bam
+head <REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 
-wc -l /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/bam_sample_1001-1342.list
+wc -l <REDACTED_PATH>
 342
 ```
 
@@ -218,22 +218,22 @@ Script `03-1-molecule_stats_1001-1342.sh`:
 
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 2
 #SBATCH -t 0-10:00:00
 #SBATCH -J molecStats
 #SBATCH -e molecStats_%J_%A_%a.err
 #SBATCH -o molecStats_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-342
 
 # Set environment variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample'
-#REF_FASTA='/proj/snic2020-6-128/private/a_obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
+OUTPUT_DIR='<REDACTED_PATH>'
+#REF_FASTA='<REDACTED_PATH>'
 FILE_LIST=$OUTPUT_DIR/bam_sample_1001-1342.list
-PICARD_JAR='/sw/apps/bioinfo/picard/2.23.4/rackham/picard.jar'
-PERL_SCRIPT_PATH='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/code'
+PICARD_JAR='<REDACTED_PATH>'
+PERL_SCRIPT_PATH='<REDACTED_PATH>'
 
 # For a given job in the array, set the correspondent sample files
 FILE_PATH=$(sed -n "$SLURM_ARRAY_TASK_ID"p $FILE_LIST)
@@ -249,7 +249,7 @@ INPUT_DIR=$(dirname $FILE_PATH)
 # Number of cores to use
 N_CORES='2'
 
-# Load packages in Uppmax
+# Load packages in <REDACTED_HPC_SITE>
 module load bioinfo-tools samtools/1.14 picard/2.23.4 perl/5.26.2 datamash/1.8
 
 #### Continuation from the 03-1-read_mapping.sh script ####
@@ -310,7 +310,7 @@ awk '{ print $3-$2"\t"$4"\t"$10"\t"$1"\t"$2"\t"$3 }' $FBNAME.dedup.bxsorted.link
 rm -R $FBNAME.tmpsort
 
 ```
-Submitted batch job 30845699
+Submitted batch job <REDACTED_JOB_ID>
 **Runtime: 00-00:10:00** 3 min per file on average??
 
 These output files were generated for each sample:
@@ -389,7 +389,7 @@ chr_2	6879964	6880231	A01C01B30D68-N704	0	-	6879964	6880231	0,3,0	2	119,151	0,11
 
 - To merge the N50 one-liner files generated for each individual, I used:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/Molecule-stats
+cd <REDACTED_PATH>
 
 cat *.N50_molecule_size.info > summary_N50_molecule_size.info
 cat *.N50_reads_per_mol.info > summary_N50_reads_per_mol.info
@@ -410,14 +410,14 @@ Script `03-molecule-stats.R`
 # Molecule stats haplotagging data
 
 # Set environmental variables
-work_dir <- "~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/analysis/03_read_mapping"
-rpm_file <- "~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/analysis/03_read_mapping/Molecule-stats/merged_reads.per.mol.log.txt"
-#rpm_file <- "~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/analysis/03_read_mapping/Molecule-stats/DC9_8.D68_N704.reads.per.mol.log"
-hist_file <- "~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/analysis/03_read_mapping/Molecule-stats/merged_1kb-bin.molecule.histogram.txt"
-#hist_file <- "~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/analysis/03_read_mapping/Molecule-stats/DC9_8.D68_N704.1kb-bin.molecule.histogram"
-#log_file <- "~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/analysis/03_read_mapping/Molecule-stats/DC9_8.D68_N704_Mol-size_BC_ReadsPerMol_location.log"
-N50_molsize_file <- "~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/analysis/03_read_mapping/Molecule-stats/summary_N50_molecule_size.info"
-N50_readsmol_file <- "~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/analysis/03_read_mapping/Molecule-stats/summary_N50_reads_per_mol.info"
+work_dir <- "<REDACTED_PATH>"
+rpm_file <- "<REDACTED_PATH>"
+#rpm_file <- "<REDACTED_PATH>"
+hist_file <- "<REDACTED_PATH>"
+#hist_file <- "<REDACTED_PATH>"
+#log_file <- "<REDACTED_PATH>"
+N50_molsize_file <- "<REDACTED_PATH>"
+N50_readsmol_file <- "<REDACTED_PATH>"
 
 # Set working directory
 setwd(work_dir)
@@ -546,7 +546,7 @@ ShadHap1        L002    C10     CO067   CO      Illumina        NovaSeq6000
 #!/bin/bash
 
 # Software path
-export PATH=/programs/samtools-1.11/bin:$PATH
+export PATH=<REDACTED_PATH>:$PATH
 
 # Global variables
 INFO_FILES="02-info_files"
@@ -622,7 +622,7 @@ while read i; do
   BARCODE=$(echo $i | cut -d ' ' -f3)
   BAMBASE=$LIBRARY'_'$LANE'_'$BARCODE
 
-  awk '!($4~/A00|B00|C00|D00/)' ${BAMDIR}'/'${BAMBASE}'.dedup.bxsorted.linked_reads.full.bed' > ${BAMDIR}'/'${BAMBASE}'.dedup.bxsorted.linked_reads.full.no00.bed' &
+  awk '!($4<REDACTED_PATH>|B00|C00|D00/)' ${BAMDIR}'/'${BAMBASE}'.dedup.bxsorted.linked_reads.full.bed' > ${BAMDIR}'/'${BAMBASE}'.dedup.bxsorted.linked_reads.full.no00.bed' &
          COUNT=$(( COUNT + 1 ))
        if [ $COUNT == $N_CORE_MAX ]; then
           wait

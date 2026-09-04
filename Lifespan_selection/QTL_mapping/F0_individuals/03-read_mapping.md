@@ -6,9 +6,9 @@
 
 I used these commands:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/00-genome
+cd <REDACTED_PATH>
 
-ln -s /proj/snic2020-6-128/private/a_obtectus_poolseq/00-genome/* .
+ln -s <REDACTED_PATH> .
 ```
 
 ## Setup input files and scripts for read mapping
@@ -17,39 +17,39 @@ I will use the read mapper [bwa](http://bio-bwa.sourceforge.net) to align clean 
 
 - Path to R1 files:
 ```bash
-ls -lh /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/*/*_R1*.gz | awk '{print $9}' > /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/R1_files_bwa.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/R1_files_bwa.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-EL1-F/Sample_VA-3193-EL1-F_R1.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-EL1-M/Sample_VA-3193-EL1-M_R1.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-EL4-F/Sample_VA-3193-EL4-F_R1.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-EL4-M/Sample_VA-3193-EL4-M_R1.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-LE1-F/Sample_VA-3193-LE1-F_R1.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-LE1-M/Sample_VA-3193-LE1-M_R1.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-LE2-F/Sample_VA-3193-LE2-F_R1.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-LE2-M/Sample_VA-3193-LE2-M_R1.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 - Path to R2 files:
 ```bash
-ls -lh /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/*/*_R2*.gz | awk '{print $9}' > /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/R2_files_bwa.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/R2_files_bwa.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-EL1-F/Sample_VA-3193-EL1-F_R2.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-EL1-M/Sample_VA-3193-EL1-M_R2.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-EL4-F/Sample_VA-3193-EL4-F_R2.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-EL4-M/Sample_VA-3193-EL4-M_R2.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-LE1-F/Sample_VA-3193-LE1-F_R2.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-LE1-M/Sample_VA-3193-LE1-M_R2.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-LE2-F/Sample_VA-3193-LE2-F_R2.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/Sample_VA-3193-LE2-M/Sample_VA-3193-LE2-M_R2.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 - Sample names:
 ```bash
-ls -lh /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/*/*.fastq.gz | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f10 | sed 's/_R.*$//' | uniq > /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/sample_IDs_bwa.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f10 | sed 's/_R.*$//' | uniq > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/sample_IDs_bwa.txt
+cat <REDACTED_PATH>
 
 Sample_VA-3193-EL1-F
 Sample_VA-3193-EL1-M
@@ -65,15 +65,15 @@ Script `03-1-read_mapping.sh` that launches 16 separate jobs (one for each sampl
 
 ```bash
 #!/bin/bash
-#SBATCH -A snic2021-22-466
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 8
 #SBATCH -t 4-00:00:00
 #SBATCH -J map_reads
 #SBATCH -e map_reads_%J_%A_%a.err
 #SBATCH -o map_reads_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-8
 
 # Load required software.
@@ -84,13 +84,13 @@ module load picard/2.20.4
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files'
+WORK_DIR='<REDACTED_PATH>'
 R1_FILE='./R1_files_bwa.txt'
 R2_FILE='./R2_files_bwa.txt'
 ID_FILE='./sample_IDs_bwa.txt'
-REF_FILE='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/00-genome/A.obtectus_v2.0.fasta'
+REF_FILE='<REDACTED_PATH>'
 # Programs.
-PICARD_JAR='/sw/apps/bioinfo/picard/2.20.4/rackham/picard.jar'
+PICARD_JAR='<REDACTED_PATH>'
 
 # Directory where the BAM files will be stored.
 cd $WORK_DIR
@@ -146,7 +146,7 @@ cp $SNIC_TMP/${ID_target}.sort.MarkDup.RG.bam.bai $WORK_DIR
 
 # Obtain mapping quality summary statistics.
 module load QualiMap/2.2.1
-unset DISPLAY  # Turn display off to avoid problems with X11 in Uppmax.
+unset DISPLAY  # Turn display off to avoid problems with X11 in <REDACTED_HPC_SITE>.
 
 if [ -d $WORK_DIR/Qualimap_results ]; then echo "Qualimap_results/ exists"; else mkdir $WORK_DIR/Qualimap_results; fi
 
@@ -157,7 +157,7 @@ qualimap --java-mem-size=60G bamqc -bam $SNIC_TMP/${ID_target}.sort.MarkDup.RG.b
 echo -e $(date -u) ": Qualimap ended..."
 
 ```
-Submitted batch job 6228001 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 01-03:56:00**??
 
 
@@ -165,14 +165,14 @@ Submitted batch job 6228001 on cluster snowy
 
 ## Generate a Multiqc report of the qualimap reports
 ```
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/03-bam-files/Qualimap_results
+cd <REDACTED_PATH>
 
 module load bioinfo-tools MultiQC/1.12
 multiqc .
 
 /// MultiQC 🔍 | v1.12
 
-|           multiqc | Search path : /crex/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/Qualimap_results
+|           multiqc | Search path : <REDACTED_PATH>
 |         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 400/400  
 |          qualimap | Found 8 BamQC reports
 |           multiqc | Compressing plot data

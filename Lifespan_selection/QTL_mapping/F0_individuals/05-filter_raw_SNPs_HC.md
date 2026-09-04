@@ -30,8 +30,8 @@ mv OTT_8ind_F0_sentieon.vcf.gz.tbi OTT_8_F0.HC.vcf.gz.tbi
 Script `05-1-extract-SNPS-GATKqual-stats.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A naiss2023-22-508
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core
 #SBATCH -n 2
 #SBATCH -t 20:00:00
@@ -39,7 +39,7 @@ Script `05-1-extract-SNPS-GATKqual-stats.sh`:
 #SBATCH -e filter-rawSNPs1_%J_%A_%a.err
 #SBATCH -o filter-rawSNPs1_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH --mail-type=ALL
 
 # Load required programs.
@@ -51,16 +51,16 @@ module load samtools/1.10
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files'
-REF_PATH='/proj/snic2020-6-128/private/a_obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
+WORK_DIR='<REDACTED_PATH>'
+REF_PATH='<REDACTED_PATH>'
 REF_FILE=$(basename "${REF_PATH}")
-INPUT_PATH='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/OTT_8_F0.HC.vcf.gz'
+INPUT_PATH='<REDACTED_PATH>'
 INPUT_FILE=$(basename "${INPUT_PATH}")
 OUTPUT_PREFFIX='OTT_8_F0.HC'
 
 # Programs.
-GATK_JAR='/sw/apps/bioinfo/GATK/3.8-0/GenomeAnalysisTK.jar'
-R_SCRIPT_PLOTS='/proj/snic2020-6-128/private/a_obtectus_poolseq/users/angela/code/utility-code/05-2-generate-GATK-ANN-plots.R'
+GATK_JAR='<REDACTED_PATH>'
+R_SCRIPT_PLOTS='<REDACTED_PATH>'
 
 # Copy required files to the hard drive of the node in the cluster (SNIC_TMP).
 cp $INPUT_PATH* $SNIC_TMP # With *, the vcf file and its index will be copied.
@@ -111,7 +111,7 @@ cp $SNIC_TMP/$OUTPUT_PREFFIX.SNPs.raw.ANN.table $WORK_DIR
 cp $SNIC_TMP/*.pdf $WORK_DIR
 
 ```
-Submitted batch job 8660356 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-04:16:45**
 
 
@@ -122,8 +122,8 @@ Submitted batch job 8660356 on cluster snowy
 Script `05-2-filter-raw-SNPs.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A naiss2023-22-508
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core
 #SBATCH -n 5
 #SBATCH -t 20:00:00
@@ -131,7 +131,7 @@ Script `05-2-filter-raw-SNPs.sh`:
 #SBATCH -e filter_rawSNPs2_%J_%A_%a.err
 #SBATCH -o filter_rawSNPs2_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH --mail-type=ALL
 
 # Load required programs in computer cluster.
@@ -140,9 +140,9 @@ module load GATK/4.1.4.1
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files'
-REF_FASTA='/proj/snic2020-6-128/private/a_obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
-INPUT_VCF='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/OTT_8_F0.HC.SNPs.raw.vcf.gz'
+WORK_DIR='<REDACTED_PATH>'
+REF_FASTA='<REDACTED_PATH>'
+INPUT_VCF='<REDACTED_PATH>'
 OUTPUT_PREFFIX='OTT_8_F0.HC'
 #REF_FILE=$(basename "${REF_PATH}")
 #INPUT_FILE=$(basename "${INPUT_PATH}")
@@ -202,7 +202,7 @@ tabix -p vcf $OUTPUT_PREFFIX.SNPs.hf.DP3.GQ20.mono.miss20.vcf.gz
 # 2.4) Extract DP field for each variant in the VCF file of filtered SNPs.
 # Programs.
 module load GATK/3.8-0
-GATK_JAR='/sw/apps/bioinfo/GATK/3.8-0/GenomeAnalysisTK.jar'
+GATK_JAR='<REDACTED_PATH>'
 
 java -Djava.io.tmpdir=$SNIC_TMP/tmp -XX:ParallelGCThreads=1 -Dsamjdk.use_async_io=true -Dsamjdk.buffer_size=4194304 -Xmx14G -jar $GATK_JAR \
 -T VariantsToTable \
@@ -227,7 +227,7 @@ echo -e "Number of SNPs in $OUTPUT_PREFFIX.SNPs.hf.DP3.GQ20.mono.miss20.vcf.gz i
 bcftools view -H $OUTPUT_PREFFIX.SNPs.hf.DP3.GQ20.mono.miss20.vcf.gz | wc -l
 
 ```
-Submitted batch job 8660431 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-01:03:38**
 
 **SNPs retained after each filter**
@@ -270,7 +270,7 @@ Script `05x-filter-SNP-DPperSample_v3.R` (run locally):
 #                                                                   #
 # Created by: Angela Fuentes-Pardo, inspired by code from           #
 # Mats Petterson and Dmytro Kryvokhyzha                             #
-# E-mail: apfuentesp@gmail.com, Uppsala University                  #
+# E-mail: <REDACTED_EMAIL>, Uppsala University                  #
 # Date: 2020-02-27, update: 2020-05-18                              #
 #                                                                   #
 #####################################################################
@@ -283,16 +283,16 @@ rm(list=ls())
 #cat(args, sep='\n')
 
 ## Assign these arguments to R objects.
-#working_dir <- args[1]  # /proj/snic2020-16-14/private/HorseMackerel/data/05-VCF-files
-#input_file <- args[2]   # /proj/snic2020-16-14/private/HorseMackerel/data/05-VCF-files/HOM_12_pools.SNPs.hf.vcf.DP.table
+#working_dir <- args[1]  # <REDACTED_PATH>
+#input_file <- args[2]   # <REDACTED_PATH>
 #outputName <- args[3]  # minus6a-6b-7
 #samples_to_remove <- strsplit(args[4],',')[[1]]  # 6a_Northern_Portugal_2017,6b_Southern_Portugal_2017,7_NorthAfrica_Mauritania_2016
 #type <- args[5]  # mode or mean
 
 ## For debugging.
-working_dir <- '~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/parentals/analysis/05-snp-filtering'
-#input_file <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/analysis/05-filter_raw_SNPs/per_pool_DP_10lines.txt'
-input_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/parentals/analysis/05-snp-filtering/OTT_8_F0.HC.SNPs.hf.DP3.GQ20.mono.miss20.DP.table'
+working_dir <- '<REDACTED_PATH>'
+#input_file <- '<REDACTED_PATH>'
+input_file <- '<REDACTED_PATH>'
 library(tools)
 filename <- file_path_sans_ext(basename(input_file))
 #samples_to_remove <- strsplit('IBC-S,NTS-F', split=',')[[1]]
@@ -465,8 +465,8 @@ tabix herring_sentieon_91ind_190521.SV.VF.F2.maxDPtriple.setGT.inv.vcf.gz
 
 ```bash
 #!/bin/bash
-#SBATCH -A naiss2023-22-508
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core
 #SBATCH -n 5
 #SBATCH -t 20:00:00
@@ -474,7 +474,7 @@ tabix herring_sentieon_91ind_190521.SV.VF.F2.maxDPtriple.setGT.inv.vcf.gz
 #SBATCH -e filter_rawSNPs2_%J_%A_%a.err
 #SBATCH -o filter_rawSNPs2_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH --mail-type=ALL
 
 # Load required programs in computer cluster.
@@ -483,9 +483,9 @@ module load GATK/4.1.4.1
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files'
-REF_FASTA='/proj/snic2020-6-128/private/a_obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
-INPUT_VCF='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/OTT_8_F0.HC.SNPs.raw.vcf.gz'
+WORK_DIR='<REDACTED_PATH>'
+REF_FASTA='<REDACTED_PATH>'
+INPUT_VCF='<REDACTED_PATH>'
 OUTPUT_PREFFIX='OTT_8_F0.HC'
 #REF_FILE=$(basename "${REF_PATH}")
 #INPUT_FILE=$(basename "${INPUT_PATH}")
@@ -519,9 +519,9 @@ tabix $OUTPUT_PREFFIX..SNPs.hf.DP3.GQ20.mono.miss20.max3MDP.vcf.gz
 
 List of SNPs resulting in each filter, `list_SNPs_passed_filters.txt`:
 ```bash
-ls List* | awk '{print $9}' > /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/list_SNPs_passed_filters.txt
+ls List* | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/list_SNPs_passed_filters.txt
+cat <REDACTED_PATH>
 
 List_SNPs_passed_DPfilter.Mean1SD.OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.DP.OTT_16_pools.txt
 List_SNPs_passed_DPfilter.Mode1halfMode.OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.DP.OTT_16_pools.txt
@@ -539,15 +539,15 @@ OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99
 Script to apply the DP filter in the 3 datasets in parallel, `05-3-apply-DP-filter.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2020-5-94
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 4
 #SBATCH -t 20:00:00
 #SBATCH -J apply_DPfilter
 #SBATCH -e apply_DPfilter_%J_%A_%a.err
 #SBATCH -o apply_DPfilter_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH --mail-type=ALL
 #SBATCH -a 1-3
 
@@ -560,8 +560,8 @@ module load zlib/1.2.11
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files'
-INPUT_FILE='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.vcf.gz'
+WORK_DIR='<REDACTED_PATH>'
+INPUT_FILE='<REDACTED_PATH>'
 SNP_LIST='./list_SNPs_passed_filters.txt'
 OUTPUT_PREFFIX='./list_output_filenames.txt'
 
@@ -594,7 +594,7 @@ echo -e "Number of SNPs in $OUTFILE_target.vcf.gz is":
 bcftools view -H $OUTFILE_target.vcf.gz | wc -l
 
 ```
-Submitted batch job 4350740 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-00:28:00**
 
 STDOUT of vcftools:
@@ -603,7 +603,7 @@ VCFtools - 0.1.15
 (C) Adam Auton and Anthony Marcketta 2009
 
 Parameters as interpreted:
-	--gzvcf /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.vcf.gz
+	--gzvcf <REDACTED_PATH>
 	--recode-INFO-all
 	--positions OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.filtered_SNPs.list
 	--recode
@@ -620,7 +620,7 @@ VCFtools - 0.1.15
 (C) Adam Auton and Anthony Marcketta 2009
 
 Parameters as interpreted:
-	--gzvcf /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.vcf.gz
+	--gzvcf <REDACTED_PATH>
 	--recode-INFO-all
 	--positions OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.DPMean1SD.filtered_SNPs.list
 	--recode
@@ -637,7 +637,7 @@ VCFtools - 0.1.15
 (C) Adam Auton and Anthony Marcketta 2009
 
 Parameters as interpreted:
-	--gzvcf /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.vcf.gz
+	--gzvcf <REDACTED_PATH>
 	--recode-INFO-all
 	--positions OTT_8_F0.HC.SNPs.hf.GQ20.mono.miss20.mac3.DPMode1half.filtered_SNPs.list
 	--recode

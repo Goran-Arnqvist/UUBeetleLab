@@ -6,136 +6,136 @@ Pools were sequenced in 8 lanes, but there were *16 "true" samples* (8 selection
 
 Create symlinks to raw data:
 ```bash
-cd /proj/snic2020-16-14/private/Beetles/data/01-raw-reads/unmerged
+cd <REDACTED_PATH>
 
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-F/EI-F_S9_L005_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-F/EI-F_S9_L005_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-F/EI-F_S9_L006_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-F/EI-F_S9_L006_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-F/EI-F_S9_L007_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-F/EI-F_S9_L007_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-F/EI-F_S9_L008_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-F/EI-F_S9_L008_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-M/EI-M_S1_L001_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-M/EI-M_S1_L001_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-M/EI-M_S1_L002_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-M/EI-M_S1_L002_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-M/EI-M_S1_L003_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-M/EI-M_S1_L003_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-M/EI-M_S1_L004_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EI-M/EI-M_S1_L004_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-F/EII-F_S11_L005_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-F/EII-F_S11_L005_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-F/EII-F_S11_L006_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-F/EII-F_S11_L006_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-F/EII-F_S11_L007_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-F/EII-F_S11_L007_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-F/EII-F_S11_L008_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-F/EII-F_S11_L008_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-M/EII-M_S3_L001_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-M/EII-M_S3_L001_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-M/EII-M_S3_L002_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-M/EII-M_S3_L002_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-M/EII-M_S3_L003_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-M/EII-M_S3_L003_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-M/EII-M_S3_L004_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EII-M/EII-M_S3_L004_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-F/EIII-F_S13_L005_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-F/EIII-F_S13_L005_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-F/EIII-F_S13_L006_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-F/EIII-F_S13_L006_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-F/EIII-F_S13_L007_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-F/EIII-F_S13_L007_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-F/EIII-F_S13_L008_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-F/EIII-F_S13_L008_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-M/EIII-M_S5_L001_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-M/EIII-M_S5_L001_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-M/EIII-M_S5_L002_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-M/EIII-M_S5_L002_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-M/EIII-M_S5_L003_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-M/EIII-M_S5_L003_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-M/EIII-M_S5_L004_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIII-M/EIII-M_S5_L004_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-F/EIV-F_S15_L005_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-F/EIV-F_S15_L005_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-F/EIV-F_S15_L006_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-F/EIV-F_S15_L006_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-F/EIV-F_S15_L007_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-F/EIV-F_S15_L007_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-F/EIV-F_S15_L008_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-F/EIV-F_S15_L008_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-M/EIV-M_S7_L001_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-M/EIV-M_S7_L001_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-M/EIV-M_S7_L002_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-M/EIV-M_S7_L002_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-M/EIV-M_S7_L003_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-M/EIV-M_S7_L003_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-M/EIV-M_S7_L004_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_EIV-M/EIV-M_S7_L004_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-F/LV-F_S10_L005_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-F/LV-F_S10_L005_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-F/LV-F_S10_L006_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-F/LV-F_S10_L006_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-F/LV-F_S10_L007_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-F/LV-F_S10_L007_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-F/LV-F_S10_L008_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-F/LV-F_S10_L008_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-M/LV-M_S2_L001_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-M/LV-M_S2_L001_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-M/LV-M_S2_L002_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-M/LV-M_S2_L002_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-M/LV-M_S2_L003_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-M/LV-M_S2_L003_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-M/LV-M_S2_L004_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LV-M/LV-M_S2_L004_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-F/LVI-F_S12_L005_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-F/LVI-F_S12_L005_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-F/LVI-F_S12_L006_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-F/LVI-F_S12_L006_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-F/LVI-F_S12_L007_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-F/LVI-F_S12_L007_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-F/LVI-F_S12_L008_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-F/LVI-F_S12_L008_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-M/LVI-M_S4_L001_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-M/LVI-M_S4_L001_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-M/LVI-M_S4_L002_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-M/LVI-M_S4_L002_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-M/LVI-M_S4_L003_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-M/LVI-M_S4_L003_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-M/LVI-M_S4_L004_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVI-M/LVI-M_S4_L004_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-F/LVII-F_S14_L005_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-F/LVII-F_S14_L005_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-F/LVII-F_S14_L006_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-F/LVII-F_S14_L006_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-F/LVII-F_S14_L007_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-F/LVII-F_S14_L007_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-F/LVII-F_S14_L008_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-F/LVII-F_S14_L008_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-M/LVII-M_S6_L001_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-M/LVII-M_S6_L001_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-M/LVII-M_S6_L002_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-M/LVII-M_S6_L002_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-M/LVII-M_S6_L003_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-M/LVII-M_S6_L003_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-M/LVII-M_S6_L004_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVII-M/LVII-M_S6_L004_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-F/LVIII-F_S16_L005_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-F/LVIII-F_S16_L005_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-F/LVIII-F_S16_L006_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-F/LVIII-F_S16_L006_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-F/LVIII-F_S16_L007_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-F/LVIII-F_S16_L007_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-F/LVIII-F_S16_L008_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-F/LVIII-F_S16_L008_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-M/LVIII-M_S8_L001_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-M/LVIII-M_S8_L001_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-M/LVIII-M_S8_L002_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-M/LVIII-M_S8_L002_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-M/LVIII-M_S8_L003_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-M/LVIII-M_S8_L003_R2_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-M/LVIII-M_S8_L004_R1_001.fastq.gz .
-ln -s /crex/proj/uppstore2017218/b2017004/INBOX/170412_D00457_0187_BCALMKANXX/Sample_LVIII-M/LVIII-M_S8_L004_R2_001.fastq.gz .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
+ln -s <REDACTED_PATH> .
 
 ```
 Verify the number of files is correct:
@@ -147,7 +147,7 @@ Concatenate reads per sample using the script `01-merge-raw-reads-per-pool.sh`:
 ```bash
 #!/bin/bash
 
-cd /proj/snic2020-16-14/private/Beetles/data/01-raw-reads
+cd <REDACTED_PATH>
 
 cat unmerged/EI-F_S9_L005_R1_001.fastq.gz unmerged/EI-F_S9_L006_R1_001.fastq.gz unmerged/EI-F_S9_L007_R1_001.fastq.gz unmerged/EI-F_S9_L008_R1_001.fastq.gz > EI-F_S9_L005-8_R1_001.fastq.gz
 cat unmerged/EI-F_S9_L005_R2_001.fastq.gz unmerged/EI-F_S9_L006_R2_001.fastq.gz unmerged/EI-F_S9_L007_R2_001.fastq.gz unmerged/EI-F_S9_L008_R2_001.fastq.gz > EI-F_S9_L005-8_R2_001.fastq.gz
@@ -186,44 +186,44 @@ cat unmerged/LVIII-M_S8_L001_R2_001.fastq.gz unmerged/LVIII-M_S8_L002_R2_001.fas
 ```
 Verify the merged fastq files were generated:
 ```bash
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads$ ls
+<REDACTED_PATH> ls
 
 total 410G
--rw-rw-r-- 1 angela snic2020-16-14  12G Jun  9 12:17 EI-F_S9_L005-8_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  12G Jun  9 12:17 EI-F_S9_L005-8_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  13G Jun  9 15:26 EII-F_S11_L005-8_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  13G Jun  9 15:28 EII-F_S11_L005-8_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  14G Jun  9 12:22 EIII-F_S13_L005-8_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  15G Jun  9 12:23 EIII-F_S13_L005-8_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  11G Jun  9 12:24 EIII-M_S5_L001-4_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  11G Jun  9 12:24 EIII-M_S5_L001-4_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14 9.9G Jun  9 12:21 EII-M_S3_L001-4_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14 9.7G Jun  9 12:21 EII-M_S3_L001-4_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  13G Jun  9 12:18 EI-M_S1_L001-4_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  13G Jun  9 12:19 EI-M_S1_L001-4_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  11G Jun  9 12:25 EIV-F_S15_L005-8_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  11G Jun  9 12:25 EIV-F_S15_L005-8_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  11G Jun  9 12:26 EIV-M_S7_L001-4_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  12G Jun  9 12:26 EIV-M_S7_L001-4_R2_001.fastq.gz
-drwxrwsr-x 2 angela snic2020-16-14 4.0K Jun  9 15:07 FastQC/
--rw-rw-r-- 1 angela snic2020-16-14 2.6K Jun  9 15:11 fastq_files.txt
--rw-rw-r-- 1 angela snic2020-16-14  13G Jun  9 12:27 LV-F_S10_L005-8_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  13G Jun  9 12:28 LV-F_S10_L005-8_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  13G Jun  9 12:30 LVI-F_S12_L005-8_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  13G Jun  9 12:31 LVI-F_S12_L005-8_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  16G Jun  9 12:33 LVII-F_S14_L005-8_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  16G Jun  9 12:34 LVII-F_S14_L005-8_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  17G Jun  9 12:36 LVIII-F_S16_L005-8_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  17G Jun  9 12:37 LVIII-F_S16_L005-8_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  18G Jun  9 12:38 LVIII-M_S8_L001-4_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  18G Jun  9 12:39 LVIII-M_S8_L001-4_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  14G Jun  9 12:34 LVII-M_S6_L001-4_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  14G Jun  9 12:35 LVII-M_S6_L001-4_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  14G Jun  9 12:31 LVI-M_S4_L001-4_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  14G Jun  9 12:32 LVI-M_S4_L001-4_R2_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  11G Jun  9 12:28 LV-M_S2_L001-4_R1_001.fastq.gz
--rw-rw-r-- 1 angela snic2020-16-14  11G Jun  9 12:29 LV-M_S2_L001-4_R2_001.fastq.gz
-drwxrwsr-x 2 angela snic2020-16-14  12K Jun  9 15:25 unmerged/
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  12G Jun  9 12:17 EI-F_S9_L005-8_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  12G Jun  9 12:17 EI-F_S9_L005-8_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  13G Jun  9 15:26 EII-F_S11_L005-8_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  13G Jun  9 15:28 EII-F_S11_L005-8_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  14G Jun  9 12:22 EIII-F_S13_L005-8_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  15G Jun  9 12:23 EIII-F_S13_L005-8_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  11G Jun  9 12:24 EIII-M_S5_L001-4_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  11G Jun  9 12:24 EIII-M_S5_L001-4_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE> 9.9G Jun  9 12:21 EII-M_S3_L001-4_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE> 9.7G Jun  9 12:21 EII-M_S3_L001-4_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  13G Jun  9 12:18 EI-M_S1_L001-4_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  13G Jun  9 12:19 EI-M_S1_L001-4_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  11G Jun  9 12:25 EIV-F_S15_L005-8_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  11G Jun  9 12:25 EIV-F_S15_L005-8_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  11G Jun  9 12:26 EIV-M_S7_L001-4_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  12G Jun  9 12:26 EIV-M_S7_L001-4_R2_001.fastq.gz
+drwxrwsr-x 2 angela <REDACTED_PROJECT_CODE> 4.0K Jun  9 15:07 FastQC/
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE> 2.6K Jun  9 15:11 fastq_files.txt
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  13G Jun  9 12:27 LV-F_S10_L005-8_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  13G Jun  9 12:28 LV-F_S10_L005-8_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  13G Jun  9 12:30 LVI-F_S12_L005-8_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  13G Jun  9 12:31 LVI-F_S12_L005-8_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  16G Jun  9 12:33 LVII-F_S14_L005-8_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  16G Jun  9 12:34 LVII-F_S14_L005-8_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  17G Jun  9 12:36 LVIII-F_S16_L005-8_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  17G Jun  9 12:37 LVIII-F_S16_L005-8_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  18G Jun  9 12:38 LVIII-M_S8_L001-4_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  18G Jun  9 12:39 LVIII-M_S8_L001-4_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  14G Jun  9 12:34 LVII-M_S6_L001-4_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  14G Jun  9 12:35 LVII-M_S6_L001-4_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  14G Jun  9 12:31 LVI-M_S4_L001-4_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  14G Jun  9 12:32 LVI-M_S4_L001-4_R2_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  11G Jun  9 12:28 LV-M_S2_L001-4_R1_001.fastq.gz
+-rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE>  11G Jun  9 12:29 LV-M_S2_L001-4_R2_001.fastq.gz
+drwxrwsr-x 2 angela <REDACTED_PROJECT_CODE>  12K Jun  9 15:25 unmerged/
 
 ```
 
@@ -231,54 +231,54 @@ drwxrwsr-x 2 angela snic2020-16-14  12K Jun  9 15:25 unmerged/
 
 Input file `fastq_files.txt`:
 ```bash
-ls -lh /proj/snic2020-16-14/private/Beetles/data/01-raw-reads | grep ".fastq.gz$" | awk '{print "/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/"$9}' > /proj/snic2020-16-14/private/Beetles/data/01-raw-reads/fastq_files.txt
+ls -lh <REDACTED_PATH> | grep ".fastq.gz$" | awk '{print "<REDACTED_PATH>"$9}' > <REDACTED_PATH>
 
 cat fastq_files.txt
 
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EI-F_S9_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EI-F_S9_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EII-F_S11_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EII-F_S11_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIII-F_S13_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIII-F_S13_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIII-M_S5_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIII-M_S5_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EII-M_S3_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EII-M_S3_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EI-M_S1_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EI-M_S1_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIV-F_S15_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIV-F_S15_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIV-M_S7_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIV-M_S7_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LV-F_S10_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LV-F_S10_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVI-F_S12_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVI-F_S12_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVII-F_S14_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVII-F_S14_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVIII-F_S16_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVIII-F_S16_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVIII-M_S8_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVIII-M_S8_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVII-M_S6_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVII-M_S6_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVI-M_S4_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVI-M_S4_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LV-M_S2_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LV-M_S2_L001-4_R2_001.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 I created a directory for the FastQC results, `mkdir FastQC_results`. The I run the script `01-raw-reads-qc.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2017-7-378
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 1
 #SBATCH -t 5:00:00
 #SBATCH -J raw-reads-qc
 #SBATCH -e raw-reads-qc_%J_%A_%a.err
 #SBATCH -o raw-reads-qc_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-32
 
 # Load modules.
@@ -286,9 +286,9 @@ module load bioinfo-tools
 module load FastQC/0.11.8
 
 # Set environment variables.
-WORK_DIR='/proj/snic2020-16-14/private/Beetles/data/01-raw-reads'
+WORK_DIR='<REDACTED_PATH>'
 SAMPLES_FILE='./fastq_files.txt'
-OUTPUT_DIR='/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/FastQC_results'
+OUTPUT_DIR='<REDACTED_PATH>'
 
 cd $WORK_DIR
 
@@ -301,12 +301,12 @@ echo -e This is the output file dir: ${OUTPUT_DIR}
 fastqc ${SAMPLE_target} -o ${OUTPUT_DIR}
 
 ```
-Submitted batch job 14625692
+Submitted batch job <REDACTED_JOB_ID>
 **Runtime: 00-00:38:00**
 
 Obtain a single FastQC report for all samples using MultiQC:
 ```bash
-cd /proj/snic2020-16-14/private/Beetles/data/01-raw-reads/FastQC_results
+cd <REDACTED_PATH>
 
 module load bioinfo-tools MultiQC/1.9
 multiqc .
@@ -315,7 +315,7 @@ Stdout:
 ```bash
 [INFO   ]         multiqc : This is MultiQC v1.9
 [INFO   ]         multiqc : Template    : default
-[INFO   ]         multiqc : Searching   : /crex/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/FastQC_results
+[INFO   ]         multiqc : Searching   : <REDACTED_PATH>
 Searching 64 files..  [####################################]  100%             
 [INFO   ]          fastqc : Found 32 reports
 [INFO   ]         multiqc : Compressing plot data

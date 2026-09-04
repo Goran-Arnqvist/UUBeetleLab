@@ -276,8 +276,8 @@ CTGTCTCTTATACACATCT
 ```
 Copy the file `adapters.fa` to the desired directory (where clean reads will be stored):
 ```bash
-cd /proj/snic2020-16-14/private/Beetles/data/02-clean-reads
-cp /proj/uppstore2017191/b2017031_nobackup/private/Transcriptome_Data/Salinity/Trimmed-reads/Sample_HAS-9F-BSH/adapters.fa .
+cd <REDACTED_PATH>
+cp <REDACTED_PATH> .
 ```
 Create a directory for the FastQC results:
 ```bash
@@ -287,58 +287,58 @@ mkdir FastQC_results
 Create input files:
 - R1 files:
 ```bash
-cd /proj/snic2020-16-14/private/Beetles/data/02-clean-reads
+cd <REDACTED_PATH>
 
-ls -lh /proj/snic2020-16-14/private/Beetles/data/01-raw-reads/*_R1_* | awk '{print $9}' > /proj/snic2020-16-14/private/Beetles/data/02-clean-reads/R1_files.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-16-14/private/Beetles/data/02-clean-reads/R1_files.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EI-F_S9_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EII-F_S11_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIII-F_S13_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIII-M_S5_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EII-M_S3_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EI-M_S1_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIV-F_S15_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIV-M_S7_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LV-F_S10_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVI-F_S12_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVII-F_S14_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVIII-F_S16_L005-8_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVIII-M_S8_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVII-M_S6_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVI-M_S4_L001-4_R1_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LV-M_S2_L001-4_R1_001.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 - R2 files:
 ```bash
-ls -lh /proj/snic2020-16-14/private/Beetles/data/01-raw-reads/*_R2_* | awk '{print $9}' > /proj/snic2020-16-14/private/Beetles/data/02-clean-reads/R2_files.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-16-14/private/Beetles/data/02-clean-reads/R2_files.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EI-F_S9_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EII-F_S11_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIII-F_S13_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIII-M_S5_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EII-M_S3_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EI-M_S1_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIV-F_S15_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/EIV-M_S7_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LV-F_S10_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVI-F_S12_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVII-F_S14_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVIII-F_S16_L005-8_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVIII-M_S8_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVII-M_S6_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LVI-M_S4_L001-4_R2_001.fastq.gz
-/proj/snic2020-16-14/private/Beetles/data/01-raw-reads/LV-M_S2_L001-4_R2_001.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 
 ```
 - Sample subdirectory:
 ```bash
-ls -lh /proj/snic2020-16-14/private/Beetles/data/01-raw-reads/*.fastq.gz | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f8 | sed 's/_S.*$//' | uniq > /proj/snic2020-16-14/private/Beetles/data/02-clean-reads/sample_subDir.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f8 | sed 's/_S.*$//' | uniq > <REDACTED_PATH>
 
-cat /proj/snic2020-16-14/private/Beetles/data/02-clean-reads/sample_subDir.txt
+cat <REDACTED_PATH>
 
 EI-F
 EII-F
@@ -360,9 +360,9 @@ LV-M
 
 - Sample IDs:
 ```bash
-ls -lh /proj/snic2020-16-14/private/Beetles/data/01-raw-reads/*.fastq.gz | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f8 | sed 's/_S.*$//' | uniq > /proj/snic2020-16-14/private/Beetles/data/02-clean-reads/sample_IDs.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f8 | sed 's/_S.*$//' | uniq > <REDACTED_PATH>
 
-cat /proj/snic2020-16-14/private/Beetles/data/02-clean-reads/sample_IDs.txt
+cat <REDACTED_PATH>
 
 EI-F
 EII-F
@@ -388,14 +388,14 @@ LV-M
 Script `02-trim_raw_reads-PE.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2017-7-378
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 6
 #SBATCH -t 2-00:00:00
 #SBATCH -J trim_raw_reads
 #SBATCH -e trim_raw_reads_%J_%A_%a.err
 #SBATCH -o trim_raw_reads_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-16
 
 # Load libraries.
@@ -405,14 +405,14 @@ module load FastQC/0.11.8
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-16-14/private/Beetles/data/02-clean-reads'
+WORK_DIR='<REDACTED_PATH>'
 R1_FILE='./R1_files.txt'
 R2_FILE='./R2_files.txt'
 OUTPUT_SUBDIR='./sample_subDir.txt'
 ID_FILE='./sample_IDs.txt'
 ADAPTERS_FILE='./adapters.fa'
 # Programs:
-TRIMMO_JAR='/sw/apps/bioinfo/trimmomatic/0.36/rackham/trimmomatic-0.36.jar'
+TRIMMO_JAR='<REDACTED_PATH>'
 
 # Go to the working directory where all these files are located.
 cd $WORK_DIR
@@ -447,7 +447,7 @@ if [ -d ${WORK_DIR}/FastQC_results ]; then echo "Dir /WORK_DIR/FastQC_results ex
 fastqc -t 6 ${WORK_DIR}/${SUBDIR_target}/${ID_target}_R1.fastq.gz ${WORK_DIR}/${SUBDIR_target}/${ID_target}_R2.fastq.gz -o ${WORK_DIR}/FastQC_results
 
 ```
-Submitted batch job 14626038
+Submitted batch job <REDACTED_JOB_ID>
 **Runtime: 00-06:40:00**
 
 The 16 files were processed correctly, I made the mistake to launch a job array for 32 instead of 16 individuals jobs. This explains the "failure" of the jobs 17 to 32.
@@ -456,7 +456,7 @@ The 16 files were processed correctly, I made the mistake to launch a job array 
 ## 2020-06-11
 Obtain a single FastQC report for all samples using MultiQC:
 ```bash
-cd /proj/snic2020-16-14/private/Beetles/data/02-clean-reads/FastQC_results
+cd <REDACTED_PATH>
 
 module load bioinfo-tools MultiQC/1.9
 multiqc .
@@ -465,7 +465,7 @@ Stdout:
 ```
 [INFO   ]         multiqc : This is MultiQC v1.9
 [INFO   ]         multiqc : Template    : default
-[INFO   ]         multiqc : Searching   : /crex/proj/snic2020-16-14/private/Beetles/data/02-clean-reads/FastQC_results
+[INFO   ]         multiqc : Searching   : <REDACTED_PATH>
 Searching 64 files..  [####################################]  100%             
 [INFO   ]          fastqc : Found 32 reports
 [INFO   ]         multiqc : Compressing plot data
@@ -477,10 +477,10 @@ Searching 64 files..  [####################################]  100%
 **Comments**
 Good sequence data. % Duplicate reads is about 24% (normal), GC content is 35%, and each sample has ~120 million reads. Read length between 36 and 126 bp.
 The Illumina adapters and low quality bases were removed successfully:
-![adapter content](/Users/angfu103/Dropbox/PostDoc_UU/Projects/Beettles/analysis/02-trim-raw-reads/multiqc_data/fastqc_adapter_content_plot.png)
+![adapter content](<REDACTED_PATH>)
 
 Still remain though, a slight overrepresentation of sequences that represent about 1% of the total and do not correspond to Illumina adapters:
-![overrepresented seqs](/Users/angfu103/Dropbox/PostDoc_UU/Projects/Beettles/analysis/02-trim-raw-reads/multiqc_data/fastqc_overrepresented_sequencesi_plot.png)
+![overrepresented seqs](<REDACTED_PATH>)
 
 Here an example of these sequences for sample EI-F:
 ```bash
@@ -524,6 +524,6 @@ ACGATTTATTACGATTTATTACGATTTATTACGATTTATTACGATTTATT	127020	0.10170656603561833	No
 
 These sequences most likely correspond to microsatellite repeats. Indeed, a quick search with [Microsatellite Finder](http://insilico.ehu.es/mini_tools/microsatellites/) confirmed this observation:
 
-![strs1](/Users/angfu103/Dropbox/PostDoc_UU/Projects/Beettles/analysis/02-trim-raw-reads/multiqc_data/strfinder_search.png)
-![strs2](/Users/angfu103/Dropbox/PostDoc_UU/Projects/Beettles/analysis/02-trim-raw-reads/multiqc_data/strs-R1.png)
-![strs3](/Users/angfu103/Dropbox/PostDoc_UU/Projects/Beettles/analysis/02-trim-raw-reads/multiqc_data/strs-R2.png)
+![strs1](<REDACTED_PATH>)
+![strs2](<REDACTED_PATH>)
+![strs3](<REDACTED_PATH>)
