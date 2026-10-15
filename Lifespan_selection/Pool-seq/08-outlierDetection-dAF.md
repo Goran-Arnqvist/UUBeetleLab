@@ -288,7 +288,7 @@ getClosestGene2SNPs <- function(SNPfile = NULL, SNPdf = NULL, GTFfile = NULL, wi
 
   # For debugging.
   # Original GTF file from Ensembl, without gene symbols
-  #gtf_file <- 'Dropbox/PostDoc_UU/Projects/Herring/genome/Clupea_harengus.Ch_v2.0.2.96.gtf'
+  #gtf_file <- '<REDACTED_PATH>/Clupea_harengus.Ch_v2.0.2.96.gtf'
   # GTF file with gene symbols
   #GTFfile <- '<REDACTED_PATH>'
   #SNPfile <- '<REDACTED_PATH>'

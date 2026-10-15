@@ -187,23 +187,23 @@ Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 Files generated:
 ```bash
 total 1.6T
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  47G Sep 28 02:22 VF-3324-BeetleA_S120_L004_tag.bam
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 3.5M Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.bai
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  31G Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.bam
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 4.0K Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.metrics
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  29G Sep 28 03:38 VF-3324-BeetleA_S120_L004_tag.sorted.bam
-drwxrwsr-x  2 angela <REDACTED_PROJECT_CODE>  28K Sep 28 03:38 VF-3324-BeetleA_S120_L004_tag.tmpsort/
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  53G Sep 29 04:39 VF-3324-BeetleB_S121_L004_tag.bam
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 3.6M Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.bai
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  35G Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.bam
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 3.9K Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.metrics
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  32G Sep 29 06:08 VF-3324-BeetleB_S121_L004_tag.sorted.bam
-drwxrwsr-x  2 angela <REDACTED_PROJECT_CODE>  32K Sep 29 06:08 VF-3324-BeetleB_S121_L004_tag.tmpsort/
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  49G Sep 28 03:14 VF-3324-BeetleC_S122_L004_tag.bam
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 3.5M Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.bai
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  32G Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.bam
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE> 4.0K Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.metrics
--rw-rw-r--  1 angela <REDACTED_PROJECT_CODE>  30G Sep 28 04:43 VF-3324-BeetleC_S122_L004_tag.sorted.bam
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE>  47G Sep 28 02:22 VF-3324-BeetleA_S120_L004_tag.bam
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE> 3.5M Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.bai
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE>  31G Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.bam
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE> 4.0K Sep 28 07:31 VF-3324-BeetleA_S120_L004_tag.pMarkdup.metrics
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE>  29G Sep 28 03:38 VF-3324-BeetleA_S120_L004_tag.sorted.bam
+drwxrwsr-x  2 <REDACTED_USER> <REDACTED_PROJECT_CODE>  28K Sep 28 03:38 VF-3324-BeetleA_S120_L004_tag.tmpsort/
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE>  53G Sep 29 04:39 VF-3324-BeetleB_S121_L004_tag.bam
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE> 3.6M Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.bai
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE>  35G Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.bam
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE> 3.9K Sep 29 10:11 VF-3324-BeetleB_S121_L004_tag.pMarkdup.metrics
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE>  32G Sep 29 06:08 VF-3324-BeetleB_S121_L004_tag.sorted.bam
+drwxrwsr-x  2 <REDACTED_USER> <REDACTED_PROJECT_CODE>  32K Sep 29 06:08 VF-3324-BeetleB_S121_L004_tag.tmpsort/
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE>  49G Sep 28 03:14 VF-3324-BeetleC_S122_L004_tag.bam
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE> 3.5M Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.bai
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE>  32G Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.bam
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE> 4.0K Sep 28 08:36 VF-3324-BeetleC_S122_L004_tag.pMarkdup.metrics
+-rw-rw-r--  1 <REDACTED_USER> <REDACTED_PROJECT_CODE>  30G Sep 28 04:43 VF-3324-BeetleC_S122_L004_tag.sorted.bam
 ```
 
 
@@ -499,7 +499,7 @@ mv: cannot stat ‘D01-N704.bam.bai’: No such file or directory
 I confirmed the bam file exists but not the index file:
 ```bash
 ll *D01_N704*
--rw-rw-r-- 1 angela <REDACTED_PROJECT_CODE> 1.3M Sep 29 20:30 DC12_2.D01_N704.bam
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_PROJECT_CODE> 1.3M Sep 29 20:30 DC12_2.D01_N704.bam
 ```
 Very tiny file, maybe this explains why there is not index file, I will continue with the read map stats.
 

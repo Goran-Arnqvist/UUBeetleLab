@@ -92,9 +92,9 @@ Before running these scripts in <REDACTED_HPC_SITE>, it is necessary to verify w
 
 1. Upload to <REDACTED_HPC_SITE> the three directories provided by Marek to a single directory called `scripts/`:
 ```bash
-drwx------ 2 angela <REDACTED_PROJECT_CODE> 4.0K Sep 14 12:57 demult_fastq_vX/
-drwx------ 2 angela <REDACTED_PROJECT_CODE> 4.0K Sep 14 11:16 demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping/
-drwx------ 2 angela <REDACTED_PROJECT_CODE> 4.0K Sep 14 11:16 vX_R2_clipping_postTag/
+drwx------ 2 <REDACTED_USER> <REDACTED_PROJECT_CODE> 4.0K Sep 14 12:57 demult_fastq_vX/
+drwx------ 2 <REDACTED_USER> <REDACTED_PROJECT_CODE> 4.0K Sep 14 11:16 demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping/
+drwx------ 2 <REDACTED_USER> <REDACTED_PROJECT_CODE> 4.0K Sep 14 11:16 vX_R2_clipping_postTag/
 ```
 I changed the executable permissions of the `*.o` and `*.cpp` files with `chmod +x <filename>`
 ```bash
@@ -126,17 +126,17 @@ These files were generated:
 ```bash
 <REDACTED_PATH> ls
 total 6.6G
--rw-rw-r-- 1 angela angela 1.2K Jun  9 15:12 BC_A_VX.txt
--rw-rw-r-- 1 angela angela 1.1K Jun  9 15:12 BC_B.txt
--rw-rw-r-- 1 angela angela 1.1K Jun  9 15:12 BC_C_VX.txt
--rw-rw-r-- 1 angela angela 1.1K Jun  9 15:12 BC_D.txt
--rw-rw-r-- 1 angela angela   42 Jun  9 15:12 BC_ME.txt
--rwxrwxr-x 1 angela angela  11K Jun  9 15:13 demult_fastq_VX.cpp*
--rwxrwxr-x 1 angela angela  81K Jun  9 15:13 demult_fastq_VX.o*
--rw-rw-r-- 1 angela angela    0 Sep 14 12:57 VF-3324-BeetleA_S120_L004_tag_clearBC.log
--rw-rw-r-- 1 angela angela 3.4G Sep 14 15:09 VF-3324-BeetleA_S120_L004_tag_R1_001.fastq.gz
--rw-rw-r-- 1 angela angela 3.3G Sep 14 15:09 VF-3324-BeetleA_S120_L004_tag_R2_001.fastq.gz
--rw-rw-r-- 1 angela angela    0 Sep 14 12:57 VF-3324-BeetleA_S120_L004_tag_unclearBC.log
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 1.2K Jun  9 15:12 BC_A_VX.txt
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 1.1K Jun  9 15:12 BC_B.txt
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 1.1K Jun  9 15:12 BC_C_VX.txt
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 1.1K Jun  9 15:12 BC_D.txt
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER>   42 Jun  9 15:12 BC_ME.txt
+-rwxrwxr-x 1 <REDACTED_USER> <REDACTED_USER>  11K Jun  9 15:13 demult_fastq_VX.cpp*
+-rwxrwxr-x 1 <REDACTED_USER> <REDACTED_USER>  81K Jun  9 15:13 demult_fastq_VX.o*
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER>    0 Sep 14 12:57 VF-3324-BeetleA_S120_L004_tag_clearBC.log
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 3.4G Sep 14 15:09 VF-3324-BeetleA_S120_L004_tag_R1_001.fastq.gz
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 3.3G Sep 14 15:09 VF-3324-BeetleA_S120_L004_tag_R2_001.fastq.gz
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER>    0 Sep 14 12:57 VF-3324-BeetleA_S120_L004_tag_unclearBC.log
 ```
 
 Marek recommended to examine the output R1 and R2 files. The BX-tag should have ACBD with almost no 00 in it.

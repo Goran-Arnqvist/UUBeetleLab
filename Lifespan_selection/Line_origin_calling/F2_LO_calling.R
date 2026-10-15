@@ -1,16 +1,16 @@
 #Author: Mats Pettersson
-#mats.pettersson@imbim.uu.se
+#<REDACTED_EMAIL>
 
 #Line origin calling of F2 beetles
 filtered_VCF_files <- read.table("~/Projects/Beetle/data/offspring_LO_calling/offspring_filtered_vcf_list.txt", sep = "", stringsAsFactors = F, header = F)
 filtered_VCF_files$sample_ID <- sub("(.+)[.]filtered[.]vcf[.]gz", "\\1", filtered_VCF_files$V9)
 filtered_VCF_files$sample_ID_file <- paste0("~/Projects/Beetle/data/offspring_LO_calling/sample_ID_files/", filtered_VCF_files$sample_ID, ".txt")
-filtered_VCF_files$vcf_file <- paste0("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/offspring/filtered_vcf/",filtered_VCF_files$V9)
+filtered_VCF_files$vcf_file <- paste0("<REDACTED_PATH>/offspring/filtered_vcf/",filtered_VCF_files$V9)
 
 for (i in 1:length(filtered_VCF_files$sample_ID)){
   write(x = filtered_VCF_files$sample_ID[i], file =  filtered_VCF_files$sample_ID_file[i])
 }
-write(x = paste0("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/offspring/sample_ID_files/", filtered_VCF_files$sample_ID, ".txt"), file = "~/Projects/Beetle/data/offspring_LO_calling/sample_ID_file_list.txt")
+write(x = paste0("<REDACTED_PATH>/offspring/sample_ID_files/", filtered_VCF_files$sample_ID, ".txt"), file = "~/Projects/Beetle/data/offspring_LO_calling/sample_ID_file_list.txt")
 write(x = filtered_VCF_files$vcf_file, file = "~/Projects/Beetle/data/offspring_LO_calling/vcf_file_list.txt")
 write(x = filtered_VCF_files$sample_ID, file = "~/Projects/Beetle/data/offspring_LO_calling/sample_ID_list.txt")
 
@@ -203,8 +203,8 @@ est_LO_segment <- function(target_offspring, founder_GT_df, offspring_GT_df, ped
 
 ###Data collection code.
 LO_comp_list <- list()
-#LO_data_files <- dir("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_results/", full.names = T)
-LO_data_files <- dir("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_results_corrected/", full.names = T)
+#LO_data_files <- dir("<REDACTED_PATH>/custom_LO_calling/LO_results/", full.names = T)
+LO_data_files <- dir("<REDACTED_PATH>/custom_LO_calling/LO_results_corrected/", full.names = T)
 LO_data_files <- LO_data_files[grepl("chunk_[0-9]+[.]RData",LO_data_files)]
 
 for(LO_data_file in LO_data_files){
@@ -213,8 +213,8 @@ for(LO_data_file in LO_data_files){
   rm(Lo_est_list)
 }
 
-#save(LO_comp_list, file = "/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_compiled_list.RData")
-save(LO_comp_list, file = "/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_compiled_list_corrected.RData")
+#save(LO_comp_list, file = "<REDACTED_PATH>/custom_LO_calling/LO_compiled_list.RData")
+save(LO_comp_list, file = "<REDACTED_PATH>/custom_LO_calling/LO_compiled_list_corrected.RData")
 
 
 comp_LO_df <- do.call(rbind, LO_comp_list)
@@ -224,11 +224,11 @@ reshape_LO_df$chr <- as.integer(sub("([0-9]+)[:]([0-9]+)[-]([0-9]+)", "\\1", res
 reshape_LO_df$win_start <- as.integer(sub("([0-9]+)[:]([0-9]+)[-]([0-9]+)", "\\2", reshape_LO_df$window))
 reshape_LO_df <- reshape_LO_df[order(reshape_LO_df$chr, reshape_LO_df$win_start), ]
 
-#save(reshape_LO_df, file = "/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_compiled_reshape_df.RData")
-save(reshape_LO_df, file = "/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_compiled_reshape_df_corrected.RData")
+#save(reshape_LO_df, file = "<REDACTED_PATH>/custom_LO_calling/LO_compiled_reshape_df.RData")
+save(reshape_LO_df, file = "<REDACTED_PATH>/custom_LO_calling/LO_compiled_reshape_df_corrected.RData")
 
-#load("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_compiled_reshape_df.RData")
-load("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_compiled_reshape_df_corrected.RData")
+#load("<REDACTED_PATH>/custom_LO_calling/LO_compiled_reshape_df.RData")
+load("<REDACTED_PATH>/custom_LO_calling/LO_compiled_reshape_df_corrected.RData")
 
 reshape_LO_df_num <- reshape_LO_df
 reshape_LO_df_num[reshape_LO_df == "None"] <- NA
@@ -241,8 +241,8 @@ for(i in call_cols){
   reshape_LO_df_num[,i] <- as.integer(reshape_LO_df_num[,i])
 }
 
-#save(reshape_LO_df_num, file = "/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_compiled_reshape_012_df.RData")
-save(reshape_LO_df_num, file = "/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_compiled_reshape_012_df_corrected.RData")
+#save(reshape_LO_df_num, file = "<REDACTED_PATH>/custom_LO_calling/LO_compiled_reshape_012_df.RData")
+save(reshape_LO_df_num, file = "<REDACTED_PATH>/custom_LO_calling/LO_compiled_reshape_012_df_corrected.RData")
 
 
 #load("~/Projects/Beetle/data/offspring_LO_calling/LO_compiled_reshape_012_df.RData") <--- Obsolete version with mixed-up parentals
@@ -563,7 +563,7 @@ output_pedigree_corrected$pat_Grand_Sire <- output_pedigree_corrected$Sire[match
 write.table(x = output_pedigree_corrected, file = "~/Projects/Beetle/data/offspring_LO_calling/pedigree_info/A_ob_pedigree_corrected_v1.txt", sep ="\t", quote = F, row.names = F, col.names = T)
 
 ####
-#LO_pedigree <- read.table("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/A_ob_pedigree_corrected_v1.txt", sep = "\t", stringsAsFactors = F, header = T)
+#LO_pedigree <- read.table("<REDACTED_PATH>/custom_LO_calling/A_ob_pedigree_corrected_v1.txt", sep = "\t", stringsAsFactors = F, header = T)
 LO_pedigree <- read.table("~/Projects/Beetle/data/offspring_LO_calling/pedigree_info/A_ob_pedigree_corrected_v1.txt", sep = "\t", stringsAsFactors = F, header = T)
 founder_LO_df <- data.frame(ID = LO_pedigree$ID[LO_pedigree$generation == 0], line = NA)
 founder_LO_df$line[grep("[0-9]-M", founder_LO_df$ID)] <- sub(".+-([EL])([EL])[0-9].+","\\1",founder_LO_df$ID[grep("[0-9]-M", founder_LO_df$ID)])
@@ -614,7 +614,7 @@ boxplot(Lifespan~LO_call + Sex + 1, data = tmp_QTL_df)
 dev.off()
 
 #Re-estimation of observed sex
-#find /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/03-bam-files/split_per_sample/ -maxdepth 1 -type f -name '*.bam' > ./offspring_bam_list.txt
+#find <REDACTED_PATH>/offspring/data/03-bam-files/split_per_sample/ -maxdepth 1 -type f -name '*.bam' > ./offspring_bam_list.txt
 
 x_cov_file_list <- dir("~/Projects/Beetle/data/offspring_sex_estimation/cov_X/")
 x_cov_file_list <- x_cov_file_list[grepl("_X_cov.txt", x_cov_file_list)]
