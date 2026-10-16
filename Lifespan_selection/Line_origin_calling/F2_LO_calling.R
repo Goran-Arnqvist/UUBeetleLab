@@ -1,5 +1,5 @@
 #Author: Mats Pettersson
-#<REDACTED_EMAIL>
+#mats.pettersson@imbim.uu.se
 
 #Line origin calling of F2 beetles
 filtered_VCF_files <- read.table("~/Projects/Beetle/data/offspring_LO_calling/offspring_filtered_vcf_list.txt", sep = "", stringsAsFactors = F, header = F)

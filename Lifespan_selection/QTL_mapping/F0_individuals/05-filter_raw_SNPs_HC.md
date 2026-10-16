@@ -270,7 +270,7 @@ Script `05x-filter-SNP-DPperSample_v3.R` (run locally):
 #                                                                   #
 # Created by: Angela Fuentes-Pardo, inspired by code from           #
 # Mats Petterson and Dmytro Kryvokhyzha                             #
-# E-mail: <REDACTED_EMAIL>, Uppsala University                  #
+# E-mail: apfuentesp@gmail.com, Uppsala University                  #
 # Date: 2020-02-27, update: 2020-05-18                              #
 #                                                                   #
 #####################################################################

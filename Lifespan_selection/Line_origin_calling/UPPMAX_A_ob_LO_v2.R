@@ -1,5 +1,5 @@
 #Author: Mats Pettersson
-#<REDACTED_EMAIL>
+#mats.pettersson@imbim.uu.se
 
 #Required packages & functions
 require(vcfR)

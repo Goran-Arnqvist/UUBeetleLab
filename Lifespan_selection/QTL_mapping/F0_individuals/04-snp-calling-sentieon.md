@@ -22,7 +22,7 @@ https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller
 
 - Upload licenses to <REDACTED_HPC_SITE>
 
-- Upload the latest version of the software package for Linuz shared by Don Freed, <REDACTED_EMAIL> (https://s3.amazonaws.com/sentieon-release/software/sentieon-genomics-202112.05.tar.gz)
+- Upload the latest version of the software package for Linuz shared by Don Freed, don.freed@sentieon.com (https://s3.amazonaws.com/sentieon-release/software/sentieon-genomics-202112.05.tar.gz)
 
 - Initiate license in <REDACTED_HPC_SITE> (<REDACTED_HPC_SITE>):
 ```bash

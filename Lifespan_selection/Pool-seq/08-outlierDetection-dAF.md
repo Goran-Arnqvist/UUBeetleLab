@@ -49,7 +49,7 @@ The R script is called `08-2-calc-dAF_v5.R`:
 # Calculate the absolute delta allele frequency between pairs of    
 # super pools                         
 #                                                                   
-# E-mail: <REDACTED_EMAIL>, Uppsala University
+# E-mail: apfuentesp@gmail.com, Uppsala University
 # Date: 2020-03-25, modified: 2021-01-13                          
 #                                                                   
 #####################################################################
@@ -275,7 +275,7 @@ calculate.dAF <- function(poolData, comparison, group1, group2, na.rm) {
 #'
 #' Created by: Angela Fuentes-Pardo, Uppsala University
 #' Date: 2020-07-25, updated on. 2020-12-03
-#' e-mail: <REDACTED_EMAIL>
+#' e-mail: apfuentesp@gmail.com
 #'
 #' @param SNPfile Path to the file listing SNPs of interest, required CHROM-POS or SNP columns
 #' @param SNPdf R data frame listing the SNPs of interest, required CHROM-POS or SNP columns
@@ -487,8 +487,8 @@ getClosestGene2SNPs <- function(SNPfile = NULL, SNPdf = NULL, GTFfile = NULL, wi
 ###############################################################################################
 #'                                                                   
 #' Function that ranks snpEff effects and adds them to a dAF file (previously named processAnnotatedSNPs)
-#' Developed by: Mats Pettersson, <REDACTED_EMAIL>
-#' Modifications by: Angela P. Fuentes-Pardo, <REDACTED_EMAIL>
+#' Developed by: Mats Pettersson, mats.pettersson@imbim.uu.se
+#' Modifications by: Angela P. Fuentes-Pardo, apfuentesp@gmail.com
 #' Uppsala University                  
 #' Date: 2020-12-03, modified: 2021-01-05                          
 #'
@@ -1178,7 +1178,7 @@ Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 R script `findGenRegInterest_OTT.R`:
 ```R
 # Generate a list of genomic regions of interest in the OTT
-# Code made by: Angela P. Fuentes-Pardo, e-mail: <REDACTED_EMAIL>
+# Code made by: Angela P. Fuentes-Pardo, e-mail: apfuentesp@gmail.com
 # Date: 2021-03-19
 #
 

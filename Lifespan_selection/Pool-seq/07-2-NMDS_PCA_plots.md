@@ -69,7 +69,7 @@ R script `07-2-make-NMDS-PCA-plots.R`:
 # Perform Non-metric Multidimensional Scaling based on              #
 # population allele frequencies of pool-seq data                    #
 #                                                                   #
-# E-mail: <REDACTED_EMAIL>, Uppsala University                  #
+# E-mail: apfuentesp@gmail.com, Uppsala University                  #
 # Date: 2020-04-02                                                  #
 #                                                                   #
 #####################################################################

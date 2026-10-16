@@ -1,5 +1,5 @@
 #Author: Mats Pettersson
-#<REDACTED_EMAIL>
+#mats.pettersson@imbim.uu.se
 est_LO_segment <- function(target_offspring, founder_GT_df, offspring_GT_df, pedigree_df, founder_line_df){
   
   

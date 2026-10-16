@@ -20,7 +20,7 @@ Below, there is the custom python script that converts the AD file to the SYNC f
 
 """
 Created on Jan. 10, 2018. Modified on: Dec. 27, 2019, Uppsala University.
-@author: Angela P. Fuentes-Pardo, based on a draft script made by Gavin Douglas. E-mail: <REDACTED_EMAIL>.
+@author: Angela P. Fuentes-Pardo, based on a draft script made by Gavin Douglas. E-mail: apfuentesp@gmail.com.
 
 **Description**:
 This script converts a CSV file - with allele depths per sample - into a so called 'synchronized' format, required by Popoolation2
@@ -165,7 +165,7 @@ The R script that calculates and plot pairwise-FST values is called `07-1-calcul
 # Code version: 1.0.0 (Sept. 2018)                                          #
 # Created by: Angela P. Fuentes-Pardo, Dalhousie University                 #
 # Modifications made on: March 25, 2021, Uppsala University                 #
-# e-mail: <REDACTED_EMAIL>                                              #
+# e-mail: apfuentesp@gmail.com                                              #
 #                                                                           #
 # Paper of poolfstat: Hivert et al. (2018)                                  #
 # https://doi.org/10.1534/genetics.118.300900                               #

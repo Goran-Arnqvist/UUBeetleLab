@@ -14,7 +14,7 @@ I will use the custom python3 script `apply_Neff_correction_AD_v2.py` (below), w
 
 """
 Date: May 19, 2020
-Created by: Angela P. Fuentes-Pardo, e-mail: <REDACTED_EMAIL>, Uppsala University.
+Created by: Angela P. Fuentes-Pardo, e-mail: apfuentesp@gmail.com, Uppsala University.
 
 Script that applies the Neff correction described by Bergland, A. O., Behrman, E. L., O’Brien, K. R., Schmidt, P. S., & Petrov, D. A. (2014).
 Genomic Evidence of Rapid and Stable Adaptive Oscillations over Seasonal Time Scales in Drosophila. PLoS Genetics, 10(11), e1004775. https://doi.org/10.1371/journal.pgen.1004775
