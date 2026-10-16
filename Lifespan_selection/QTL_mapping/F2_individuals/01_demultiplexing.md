@@ -37,40 +37,40 @@ Here the options `--use-bases-mask=Y150,I13,I13,Y149` allows the full use of all
 
 The sequence data was delivered with mask=Y151,I8,Y28,Y136, so there is no need for further conversion for the tagging scripts. The sequence data of the beetles was partially demultiplexed by the sequencing facility (NGI) into 14 pools:
 ```bash
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleA/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleB/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleC/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleD/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleE/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleF/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleG/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleH/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleI/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleJ/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleK/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleL/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleM/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 14:40 Sample_VF-3324-BeetleN/
-drwxrws--- 2 root snic2020-2-19 4.0K Aug 19 15:15 Undetermined/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleA/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleB/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleC/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleD/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleE/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleF/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleG/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleH/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleI/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleJ/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleK/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleL/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleM/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 14:40 Sample_VF-3324-BeetleN/
+drwxrws--- 2 root <REDACTED_PROJECT_CODE> 4.0K Aug 19 15:15 Undetermined/
 ```
 The `Undetermined/` directory contains files that corresponds to the approx 5-10% of reads where there is issue with the sequence, either all poly-GGGGGG-containing sequences = no signal clusters, or reads with low quality or too many mistakes in the i7/plate barcodes so it was not possible to assign them to the BeetleA-N plates:
 ```bash
 $ ls Undetermined
 total 12G
--rw-rw---- 1 root snic2020-2-19 551M Aug 18 14:04 Undetermined_S0_L004_I1_001.fastq.gz
--rw-rw---- 1 root snic2020-2-19 4.6G Aug 18 14:04 Undetermined_S0_L004_R1_001.fastq.gz
--rw-rw---- 1 root snic2020-2-19 1.3G Aug 18 14:04 Undetermined_S0_L004_R2_001.fastq.gz
--rw-rw---- 1 root snic2020-2-19 4.8G Aug 18 14:04 Undetermined_S0_L004_R3_001.fastq.gz
+-rw-rw---- 1 root <REDACTED_PROJECT_CODE> 551M Aug 18 14:04 Undetermined_S0_L004_I1_001.fastq.gz
+-rw-rw---- 1 root <REDACTED_PROJECT_CODE> 4.6G Aug 18 14:04 Undetermined_S0_L004_R1_001.fastq.gz
+-rw-rw---- 1 root <REDACTED_PROJECT_CODE> 1.3G Aug 18 14:04 Undetermined_S0_L004_R2_001.fastq.gz
+-rw-rw---- 1 root <REDACTED_PROJECT_CODE> 4.8G Aug 18 14:04 Undetermined_S0_L004_R3_001.fastq.gz
 ```
 For each of the pools (single directories), there are four files:
 ```bash
 $ ls Sample_VF-3324-BeetleA
 
 total 36G
--rw-rw---- 1 root snic2020-2-19 1.2G Aug 18 14:04 VF-3324-BeetleA_S120_L004_I1_001.fastq.gz
--rw-rw---- 1 root snic2020-2-19  16G Aug 18 14:04 VF-3324-BeetleA_S120_L004_R1_001.fastq.gz
--rw-rw---- 1 root snic2020-2-19 4.2G Aug 18 14:04 VF-3324-BeetleA_S120_L004_R2_001.fastq.gz
--rw-rw---- 1 root snic2020-2-19  15G Aug 18 14:04 VF-3324-BeetleA_S120_L004_R3_001.fastq.gz
+-rw-rw---- 1 root <REDACTED_PROJECT_CODE> 1.2G Aug 18 14:04 VF-3324-BeetleA_S120_L004_I1_001.fastq.gz
+-rw-rw---- 1 root <REDACTED_PROJECT_CODE>  16G Aug 18 14:04 VF-3324-BeetleA_S120_L004_R1_001.fastq.gz
+-rw-rw---- 1 root <REDACTED_PROJECT_CODE> 4.2G Aug 18 14:04 VF-3324-BeetleA_S120_L004_R2_001.fastq.gz
+-rw-rw---- 1 root <REDACTED_PROJECT_CODE>  15G Aug 18 14:04 VF-3324-BeetleA_S120_L004_R3_001.fastq.gz
 ```
 
 ## File and script set up
@@ -88,13 +88,13 @@ Marek recommends to use the two-in-one approach as it needs only one time execut
 
 ## Test run
 
-Before running these scripts in Uppmax, it is necessary to verify whether the c++ binaries match the cluster's architecture (or is it needed to re-compile them?). So I did a test run of the first script of the two step approach on a single pool data set following these steps:
+Before running these scripts in <REDACTED_HPC_SITE>, it is necessary to verify whether the c++ binaries match the cluster's architecture (or is it needed to re-compile them?). So I did a test run of the first script of the two step approach on a single pool data set following these steps:
 
-1. Upload to Uppmax the three directories provided by Marek to a single directory called `scripts/`:
+1. Upload to <REDACTED_HPC_SITE> the three directories provided by Marek to a single directory called `scripts/`:
 ```bash
-drwx------ 2 angela snic2020-6-128 4.0K Sep 14 12:57 demult_fastq_vX/
-drwx------ 2 angela snic2020-6-128 4.0K Sep 14 11:16 demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping/
-drwx------ 2 angela snic2020-6-128 4.0K Sep 14 11:16 vX_R2_clipping_postTag/
+drwx------ 2 <REDACTED_USER> <REDACTED_PROJECT_CODE> 4.0K Sep 14 12:57 demult_fastq_vX/
+drwx------ 2 <REDACTED_USER> <REDACTED_PROJECT_CODE> 4.0K Sep 14 11:16 demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping/
+drwx------ 2 <REDACTED_USER> <REDACTED_PROJECT_CODE> 4.0K Sep 14 11:16 vX_R2_clipping_postTag/
 ```
 I changed the executable permissions of the `*.o` and `*.cpp` files with `chmod +x <filename>`
 ```bash
@@ -104,8 +104,8 @@ chmod +x demult_fastq_VX.o
 
 2. Set bash environmental variables giving paths to specific directories and files:
 ```bash
-SCRIPT_1_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/scripts/demult_fastq_vX’
-#SCRIPT_1_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/scripts/demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping'
+SCRIPT_1_DIR='<REDACTED_PATH>
+#SCRIPT_1_DIR='<REDACTED_PATH>'
 PATH_2_SAMPLE='../../Sample_VF-3324-BeetleA/'
 ```
 
@@ -124,19 +124,19 @@ loaded barcodes: 96 A, 96 B, 96 C, 96 D, 3 ME
 
 These files were generated:
 ```bash
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/scripts/demult_fastq_vX$ ls
+<REDACTED_PATH> ls
 total 6.6G
--rw-rw-r-- 1 angela angela 1.2K Jun  9 15:12 BC_A_VX.txt
--rw-rw-r-- 1 angela angela 1.1K Jun  9 15:12 BC_B.txt
--rw-rw-r-- 1 angela angela 1.1K Jun  9 15:12 BC_C_VX.txt
--rw-rw-r-- 1 angela angela 1.1K Jun  9 15:12 BC_D.txt
--rw-rw-r-- 1 angela angela   42 Jun  9 15:12 BC_ME.txt
--rwxrwxr-x 1 angela angela  11K Jun  9 15:13 demult_fastq_VX.cpp*
--rwxrwxr-x 1 angela angela  81K Jun  9 15:13 demult_fastq_VX.o*
--rw-rw-r-- 1 angela angela    0 Sep 14 12:57 VF-3324-BeetleA_S120_L004_tag_clearBC.log
--rw-rw-r-- 1 angela angela 3.4G Sep 14 15:09 VF-3324-BeetleA_S120_L004_tag_R1_001.fastq.gz
--rw-rw-r-- 1 angela angela 3.3G Sep 14 15:09 VF-3324-BeetleA_S120_L004_tag_R2_001.fastq.gz
--rw-rw-r-- 1 angela angela    0 Sep 14 12:57 VF-3324-BeetleA_S120_L004_tag_unclearBC.log
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 1.2K Jun  9 15:12 BC_A_VX.txt
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 1.1K Jun  9 15:12 BC_B.txt
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 1.1K Jun  9 15:12 BC_C_VX.txt
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 1.1K Jun  9 15:12 BC_D.txt
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER>   42 Jun  9 15:12 BC_ME.txt
+-rwxrwxr-x 1 <REDACTED_USER> <REDACTED_USER>  11K Jun  9 15:13 demult_fastq_VX.cpp*
+-rwxrwxr-x 1 <REDACTED_USER> <REDACTED_USER>  81K Jun  9 15:13 demult_fastq_VX.o*
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER>    0 Sep 14 12:57 VF-3324-BeetleA_S120_L004_tag_clearBC.log
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 3.4G Sep 14 15:09 VF-3324-BeetleA_S120_L004_tag_R1_001.fastq.gz
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER> 3.3G Sep 14 15:09 VF-3324-BeetleA_S120_L004_tag_R2_001.fastq.gz
+-rw-rw-r-- 1 <REDACTED_USER> <REDACTED_USER>    0 Sep 14 12:57 VF-3324-BeetleA_S120_L004_tag_unclearBC.log
 ```
 
 Marek recommended to examine the output R1 and R2 files. The BX-tag should have ACBD with almost no 00 in it.
@@ -189,11 +189,11 @@ All looks good!
 
 Now, let's test the two-in-one script.
 
-The original c++ script shared by Marek was tailored for 10 bp barcodes. So he shared a new version of the script, this time for 8 bp long barcodes. To upload these scripts to Uppmax, I used:
+The original c++ script shared by Marek was tailored for 10 bp barcodes. So he shared a new version of the script, this time for 8 bp long barcodes. To upload these scripts to <REDACTED_HPC_SITE>, I used:
 ```bash
-rsync -av --progress /Users/angfu103/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/code/demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping/demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping.cpp angela@rackham.uppmax.uu.se:/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/scripts/demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping/
+rsync -av --progress <REDACTED_PATH> <REDACTED_REMOTE_TARGET>:<REDACTED_PATH>
 
-rsync -av --progress /Users/angfu103/Dropbox/PostDoc_UU/Projects/Beetles/QTL_mapping/offspring/code/demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping/demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping.o angela@rackham.uppmax.uu.se:/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/scripts/demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping/
+rsync -av --progress <REDACTED_PATH> <REDACTED_REMOTE_TARGET>:<REDACTED_PATH>
 ```
 
 He also shared a new `Plate_BC.txt` file, the one I had was missing one barcode:
@@ -238,22 +238,22 @@ I changed the executable permissions of the `*.o` and `*.cpp` files within `demu
 chmod +x demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping.o
 chmod +x demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping.cpp
 ```
-Submit the job `01-demultiplex_Haplo_VX.sh` to Uppmax:
+Submit the job `01-demultiplex_Haplo_VX.sh` to <REDACTED_HPC_SITE>:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 1
 #SBATCH -t 20:00:00
 #SBATCH -J demult_Haplo_VX
 #SBATCH -e demult_Haplo_VX_%J_%A_%a.err
 #SBATCH -o demult_Haplo_VX_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-14
 
 # Set bash environmental variables giving paths to specific directories and files:
-SCRIPT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/scripts/demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping'
+SCRIPT_DIR='<REDACTED_PATH>'
 SAMPLE_LIST=${SCRIPT_DIR}/sample.list
 
 echo This is array job: $SLURM_ARRAY_TASK_ID
@@ -274,13 +274,13 @@ cd ${SCRIPT_DIR}
 ./demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping.o ${SAMPLE_target}_ ${SAMPLE_PREFFIX}_tag
 
 ```
-Submitted batch job 6946964 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-10:59:00**
 
 
 These files were generated:
 ```bash
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/scripts/demult_fastq_vX$ ls
+<REDACTED_PATH> ls
 
 ```
 Marek recommended to examine the output R1 and R2 files. The BX-tag should have ACBD with almost no 00 in it.
@@ -320,9 +320,9 @@ All looks good!
 
 Then I transferred the processed files to a new directory:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads
+cd <REDACTED_PATH>
 mkdir demultiplexed_reads
 
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/scripts/demult_fastq_VX_plus_PlateBC_New_8bpPlateBC_clipping
-mv VF-3324* /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads
+cd <REDACTED_PATH>
+mv VF-3324* <REDACTED_PATH>
 ```

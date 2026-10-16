@@ -3,19 +3,19 @@
 
 #Required packages & functions
 require(vcfR)
-source("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/A_ob_LO_funcs.R")
+source("<REDACTED_PATH>/custom_LO_calling/A_ob_LO_funcs.R")
 
 
  #### affected by mislablelling, correction below.
 #Line origin calling of F2 beetles; version for UPPMAX###
-#LO_pedigree <- read.table("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/A_ob_pedigree_v2.txt", sep = "\t", stringsAsFactors = F, header = T)
+#LO_pedigree <- read.table("<REDACTED_PATH>/custom_LO_calling/A_ob_pedigree_v2.txt", sep = "\t", stringsAsFactors = F, header = T)
 #founder_LO_df <- data.frame(ID = LO_pedigree$ID[LO_pedigree$generation == 0], line = NA)
 #founder_LO_df$line[grep("[0-9]-M", founder_LO_df$ID)] <- sub(".+-([EL])([EL])[0-9].+","\\1",founder_LO_df$ID[grep("[0-9]-M", founder_LO_df$ID)])
 #founder_LO_df$line[grep("[0-9]-F", founder_LO_df$ID)] <- sub(".+-([EL])([EL])[0-9].+","\\2",founder_LO_df$ID[grep("[0-9]-M", founder_LO_df$ID)])
 ####
 
 ## Adjusted version
-LO_pedigree <- read.table("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/A_ob_pedigree_corrected_v1.txt", sep = "\t", stringsAsFactors = F, header = T)
+LO_pedigree <- read.table("<REDACTED_PATH>/custom_LO_calling/A_ob_pedigree_corrected_v1.txt", sep = "\t", stringsAsFactors = F, header = T)
 founder_LO_df <- data.frame(ID = LO_pedigree$ID[LO_pedigree$generation == 0], line = NA)
 founder_LO_df$line[grep("[0-9]-M", founder_LO_df$ID)] <- sub(".+-([EL])([EL])[0-9].+","\\1",founder_LO_df$ID[grep("[0-9]-M", founder_LO_df$ID)])
 founder_LO_df$line[grep("[0-9]-F", founder_LO_df$ID)] <- sub(".+-([EL])([EL])[0-9].+","\\2",founder_LO_df$ID[grep("[0-9]-M", founder_LO_df$ID)])
@@ -36,11 +36,11 @@ n_chunks <- ceiling(max_variant_count/chunk_size)
 
 for(chunk_i in 1:n_chunks){
   
-  current_offspring_vcf <- read.vcfR(file = "/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/beetle_offspring_full.vcf", nrows = chunk_size, skip = current_skip)
+  current_offspring_vcf <- read.vcfR(file = "<REDACTED_PATH>/custom_LO_calling/beetle_offspring_full.vcf", nrows = chunk_size, skip = current_skip)
   offspring_test_GTs <- extract.haps(current_offspring_vcf, unphased_as_NA = F) #extract.gt(offspring_test_vcf)
   rm(current_offspring_vcf)
   
-  current_founder_vcf <- read.vcfR(file = "/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/founders/vcf/OTT_8_F0.HC.SNPs.hf.DP3.GQ20.mono.miss20.vcf.gz", nrows = chunk_size, skip = current_skip)
+  current_founder_vcf <- read.vcfR(file = "<REDACTED_PATH>/founders/vcf/OTT_8_F0.HC.SNPs.hf.DP3.GQ20.mono.miss20.vcf.gz", nrows = chunk_size, skip = current_skip)
   founder_test_GTs <- extract.haps(current_founder_vcf, unphased_as_NA = F) #extract.gt(founder_test_vcf)
   rm(current_founder_vcf)
   
@@ -106,8 +106,8 @@ for(chunk_i in 1:n_chunks){
     #Collecting the results
     Lo_est_list[[current_win]] <- LO_est_df
   }
-  #LO_outfile <- paste0("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_results/A_ob_Lo_est_list_chunk_", chunk_i,".RData")
-  LO_outfile <- paste0("/proj/snic2020-6-128/private/a_obtectus_QTLmap/users/mats/custom_LO_calling/LO_results_corrected/A_ob_Lo_est_list_chunk_", chunk_i,".RData")
+  #LO_outfile <- paste0("<REDACTED_PATH>/custom_LO_calling/LO_results/A_ob_Lo_est_list_chunk_", chunk_i,".RData")
+  LO_outfile <- paste0("<REDACTED_PATH>/custom_LO_calling/LO_results_corrected/A_ob_Lo_est_list_chunk_", chunk_i,".RData")
   save(Lo_est_list, file = LO_outfile)
   
 }

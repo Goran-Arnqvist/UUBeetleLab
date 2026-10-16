@@ -276,8 +276,8 @@ CTGTCTCTTATACACATCT
 ```
 Copy the file `adapters.fa` to the desired directory (where clean reads will be stored):
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads
-cp /proj/snic2020-6-128/private/a_obtectus_poolseq/02-clean-reads/adapters.fa .
+cd <REDACTED_PATH>
+cp <REDACTED_PATH> .
 ```
 Create a directory for the FastQC results:
 ```bash
@@ -287,42 +287,42 @@ mkdir FastQC_results
 Create input files:
 - R1 files:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads
+cd <REDACTED_PATH>
 
-ls -lh /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/*/*_R1_* | awk '{print $9}' > /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/R1_files.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/R1_files.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-EL1-F/VA-3193-EL1-F_S132_L004_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-EL1-M/VA-3193-EL1-M_S131_L004_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-EL4-F/VA-3193-EL4-F_S134_L004_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-EL4-M/VA-3193-EL4-M_S133_L004_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-LE1-F/VA-3193-LE1-F_S128_L004_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-LE1-M/VA-3193-LE1-M_S127_L004_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-LE2-F/VA-3193-LE2-F_S130_L004_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-LE2-M/VA-3193-LE2-M_S129_L004_R1_001.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 - R2 files:
 ```bash
-ls -lh /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/*/*_R2_* | awk '{print $9}' > /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/R2_files.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/R2_files.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-EL1-F/VA-3193-EL1-F_S132_L004_R2_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-EL1-M/VA-3193-EL1-M_S131_L004_R2_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-EL4-F/VA-3193-EL4-F_S134_L004_R2_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-EL4-M/VA-3193-EL4-M_S133_L004_R2_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-LE1-F/VA-3193-LE1-F_S128_L004_R2_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-LE1-M/VA-3193-LE1-M_S127_L004_R2_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-LE2-F/VA-3193-LE2-F_S130_L004_R2_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/Sample_VA-3193-LE2-M/VA-3193-LE2-M_S129_L004_R2_001.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 
 ```
 - Sample subdirectory:
 ```bash
-ls -lh /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/*/*.fastq.gz | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f10 | sed 's/_S.*$//' | uniq > /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/sample_subDir.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f10 | sed 's/_S.*$//' | uniq > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/sample_subDir.txt
+cat <REDACTED_PATH>
 
 Sample_VA-3193-EL1-F
 Sample_VA-3193-EL1-M
@@ -337,9 +337,9 @@ Sample_VA-3193-LE2-M
 
 - Sample IDs:
 ```bash
-ls -lh /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/01-raw-reads/220429_A00181_0489_BHJ57GDSX3/*/*.fastq.gz | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f10 | sed 's/_S.*$//' | uniq > /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/sample_IDs.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f10 | sed 's/_S.*$//' | uniq > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/sample_IDs.txt
+cat <REDACTED_PATH>
 
 Sample_VA-3193-EL1-F
 Sample_VA-3193-EL1-M
@@ -357,14 +357,14 @@ Sample_VA-3193-LE2-M
 Script `02-trim_raw_reads-PE.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2021-22-466
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 6
 #SBATCH -t 1-00:00:00
 #SBATCH -J trim_raw_reads
 #SBATCH -e trim_raw_reads_%J_%A_%a.err
 #SBATCH -o trim_raw_reads_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-8
 
 # Load libraries.
@@ -374,14 +374,14 @@ module load FastQC/0.11.8
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads'
+WORK_DIR='<REDACTED_PATH>'
 R1_FILE='./R1_files.txt'
 R2_FILE='./R2_files.txt'
 OUTPUT_SUBDIR='./sample_subDir.txt'
 ID_FILE='./sample_IDs.txt'
 ADAPTERS_FILE='./adapters.fa'
 # Programs:
-TRIMMO_JAR='/sw/apps/bioinfo/trimmomatic/0.36/rackham/trimmomatic-0.36.jar'
+TRIMMO_JAR='<REDACTED_PATH>'
 
 # Go to the working directory where all these files are located.
 cd $WORK_DIR
@@ -416,7 +416,7 @@ if [ -d ${WORK_DIR}/FastQC_results ]; then echo "Dir /WORK_DIR/FastQC_results ex
 fastqc -t 6 ${WORK_DIR}/${SUBDIR_target}/${ID_target}_R1.fastq.gz ${WORK_DIR}/${SUBDIR_target}/${ID_target}_R2.fastq.gz -o ${WORK_DIR}/FastQC_results
 
 ```
-Submitted batch job 27461601
+Submitted batch job <REDACTED_JOB_ID>
 **Runtime: 00-06:30:00**
 
 The 8 files were processed correctly.
@@ -426,7 +426,7 @@ The 8 files were processed correctly.
 
 Obtain a single report for all samples using MultiQC based on the separate FastQC summary statistics:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/FastQC_results
+cd <REDACTED_PATH>
 
 module load bioinfo-tools MultiQC/1.12
 multiqc .
@@ -435,7 +435,7 @@ Stdout:
 ```
 /// MultiQC 🔍 | v1.12
 
-|           multiqc | Search path : /crex/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/02-clean-reads/FastQC_results
+|           multiqc | Search path : <REDACTED_PATH>
 |         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 32/32  
 |            fastqc | Found 16 reports
 |           multiqc | Compressing plot data
@@ -449,10 +449,10 @@ Stdout:
 **Comments**
 Good sequence data. % Duplicate reads is about 24% (normal), GC content is 35%, and each sample has ~120 million reads. Read length between 36 and 126 bp.
 The Illumina adapters and low quality bases were removed successfully:
-![adapter content](/Users/angfu103/Dropbox/PostDoc_UU/Projects/Beettles/analysis/02-trim-raw-reads/multiqc_data/fastqc_adapter_content_plot.png)
+![adapter content](<REDACTED_PATH>)
 
 Still remain though, a slight overrepresentation of sequences that represent about 1% of the total and do not correspond to Illumina adapters:
-![overrepresented seqs](/Users/angfu103/Dropbox/PostDoc_UU/Projects/Beettles/analysis/02-trim-raw-reads/multiqc_data/fastqc_overrepresented_sequencesi_plot.png)
+![overrepresented seqs](<REDACTED_PATH>)
 
 Here an example of these sequences for sample EI-F:
 ```bash

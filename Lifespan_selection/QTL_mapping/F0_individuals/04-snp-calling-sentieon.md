@@ -20,70 +20,70 @@ https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller
 
 ## Run Sentieon pipeline on F0 beetles
 
-- Upload licenses to Uppmax
+- Upload licenses to <REDACTED_HPC_SITE>
 
 - Upload the latest version of the software package for Linuz shared by Don Freed, don.freed@sentieon.com (https://s3.amazonaws.com/sentieon-release/software/sentieon-genomics-202112.05.tar.gz)
 
-- Initiate license in Uppmax (rackham2):
+- Initiate license in <REDACTED_HPC_SITE> (<REDACTED_HPC_SITE>):
 ```bash
 # Create an empty file for the logs
 touch gatk_OTT_parentals_Oct-26-2022.log
 
 # Set environment variables
-# Make sure to replace /home/ for /domus/h1/ when setting the path in Uppmax
-SENTIEON_DIR='/domus/h1/angela/sentieon-pipelines/sentieon-genomics-202112.05'
-SENTIEON_LICENSE='/domus/h1/angela/sentieon-pipelines/licenses/Uppsala_University_node-51.lic'
-export SENTIEON_LICENSE='/domus/h1/angela/sentieon-pipelines/licenses/Uppsala_University_node-51.lic'
-#export SENTIEON_LICENSE=10.0.10.51:8990
-LOG_FILE='/domus/h1/angela/sentieon-pipelines/logs/gatk_OTT_parentals_Oct-26-2022.log'
+# Make sure to replace <REDACTED_PATH> for <REDACTED_PATH> when setting the path in <REDACTED_HPC_SITE>
+SENTIEON_DIR='<REDACTED_PATH>'
+SENTIEON_LICENSE='<REDACTED_LICENSE_REFERENCE>'
+export SENTIEON_LICENSE='<REDACTED_LICENSE_REFERENCE>'
+#export SENTIEON_LICENSE=<REDACTED_LICENSE_REFERENCE>
+LOG_FILE='<REDACTED_PATH>'
 
 # Initialize the server (--stop to make a running server stops)
 $SENTIEON_DIR/bin/sentieon licsrvr --start --log $LOG_FILE $SENTIEON_LICENSE
 
 # If you use the `--log`, you can `cat` the file to make sure the license has started. It should say something like:
 cat $LOG_FILE
-# 2022/10/26 20:13:58 Start serving on 10.0.10.51:8990 (sentieon-genomics-202112.05)
+# 2022/10/26 20:13:58 Start serving on <REDACTED_LICENSE_REFERENCE> (sentieon-genomics-202112.05)
 
-2022/10/26 20:13:58 Start serving on 10.0.10.51:8990 (sentieon-genomics-201911)
-2022/10/27 17:46:24 cmdline: /domus/h1/angela/sentieon-pipelines/sentieon-genomics-202112.05/libexec/licsrvr --start --log /domus/h1/angela/sentieon-pipelines/logs/gatk_OTT_parentals_Oct-26-2022.log /domus/h1/angela/sentieon-pipelines/licenses/Uppsala_University_node-51.lic
-2022/10/27 17:46:24 Start serving on 10.0.10.51:8990 (sentieon-genomics-202112.05)
-2022/10/27 17:46:25 Failed to bind to address 10.0.10.51: Address already in use
+2022/10/26 20:13:58 Start serving on <REDACTED_LICENSE_REFERENCE> (sentieon-genomics-201911)
+2022/10/27 17:46:24 cmdline: <REDACTED_PATH> --start --log <REDACTED_PATH> <REDACTED_LICENSE_REFERENCE>
+2022/10/27 17:46:24 Start serving on <REDACTED_LICENSE_REFERENCE> (sentieon-genomics-202112.05)
+2022/10/27 17:46:25 Failed to bind to address <REDACTED_LICENSE_REFERENCE>: Address already in use
 2022/10/27 17:46:35 Stop serving
 2022/10/27 17:51:10 Stop serving
-2022/10/27 17:52:22 cmdline: /domus/h1/angela/sentieon-pipelines/sentieon-genomics-202112.05/libexec/licsrvr --start --log /domus/h1/angela/sentieon-pipelines/logs/gatk_OTT_parentals_Oct-26-2022.log /domus/h1/angela/sentieon-pipelines/licenses/Uppsala_University_node-51.lic
+2022/10/27 17:52:22 cmdline: <REDACTED_PATH> --start --log <REDACTED_PATH> <REDACTED_LICENSE_REFERENCE>
 2022/10/27 17:52:22 Received update from the master server
-2022/10/27 17:52:22 Start serving on 10.0.10.51:8990 (sentieon-genomics-202112.05)
+2022/10/27 17:52:22 Start serving on <REDACTED_LICENSE_REFERENCE> (sentieon-genomics-202112.05)
 ```
 
 - Run HaplotypeCaller
 
 Make sure there is a file listing the BAM files of interest:
 ```bash
-cat /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/parentals_bam.list
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/Sample_VA-3193-EL4-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/Sample_VA-3193-EL1-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/Sample_VA-3193-EL4-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/Sample_VA-3193-LE1-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/Sample_VA-3193-LE2-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/Sample_VA-3193-LE2-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/Sample_VA-3193-LE1-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/Sample_VA-3193-EL1-F.sort.MarkDup.RG.bam
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 Script `04-sentieon_01_HaplotypeCaller.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 5
 #SBATCH -t 2-00:00:00
 #SBATCH -J sentieon
 #SBATCH -e sentieon_%J_%A_%a.err
 #SBATCH -o sentieon_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-8
 
-# Load packages in Uppmax
+# Load packages in <REDACTED_HPC_SITE>
 module load python/2.7.15
 
 # *******************************************
@@ -93,25 +93,25 @@ module load python/2.7.15
 
 # Update with the fullpath location of your sample fastq
 set -x
-BAM_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files'
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files'
+BAM_DIR='<REDACTED_PATH>'
+OUTPUT_DIR='<REDACTED_PATH>'
 
 # Update with the location of the reference data files
-REF_FASTA="/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/00-genome/A.obtectus_v2.0.fasta"
+REF_FASTA="<REDACTED_PATH>"
 
 # Set SENTIEON_LICENSE if it is not set in the environment
-export SENTIEON_LICENSE='/domus/h1/angela/sentieon-pipelines/licenses/Uppsala_University_node-51.lic'
+export SENTIEON_LICENSE='<REDACTED_LICENSE_REFERENCE>'
 echo $SENTIEON_LICENSE
 
 # Update with the location of the Sentieon software package
-SENTIEON_INSTALL_DIR='/domus/h1/angela/sentieon-pipelines/sentieon-genomics-202112.05'
+SENTIEON_INSTALL_DIR='<REDACTED_PATH>'
 
 # Update with the location of temporary fast storage and uncomment
 SENTIEON_TMPDIR=$SNIC_TMP
 
 # It is important to assign meaningful names in actual cases.
 # It is particularly important to assign different read group names.
-BAM_LIST='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/03-bam-files/parentals_bam.list'
+BAM_LIST='<REDACTED_PATH>'
 BAM_target=$(sed -n "$SLURM_ARRAY_TASK_ID"p $BAM_LIST)
 #BAM=$(ls *_2pass_star_resultsAligned.sortedByCoord.out.bam | sed -n ${SLURM_ARRAY_TASK_ID}p)
 SAMPBASE=$(basename $BAM_target)
@@ -144,28 +144,28 @@ $SENTIEON_INSTALL_DIR/bin/sentieon driver -r $REF_FASTA -t $N_THREADS -i $BAM_ta
 #$SENTIEON_INSTALL_DIR/bin/sentieon driver -r $REF_FASTA -t $N_THREADS -i $BAM_DIR/${SAMPLE}.RG.bam --algo Haplotyper --genotype_model multinomial --emit_mode gvcf --emit_conf 30 --call_conf 30 ${SAMPLE}.g.vcf.gz
 
 ```
-Submitted batch job 30696808
+Submitted batch job <REDACTED_JOB_ID>
 **Runtime: 00-08:53:00**
 
 - Run Genotyper:
 
 Make a file listing the gvcf files:
 ```bash
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files
+cd <REDACTED_PATH>
 cd ..
 
-find /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files -name *.g.vcf.gz -type f > /proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/gvcf_list.txt
+find <REDACTED_PATH> -name *.g.vcf.gz -type f > <REDACTED_PATH>
 
 cat gvcf_list.txt
 
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/Sample_VA-3193-LE1-M.g.vcf.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/Sample_VA-3193-EL4-F.g.vcf.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/Sample_VA-3193-EL1-F.g.vcf.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/Sample_VA-3193-LE2-M.g.vcf.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/Sample_VA-3193-EL1-M.g.vcf.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/Sample_VA-3193-LE1-F.g.vcf.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/Sample_VA-3193-EL4-M.g.vcf.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/Sample_VA-3193-LE2-F.g.vcf.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 
 wc -l gvcf_list.txt
 8
@@ -173,27 +173,27 @@ wc -l gvcf_list.txt
 Script `04-sentieon_02_Genotyper.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p node
 #SBATCH -t 1-00:00:00
 #SBATCH -J genotyper
 #SBATCH -e genotyper_%A_%a.err
 #SBATCH -o genotyper_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 
-# Load packages in Uppmax
+# Load packages in <REDACTED_HPC_SITE>
 module load python/2.7.15
 
 # Set environmental variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files'
-REF_FASTA='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/00-genome/A.obtectus_v2.0.fasta'
-GVCF_LIST='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files/gvcf_list.txt'
+OUTPUT_DIR='<REDACTED_PATH>'
+REF_FASTA='<REDACTED_PATH>'
+GVCF_LIST='<REDACTED_PATH>'
 OUTPUT_PREFFIX='OTT_8ind_F0_sentieon'
 
 # sentieon options
-export SENTIEON_LICENSE='/domus/h1/angela/sentieon-pipelines/licenses/Uppsala_University_node-51.lic'
-SENTIEON_INSTALL_DIR='/domus/h1/angela/sentieon-pipelines/sentieon-genomics-202112.05'
+export SENTIEON_LICENSE='<REDACTED_LICENSE_REFERENCE>'
+SENTIEON_INSTALL_DIR='<REDACTED_PATH>'
 SENTIEON_TMPDIR=$SNIC_TMP
 
 # Go to the work directory
@@ -203,7 +203,7 @@ cd $OUTPUT_DIR
 $SENTIEON_INSTALL_DIR/bin/sentieon driver -r $REF_FASTA -t 20 --algo GVCFtyper --emit_mode CONFIDENT $OUTPUT_PREFFIX.vcf.gz $(<$GVCF_LIST)
 
 ```
-Submitted batch job 30704989
+Submitted batch job <REDACTED_JOB_ID>
 **Runtime: 00-01:06:57**
 
 
@@ -212,22 +212,22 @@ Submitted batch job 30704989
 Script `04-sentieon_03_Filtering.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 5
 #SBATCH -t 2-00:00:00
 #SBATCH -J filter_vcf
 #SBATCH -e filter_vcf_%J_%A_%a.err
 #SBATCH -o filter_vcf_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 
-# Load packages in Uppmax
+# Load packages in <REDACTED_HPC_SITE>
 module load bioinfo-tools samtools vcftools bcftools picard/2.20.4
 module load GATK/4.1.4.1
 
 # Set environmental variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/04-vcf-files'
-REF_FASTA='/proj/snic2020-6-128/private/a_obtectus_QTLmap/parentals/data/00-genome/A.obtectus_v2.0.fasta'
+OUTPUT_DIR='<REDACTED_PATH>'
+REF_FASTA='<REDACTED_PATH>'
 OUTPUT_PREFFIX='OTT_8ind_F0_sentieon'
 
 # Go to the working directory

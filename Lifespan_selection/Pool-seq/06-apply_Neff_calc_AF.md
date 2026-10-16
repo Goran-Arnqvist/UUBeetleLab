@@ -179,29 +179,29 @@ if __name__ == "__main__":
 
 File listing the input VCF files, `VCF_files_calcAF.txt`:
 ```bash
-cd /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF
+cd <REDACTED_PATH>
 
-ls /proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DP*.vcf.gz | awk '{print $9}' > /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/VCF_files_calcAF.txt
+ls <REDACTED_PATH> | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/VCF_files_calcAF.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMean1SD.vcf.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMode1half.vcf.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/04-vcf-files/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.vcf.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 
 I used the script `06-1-2-3-apply-Neff-calc-AF.sh` to generate all the AF+ files:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2020-15-137
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 4
 #SBATCH -t 20:00:00
 #SBATCH -J calcAF
 #SBATCH -e calcAF_%J_%A_%a.err
 #SBATCH -o calcAF_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-3
 
 # Load required programs.
@@ -212,25 +212,25 @@ module load bcftools/1.10
 
 # Set path to required files and directories as environment variables.
 echo This is array job: $SLURM_ARRAY_TASK_ID
-VCF_FILE='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF/VCF_files_calcAF.txt'
+VCF_FILE='<REDACTED_PATH>'
 INPUT_PATH=$(sed -n "$SLURM_ARRAY_TASK_ID"p $VCF_FILE)
 echo -e This is the VCF target/INPUT_PATH: ${INPUT_PATH}
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/06-apply-Neff-calc-AF'
-REF_PATH='/proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
+WORK_DIR='<REDACTED_PATH>'
+REF_PATH='<REDACTED_PATH>'
 REF_FILE=$(basename "${REF_PATH}")
-#INPUT_PATH='/home/afuentes/project/afuentes/04-VCF-files/NWAtlantic_herring_15_pools.SNPs.hf.DP20-300.GQ10.mono.miss20.maf0.05.vcf.gz'
+#INPUT_PATH='<REDACTED_PATH>'
 INPUT_FILE=$(basename "${INPUT_PATH}")
 OUTFILE_PREFIX=$(basename "${INPUT_PATH}" .vcf.gz)
 # Programs. (Copied the ones developed for the HOM, notebook date 2020-05-20)
-GATK_JAR='/sw/apps/bioinfo/GATK/3.8-0/GenomeAnalysisTK.jar'
-NEFF_CODE='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/code/utility-code/apply_Neff_correction_AD_v2.py'
-AF_CODE='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/code/utility-code/calculate_allelefreq_from_AD_v2.py'
-TPMX_CODE='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/code/utility-code/transpose_allelefreq_matrix.py'
+GATK_JAR='<REDACTED_PATH>'
+NEFF_CODE='<REDACTED_PATH>'
+AF_CODE='<REDACTED_PATH>'
+TPMX_CODE='<REDACTED_PATH>'
 
-# Copy required files to the hard drive of the node in Uppmax.
+# Copy required files to the hard drive of the node in <REDACTED_HPC_SITE>.
 cp $REF_PATH* $SNIC_TMP  # With *, copy the reference and associated files.
 cp ${REF_PATH/.fasta/.dict} $SNIC_TMP  # Copy *.dict file of the reference. Use ${parameter/pattern/string} to replace the first occurrence of a pattern with a given string. Note fasta file can ends with .fa or .fasta, change accordingly
 cp $INPUT_PATH* $SNIC_TMP  # With *, the VCF file and its index are copied.
@@ -272,5 +272,5 @@ cp $SNIC_TMP/$OUTFILE_PREFIX.AD.Neff.AF.txt $WORK_DIR
 cp $SNIC_TMP/$OUTFILE_PREFIX.AD.Neff.AF.tp $WORK_DIR
 
 ```
-Submitted batch job 4350989 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Duration: 00-00:56:00**

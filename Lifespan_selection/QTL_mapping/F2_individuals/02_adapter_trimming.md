@@ -18,11 +18,11 @@ Marek initially shared the script below, which is used after demultiplexing to r
 #$ -S /bin/bash
 #$ -cwd
 
-if [ ! -e "/tmp/mkucka" ];then mkdir /tmp/mkucka;fi
+if [ ! -e "<REDACTED_PATH>" ];then mkdir <REDACTED_PATH>;fi
 
 unset PYTHONPATH
-export LD_LIBRARY_PATH=/fml/chones/local/lib
-export PYTHONPATH=/fml/chones/local/lib/python3.8/site-packages:$PYTHONPATH
+export LD_LIBRARY_PATH=<REDACTED_PATH>
+export PYTHONPATH=<REDACTED_PATH>:$PYTHONPATH
 
 file=$1;
 echo $file
@@ -38,11 +38,11 @@ echo $dir
 #### then remove reads if one in pair shorter than 30bp
 cutadapt --nextseq-trim=10 -g AGATGTGTATAAGAGACAG -A CTGTCTCTTATACACATCT -G ACTTGTGTATAAGAGACAG -a CTGTCTCTTATACACAAGT -g ACTTGTGTATAAGAGACAG \
         --cores=2 -O 15 -m 30 --times=2 \
-        -o /tmp/mkucka/$FBNAME\_R1_001.cutadapt.fastq.gz -p /tmp/mkucka/$FBNAME\_R2_001.cutadapt.fastq.gz \
+        -o <REDACTED_PATH>\_R1_001.cutadapt.fastq.gz -p <REDACTED_PATH>\_R2_001.cutadapt.fastq.gz \
         ./$FBNAME\_R1_001.fastq.gz ./$FBNAME\_R2_001.fastq.gz \
-        --too-short-output=/tmp/mkucka/$FBNAME\_R1.tooshort.fastq2.gz --too-short-paired-output=/tmp/mkucka/$FBNAME\_R2.tooshort.fastq2.gz
+        --too-short-output=<REDACTED_PATH>\_R1.tooshort.fastq2.gz --too-short-paired-output=<REDACTED_PATH>\_R2.tooshort.fastq2.gz
 
-mv /tmp/mkucka/$FBNAME*.gz ./
+mv <REDACTED_PATH> ./
 
 ```
 
@@ -73,29 +73,29 @@ cutadapt -G ACTTGTGTATAAGAGACAG -g ACTTGTGTATAAGAGACAG -g AGATGTGTATAAGAGACAG -G
 rm $FBNAME*.fastq.1.gz
 ```
 
-## Adapted scripts to Uppmax
+## Adapted scripts to <REDACTED_HPC_SITE>
 
 Make the `file_R1.list` file, containing the full path to the R1 file of all pools (it should be 14 in total):
 ```bash
-find /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads -name *R1_001.fastq.gz -type f > /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/file_R1.list
+find <REDACTED_PATH> -name *R1_001.fastq.gz -type f > <REDACTED_PATH>
 
 # Explore file
 cat file_R1.list
 
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleB_S121_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleI_S128_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleD_S123_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleH_S127_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleN_S133_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleJ_S129_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleM_S132_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleG_S126_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleE_S124_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleF_S125_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleL_S131_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleK_S130_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleC_S122_L004_tag_R1_001.fastq.gz
-/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/01-raw-reads/demultiplexed_reads/VF-3324-BeetleA_S120_L004_tag_R1_001.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 
 ```
 
@@ -103,19 +103,19 @@ Script `02-adapter_trim.sh`:
 
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 8
 #SBATCH -t 1-00:00:00
 #SBATCH -J adapter_trim
 #SBATCH -e adapter_trim_%J_%A_%a.err
 #SBATCH -o adapter_trim_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-14
 
 # Set environment variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads'
+OUTPUT_DIR='<REDACTED_PATH>'
 FILE_LIST=${OUTPUT_DIR}/file_R1.list
 
 # For a given job in the array, set the correspondent sample files
@@ -134,7 +134,7 @@ N_CORES='8'
 # Min length
 MIN_LENGTH='30'
 
-# Load packages in Uppmax
+# Load packages in <REDACTED_HPC_SITE>
 module load bioinfo-tools samtools/1.14 FastQC/0.11.9
 
 # Go to the directory where the output will be saved
@@ -177,25 +177,25 @@ if [ -d $OUTPUT_DIR/FastQC_results ]; then echo "Directory /OUTPUT_DIR/FastQC_re
 fastqc -t $N_CORES $OUTPUT_DIR/$FBNAME\_R1_001.cutadapt.fastq.gz $OUTPUT_DIR/$FBNAME\_R2_001.cutadapt.fastq.gz -o $OUTPUT_DIR/FastQC_results
 
 ```
-Submitted batch job 6961978 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-6:00:00** in total (whole array of 14 jobs), but each file separately would run in much less time than that (1:19:09)
 
 
 Script to get fastQC reports, because I forgot to run it before, `02-fastqc.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2022-22-595
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH -p core -n 4
 #SBATCH -t 5:00:00
 #SBATCH -J fastqc
 #SBATCH -e fastqc_%J_%A_%a.err
 #SBATCH -o fastqc_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-14
 
 # Set environment variables
-OUTPUT_DIR='/proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads'
+OUTPUT_DIR='<REDACTED_PATH>'
 FILE_LIST=${OUTPUT_DIR}/file_R1.list
 
 # For a given job in the array, set the correspondent sample files
@@ -212,7 +212,7 @@ N_CORES='4'
 # Min length
 MIN_LENGTH='30'
 
-# Load packages in Uppmax
+# Load packages in <REDACTED_HPC_SITE>
 module load bioinfo-tools FastQC/0.11.9
 
 # Go to the working directory
@@ -226,15 +226,15 @@ if [ -d $OUTPUT_DIR/FastQC_results ]; then echo "Directory /OUTPUT_DIR/FastQC_re
 fastqc -t $N_CORES $OUTPUT_DIR/$FBNAME\_R1_001.cutadapt.fastq.gz $OUTPUT_DIR/$FBNAME\_R2_001.cutadapt.fastq.gz -o $OUTPUT_DIR/FastQC_results
 
 ```
-Submitted batch job 30013842
+Submitted batch job <REDACTED_JOB_ID>
 **Runtime: 00-00:49:39**
 
 Generate a single FastQC report for all samples using MultiQC:
 ```bash
-# Load program in Uppmax
+# Load program in <REDACTED_HPC_SITE>
 module load bioinfo-tools MultiQC/1.12
 
-cd /proj/snic2020-6-128/private/a_obtectus_QTLmap/offspring/data/02-clean-reads/FastQC_results
+cd <REDACTED_PATH>
 
 multiqc .
 

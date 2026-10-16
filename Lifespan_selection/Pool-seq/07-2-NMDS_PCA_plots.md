@@ -31,7 +31,7 @@ I modified the R script to read in parameters from the command line, the script 
 
 ```bash
 #!/bin/bash
-#SBATCH -A def-ruzza
+#SBATCH -A <REDACTED_PROJECT_CODE>
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=8G
 #SBATCH -t 20:00:00
@@ -39,18 +39,18 @@ I modified the R script to read in parameters from the command line, the script 
 #SBATCH -e NMDS-PCA-plots_%J_%A_%a.err
 #SBATCH -o NMDS-PCA-plots_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 
 # Load required software.
 module load gcc/7.3.0 r/3.6.1
 
 # Set environment variables.
 # Files.
-WORK_DIR='/home/afuentes/project/afuentes/analysis/07-popgen-stats/NMDS-PCA/'
-INPUT_FILE='/Dropbox/PostDoc_UU/Projects/Beetles/analysis/06-apply-Neff-calc-AF/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.Neff.AF.txt'
-COLORS_FILE='/home/afuentes/project/afuentes/analysis/07-popgen-stats/NMDS-PCA/color_by_spawning-season_15pools_NWHer.txt'
+WORK_DIR='<REDACTED_PATH>'
+INPUT_FILE='<REDACTED_PATH>'
+COLORS_FILE='<REDACTED_PATH>'
 # Programs.
-R_CODE='/home/afuentes/project/afuentes/code/utility-code/07-2-make-NMDS-PCA-plots.R'
+R_CODE='<REDACTED_PATH>'
 
 # Run the R script, passing on the working directory and input file path (IN THIS ORDER!!)
 Rscript $R_CODE $WORK_DIR $INPUT_FILE $COLORS_FILE
@@ -82,19 +82,19 @@ rm(list=ls())
 #cat(args, sep='\n')
 
 ## Assign these arguments to variables.
-#working_dir <- args[1]  # /home/afuentes/project/afuentes/analysis/07-popgen-stats/nMDS
-#input_file <- args[2]   # /home/afuentes/project/afuentes/06-apply-Neff-calc-AF/NWAtlantic_herring_15_pools.SNPs.hf.DP20-300.GQ10.mono.miss20.maf0.05.AD.Neff.AF.tp
-#colors_file <- args[3]   # /home/afuentes/project/afuentes/analysis/07-popgen-stats/nMDS/color_by_spawning-season_15pools_NWHer.txt
+#working_dir <- args[1]  # <REDACTED_PATH>
+#input_file <- args[2]   # <REDACTED_PATH>
+#colors_file <- args[3]   # <REDACTED_PATH>
 
 ## For debugging.
-working_dir <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/analysis/07-1-popgen-stats/nMDS-PCA-plots'
-#input_file <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/analysis/06-apply-Neff-calc-AF/test_NWAtlantic_herring_15_pools.SNPs.hf.DP20-300.GQ10.mono.miss20.maf0.05.AD.Neff.AF.100K.tp'
-#input_file <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/analysis/06-apply-Neff-calc-AF/NWAtlantic_herring_15_pools.SNPs.hf.DP20-300.GQ10.mono.miss20.maf0.05.AD.Neff.AF.tp'
-#input_file <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/analysis/06-apply-Neff-calc-AF/NWAtlantic_herring_13_pools.SNPs.hf.DP20-300.GQ10.mono.miss20.maf0.05.AD.Neff.AF.tp'
-input_file <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/analysis/06-apply-Neff-calc-AF/NWAtlantic_herring_13_pools.SNPs.hf.DP20-300.GQ10.mono.miss20.maf0.05.AD.Neff.AF.txt'
-#input_file <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/analysis/06-apply-Neff-calc-AF/NWAtlantic_herring_13_pools.SNPs.hf.DP20-300.GQ10.mono.miss20.mac4.AD.Neff.AF.txt'
-#colors_file <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/analysis/07-1-popgen-stats/nMDS/color_by_spawning-season_15pools_NWHer.txt'
-colors_file <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/analysis/07-1-popgen-stats/nMDS-PCA-plots/color_by_spawning-season_13pools_NWHer.txt'
+working_dir <- '<REDACTED_PATH>'
+#input_file <- '<REDACTED_PATH>'
+#input_file <- '<REDACTED_PATH>'
+#input_file <- '<REDACTED_PATH>'
+input_file <- '<REDACTED_PATH>'
+#input_file <- '<REDACTED_PATH>'
+#colors_file <- '<REDACTED_PATH>'
+colors_file <- '<REDACTED_PATH>'
 
 print('# ------------- Set R objects from BASH command line: ------------- #')
 working_dir

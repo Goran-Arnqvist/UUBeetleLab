@@ -176,9 +176,9 @@ In Microsoft Excel, make a key-value guide file as follows:
 - In col3, use the CONCATENATE() function to add the prefix "chr_" to the 10 largest scaffolds (which are the putative chromosomes in this case) and "scaffold_" to the rest
 - Save this file in TXT format
 
-To upload this file to Uppmax:
+To upload this file to <REDACTED_HPC_SITE>:
 ```bash
-rsync -av --progress ~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/03-read_mapping/key-value_scaffold_rename_guide_a.obtectus_HiC_assembly.txt angela@rackham.uppmax.uu.se:/proj/snic2020-6-128/private/obtectus_poolseq/00-genome/
+rsync -av --progress <REDACTED_PATH> <REDACTED_REMOTE_TARGET>:<REDACTED_PATH>
 
 head key-value_scaffold_rename_guide_a.obtectus_HiC_assembly.txt
 HiC_scaffold_10	chr_1
@@ -403,9 +403,9 @@ rm tmp.fasta
 ```
 I created soft symbolic links to these files:
 ```
-cd /proj/snic2020-6-128/private/beetle_genomes/acanthoscelides_obtectus/HiC_genome_assembly/A.obtectus_v2.0
+cd <REDACTED_PATH>
 
-cp -s /proj/snic2020-6-128/private/a_obtectus_poolseq/00-genome/*.* .
+cp -s <REDACTED_PATH> .
 ```
 
 # 2021-03-29
@@ -415,15 +415,15 @@ For read mapping and variant calling using BWA and GATK, respectively, it is nec
 
 ```bash
 #!/bin/bash
-#SBATCH -A snic2017-7-378
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 8
 #SBATCH -t 10:00:00
 #SBATCH -J prep_genome
 #SBATCH -e prep_genome_%J_%A_%a.err
 #SBATCH -o prep_genome_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 
 # Load required software.
 module load bioinfo-tools
@@ -432,9 +432,9 @@ module load samtools/1.9
 module load picard/2.20.4
 
 # Set environment variables.
-REF_FILE='/proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
-WORK_DIR='/proj/snic2020-6-128/private/obtectus_poolseq/00-genome'
-PICARD_JAR='/sw/apps/bioinfo/picard/2.20.4/rackham/picard.jar'
+REF_FILE='<REDACTED_PATH>'
+WORK_DIR='<REDACTED_PATH>'
+PICARD_JAR='<REDACTED_PATH>'
 
 cd $WORK_DIR
 # Generate BWA file index.
@@ -460,12 +460,12 @@ OUTPUT=${REF_FILE}.dict
 echo "################# picard dictionary done" ;
 
 ```
-Submitted batch job 4333805 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-00:25:52**
 
 Rename genome dictionary file, because GATK will expect it to be named as `genome.dict` not `genome.fasta.dict`:
 ```
-cd /proj/snic2020-6-128/private/obtectus_poolseq/00-genome
+cd <REDACTED_PATH>
 mv A.obtectus_v2.0.fasta.dict A.obtectus_v2.0.dict
 ```
 
@@ -475,55 +475,55 @@ I will use the read mapper [bwa](http://bio-bwa.sourceforge.net) to align clean 
 
 - Path to R1 files:
 ```bash
-ls -lh /proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/*/*_R1*.gz | awk '{print $9}' > /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/R1_files_bwa.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/R1_files_bwa.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EI-F/EI-F_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EII-F/EII-F_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EIII-F/EIII-F_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EIII-M/EIII-M_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EII-M/EII-M_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EI-M/EI-M_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EIV-F/EIV-F_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EIV-M/EIV-M_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LV-F/LV-F_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVI-F/LVI-F_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVII-F/LVII-F_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVIII-F/LVIII-F_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVIII-M/LVIII-M_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVII-M/LVII-M_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVI-M/LVI-M_R1.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LV-M/LV-M_R1.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 - Path to R2 files:
 ```bash
-ls -lh /proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/*/*_R2*.gz | awk '{print $9}' > /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/R2_files_bwa.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/R2_files_bwa.txt
+cat <REDACTED_PATH>
 
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EI-F/EI-F_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EII-F/EII-F_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EIII-F/EIII-F_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EIII-M/EIII-M_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EII-M/EII-M_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EI-M/EI-M_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EIV-F/EIV-F_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/EIV-M/EIV-M_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LV-F/LV-F_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVI-F/LVI-F_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVII-F/LVII-F_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVIII-F/LVIII-F_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVIII-M/LVIII-M_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVII-M/LVII-M_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LVI-M/LVI-M_R2.fastq.gz
-/proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/LV-M/LV-M_R2.fastq.gz
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 - Sample names:
 ```bash
-ls -lh /proj/snic2020-6-128/private/obtectus_poolseq/02-clean-reads/*/*.fastq.gz | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f8 | sed 's/_R.*$//' | uniq > /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/sample_IDs_bwa.txt
+ls -lh <REDACTED_PATH> | awk '{print $9}' | sed -e 's+/+\t+g' | cut -f8 | sed 's/_R.*$//' | uniq > <REDACTED_PATH>
 
-cat /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/sample_IDs_bwa.txt
+cat <REDACTED_PATH>
 
 EI-F
 EII-F
@@ -547,15 +547,15 @@ Script `03-1-read_mapping.sh` that launches 16 separate jobs (one for each sampl
 
 ```bash
 #!/bin/bash
-#SBATCH -A snic2017-7-378
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 8
 #SBATCH -t 4-00:00:00
 #SBATCH -J map_reads
 #SBATCH -e map_reads_%J_%A_%a.err
 #SBATCH -o map_reads_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH -a 1-16
 
 # Load required software.
@@ -566,13 +566,13 @@ module load picard/2.20.4
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files'
+WORK_DIR='<REDACTED_PATH>'
 R1_FILE='./R1_files_bwa.txt'
 R2_FILE='./R2_files_bwa.txt'
 ID_FILE='./sample_IDs_bwa.txt'
-REF_FILE='/proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta'
+REF_FILE='<REDACTED_PATH>'
 # Programs.
-PICARD_JAR='/sw/apps/bioinfo/picard/2.20.4/rackham/picard.jar'
+PICARD_JAR='<REDACTED_PATH>'
 
 # Directory where the BAM files will be stored.
 cd $WORK_DIR
@@ -628,7 +628,7 @@ cp $SNIC_TMP/${ID_target}.sort.MarkDup.RG.bam.bai $WORK_DIR
 
 # Obtain mapping quality summary statistics.
 module load QualiMap/2.2.1
-unset DISPLAY  # Turn display off to avoid problems with X11 in Uppmax.
+unset DISPLAY  # Turn display off to avoid problems with X11 in <REDACTED_HPC_SITE>.
 
 if [ -d $WORK_DIR/Qualimap_results ]; then echo "Qualimap_results/ exists"; else mkdir $WORK_DIR/Qualimap_results; fi
 
@@ -639,7 +639,7 @@ qualimap --java-mem-size=60G bamqc -bam $SNIC_TMP/${ID_target}.sort.MarkDup.RG.b
 echo -e $(date -u) ": Qualimap ended..."
 
 ```
-Submitted batch job 4334797 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 01-03:56:00**
 
 
@@ -647,14 +647,14 @@ Submitted batch job 4334797 on cluster snowy
 
 ## Generate a Multiqc report of the qualimap reports
 ```
-cd /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/Qualimap_results
+cd <REDACTED_PATH>
 
 module load bioinfo-tools MultiQC/1.10
 multiqc .
 
 [INFO   ]         multiqc : This is MultiQC v1.10
 [INFO   ]         multiqc : Template    : default
-[INFO   ]         multiqc : Searching   : /crex/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/Qualimap_results
+[INFO   ]         multiqc : Searching   : <REDACTED_PATH>
 Searching   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 800/800  
 [INFO   ]        qualimap : Found 16 BamQC reports
 [INFO   ]         multiqc : Compressing plot data
@@ -669,32 +669,32 @@ Searching   ━━━━━━━━━━━━━━━━━━━━━━�
 Input files:
 - List of BAM files:
 ```bash
-cd /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files
+cd <REDACTED_PATH>
 
-ls -lh /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/*.bam | awk '{print $9}' > OTT_bam.list
+ls -lh <REDACTED_PATH> | awk '{print $9}' > OTT_bam.list
 
 cat OTT_bam.list
 
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EI-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EII-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EIII-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EIII-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EII-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EI-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EIV-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/EIV-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LV-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVI-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVII-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVIII-F.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVIII-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVII-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LVI-M.sort.MarkDup.RG.bam
-/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/LV-M.sort.MarkDup.RG.bam
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
+<REDACTED_PATH>
 ```
 - List of sample names:
 ```bash
-ls -lh /proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/*.bam | awk '{print $9}' | tr "/" "\t" | cut -f7 | sed 's/.sort.MarkDup.RG.bam//g' > sample_names_OTT_bams.list
+ls -lh <REDACTED_PATH> | awk '{print $9}' | tr "/" "\t" | cut -f7 | sed 's/.sort.MarkDup.RG.bam//g' > sample_names_OTT_bams.list
 
 cat sample_names_OTT_bams.list
 
@@ -720,14 +720,14 @@ LV-M
 Script `03-2-depth-of-coverage-hist.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2017-7-378
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 2
 #SBATCH -t 10:00:00
 #SBATCH -J depthCov-hist
 #SBATCH -e depthCov-hist_%J_%A_%a.err
 #SBATCH -o depthCov-hist_%J_%A_%a.out
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 #SBATCH --mail-type=ALL
 #SBATCH -a 1-16
 
@@ -736,9 +736,9 @@ module load bioinfo-tools
 module load BEDTools/2.29.2
 
 # Set environment variables.
-WORK_DIR='/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files'
-BAM_FILE_LIST='/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/OTT_bam.list'
-ID_FILE_LIST='/proj/snic2020-6-128/private/obtectus_poolseq/03-bam-files/sample_names_OTT_bams.list'
+WORK_DIR='<REDACTED_PATH>'
+BAM_FILE_LIST='<REDACTED_PATH>'
+ID_FILE_LIST='<REDACTED_PATH>'
 
 # For a given job in the array, set the correspondent sample files.
 BAM_target=$(sed -n "$SLURM_ARRAY_TASK_ID"p $BAM_FILE_LIST)
@@ -757,7 +757,7 @@ bedtools genomecov -ibam $BAM_target > $ID_target.cov
 grep "genome" $ID_target.cov > $ID_target.genomecov && rm $ID_target.cov
 
 ```
-Submitted batch job 4351015 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-00:49:00**
 
 
@@ -766,14 +766,14 @@ I made the coverage plots using the R script `plot-depthCov.R`:
 ```R
 # Plot coverage distribution based on stats obtained with bedtools genomecov function
 # Developed by Fan Han
-setwd('~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/03-read_mapping/coverage')
+setwd('<REDACTED_PATH>')
 
-files <- list.files("~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/03-read_mapping/coverage/", pattern = "\\.genomecov$")
+files <- list.files("<REDACTED_PATH>", pattern = "\\.genomecov$")
 
 pdf('OTT_16_pools_bams_genomecov.pdf')
 for(sample in files) {
   print(sample)
-  path <- paste("~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/03-read_mapping/coverage/", sample, sep="")
+  path <- paste("<REDACTED_PATH>", sample, sep="")
   cov <- read.csv(path, header = FALSE, sep = "\t")
   #png(paste(path,".png", sep = ""))
   #png(paste(path,".png", sep = ""), res = 300)

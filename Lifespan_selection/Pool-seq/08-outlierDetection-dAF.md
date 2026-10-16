@@ -13,7 +13,7 @@
 # 2021-04-01
 ## Outlier SNP detection based on paired comparisons and calculation of delta allele frequencies
 
-First, I defined the groupings for paired comparisons using the Excel file `~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/08-2-outlier-detection_dAF/List_paired_comparisons_OTT_2020-09-01.xlsx`. Then, I saved this file as a CVS file, which looks like this (I manually added the last new line while opening the file with Textwrangler):
+First, I defined the groupings for paired comparisons using the Excel file `<REDACTED_PATH>`. Then, I saved this file as a CVS file, which looks like this (I manually added the last new line while opening the file with Textwrangler):
 ```bash
 Comparison;Group1;Group2
 EI.II.III.IV_vs_LV.VI.VII.VIII;EI-F EI-M EII-F EII-M EIII-F EIII-M EIV-F EIV-M;LV-F LV-M LVI-F LVI-M LVII-F LVII-M LVIII-F LVIII-M
@@ -49,7 +49,7 @@ The R script is called `08-2-calc-dAF_v5.R`:
 # Calculate the absolute delta allele frequency between pairs of    
 # super pools                         
 #                                                                   
-# E-mail: apfuentesp@gmail.com, Uppsala University                  
+# E-mail: apfuentesp@gmail.com, Uppsala University
 # Date: 2020-03-25, modified: 2021-01-13                          
 #                                                                   
 #####################################################################
@@ -288,11 +288,11 @@ getClosestGene2SNPs <- function(SNPfile = NULL, SNPdf = NULL, GTFfile = NULL, wi
 
   # For debugging.
   # Original GTF file from Ensembl, without gene symbols
-  #gtf_file <- 'Dropbox/PostDoc_UU/Projects/Herring/genome/Clupea_harengus.Ch_v2.0.2.96.gtf'
+  #gtf_file <- '<REDACTED_PATH>/Clupea_harengus.Ch_v2.0.2.96.gtf'
   # GTF file with gene symbols
-  #GTFfile <- '~/Dropbox/PostDoc_UU/Projects/Herring/00_genome/other-annotations/Clupea_harengus.Ch_v2.0.2.100_geneSymbol.gtf'
-  #SNPfile <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/Pool-seq/analysis/06-apply-Neff-calc-AF/NWHer_15_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMode1half.excIBC-S_NTS-F.AD.Neff.AF.txt'
-  #SNPfile <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/06-apply-Neff-calc-AF/Her_73_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMode1half.72_Atl.AD.Neff.AF.txt'
+  #GTFfile <- '<REDACTED_PATH>'
+  #SNPfile <- '<REDACTED_PATH>'
+  #SNPfile <- '<REDACTED_PATH>'
   #windowSize <- 40e3  # Set window size, which is the maximum distance on bp to be considered, here we are testing 40Kb as Fan Han used this value
   #returnUniqueGeneList <- TRUE
   #returnDF <- TRUE
@@ -370,14 +370,14 @@ getClosestGene2SNPs <- function(SNPfile = NULL, SNPdf = NULL, GTFfile = NULL, wi
 
   ## Load the GTF file (with gene annotations) as a TxDb (or GRanges) object -----------
   # In TxDB format
-  #CluharV202_gtf <- makeTxDbFromGFF('~/Dropbox/PostDoc_UU/Projects/Herring/genome/Clupea_harengus.Ch_v2.0.2.96.gtf',
+  #CluharV202_gtf <- makeTxDbFromGFF('<REDACTED_PATH>',
   #                                  format = 'gtf')
 
   # In GRanges format
   GTFgr <- rtracklayer::import(GTFfile)
   GTFgr
   class(GTFgr)
-  #GTFgr <- rtracklayer::import('~/Dropbox/PostDoc_UU/Projects/Herring/genome/Clupea_harengus.Ch_v2.0.2.96.gtf')
+  #GTFgr <- rtracklayer::import('<REDACTED_PATH>')
 
   # Add the string 'chr' to match the chromosome naming in the Herring genome
   seqlevels(GTFgr) <- paste0('chr',seqlevels(GTFgr))
@@ -685,9 +685,9 @@ if(!is.null(opts$selectionRegionsFile)) {
 
 ## For debugging.
 # For Her genome v.2.0
-working_dir <- '~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/08-2-outlier-detection_dAF'
-input_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/06-apply-Neff-calc-AF/OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.Neff.AF.txt'
-contrasts_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/08-2-outlier-detection_dAF/List_paired_comparisons_OTT_2020-09-01.csv'
+working_dir <- '<REDACTED_PATH>'
+input_file <- '<REDACTED_PATH>'
+contrasts_file <- '<REDACTED_PATH>'
 chr_identifier <- 'chr'
 scaff_identifier <- 'scaffold'
 scaff_suffix <- NULL
@@ -746,7 +746,7 @@ class(poolData)
 ## Read in file listing paired comparisons (super pools).
 #comparisonPairs_df <- read.csv(contrasts_file, sep = ';', stringsAsFactors = FALSE)
 if(convert_format == TRUE) {
-  source('~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/code/utility-code/convertFormat.pairContrasts_v2.R')
+  source('<REDACTED_PATH>')
   comparisonPairs_df <- convertFormat.pairContrasts(contrasts_file)  # Function accepts TXT and CSV files
 
 } else {
@@ -781,7 +781,7 @@ summary_dAF_df <- data.frame(SNP = rownames(poolData), stringsAsFactors = FALSE)
 head(summary_dAF_df)
 
 ## Replace scaffold names (characters) by numbers.
-#source('/home/afuentes/project/afuentes/code/utility-code/createCHR.uniqueNumbers.R')
+#source('<REDACTED_PATH>')
 summary_dAF_df <- createCHR.uniqueNumbers(df = summary_dAF_df,
                                           chrIdentifier = chr_identifier,
                                           scaffoldIdentifier = scaff_identifier,
@@ -838,8 +838,8 @@ print(head(summary_dAF_df))
 
 if(isTRUE(add_gene_ann)) { # --------------- Add gene annotations to the dAF df --------------- #
 
-  #source('/proj/snic2020-2-19/private/herring/users/angela/Pool-seq/code/utility-code/getClosestGene2SNPs_v2.R')
-  #source('~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/code/utility-code/getClosestGene2SNPs_v2.R')
+  #source('<REDACTED_PATH>')
+  #source('<REDACTED_PATH>')
   SNPnames_df <- data.frame(SNP = summary_dAF_df$SNP, stringsAsFactors = FALSE)
   head(SNPnames_df)
   closestGeneAnn_df <- getClosestGene2SNPs(SNPdf = SNPnames_df, GTFfile = gtf_file, windowSize = window_size, returnDF = TRUE)
@@ -888,11 +888,11 @@ write.table(summary_dAF_df, file = paste0('Summary_dAF.',contrasts_fileName,'.',
 
 - dAF files:
 ```bash
-cd /proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/08-outlier-loci-detection/dAF/
+cd <REDACTED_PATH>
 
 nano dAF_files.txt
 
-/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/08-outlier-loci-detection/dAF/Summary_dAF.List_paired_comparisons_OTT_2020-09-01.OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.Neff.AF.txt
+<REDACTED_PATH>
 ```
 - Output dir:
 ```bash
@@ -914,13 +914,13 @@ args <- commandArgs(trailingOnly = TRUE)
 cat(args, sep='\n')
 
 ## Assign these arguments to variables.
-working_dir <- args[1]  # /proj/snic2020-16-14/private/HorseMackerel/analysis/08-outlier-loci-detection/dAF/2020-03-25
-dAF_file <- args[2]  # /proj/snic2020-16-14/private/HorseMackerel/analysis/08-outlier-loci-detection/dAF/2020-03-25/Summary_dAF.List_paired_comparisons_HOM_2020-02-21.HOM_12_pools.SNPs.hf.DP10-885.GQ10.mono.miss20.maf0.05.AD.Neff.AF.txt
-#AF_file <- args[3]  # /proj/snic2020-16-14/private/HorseMackerel/analysis/08-outlier-loci-detection/dAF/2020-03-25/Summary_dAF.List_paired_comparisons_HOM_2020-02-21.HOM_12_pools.SNPs.hf.strictDP.exc-6a-6b-7.mono.AD.Neff.AF.txt
-outputName <- args[3]  # /proj/snic2020-16-14/private/HorseMackerel/analysis/08-outlier-loci-detection/dAF/2020-03-25/Summary_dAF.List_paired_comparisons_HOM_2020-02-21.HOM_12_pools.SNPs.hf.strictDP.exc-7.mono.AD.Neff.AF.txt
-fai_sorted_file <- args[4]  # /proj/snic2020-16-14/private/HorseMackerel/analysis/08-outlier-loci-detection/dAF/2020-03-25/Summary_dAF.List_paired_comparisons_HOM_2020-02-21.HOM_12_pools.SNPs.hf.strictDP.allSamples.mono.AD.Neff.AF.txt
-rollMeanWSwide <- args[5] # /proj/snic2020-16-14/private/HorseMackerel/data/00-genome/v.2.0/fTraTra1_1.curated_primary.20200310_sorted.fa.fai
-#rollMeanWSzoom <- args[6]  # /proj/snic2020-16-14/private/HorseMackerel/analysis/08-outlier-loci-detection/dAF/Scaffolds_of_interest_HOM_dAF.txt
+working_dir <- args[1]  # <REDACTED_PATH>
+dAF_file <- args[2]  # <REDACTED_PATH>
+#AF_file <- args[3]  # <REDACTED_PATH>
+outputName <- args[3]  # <REDACTED_PATH>
+fai_sorted_file <- args[4]  # <REDACTED_PATH>
+rollMeanWSwide <- args[5] # <REDACTED_PATH>
+#rollMeanWSzoom <- args[6]  # <REDACTED_PATH>
 #sampleOrder <- args[6]
 selection_regions <- args[6]
 selection_regions_type <- args[7]
@@ -929,40 +929,40 @@ selection_regions_type <- args[7]
 #selection_regions_type <- NULL
 
 ## For debugging (everything).
-#working_dir <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/08-2-outlier-detection_dAF/plots'
-#dAF_file <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/08-2-outlier-detection_dAF/Summary_dAF.Herring_popGen2_contrasts_20201128_BrackishMigratory.Formatted.Her_73_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.72_Atl.AD.Neff.AF.txt'
-#dAF_file <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/Population-contrasts/comparison_chisqr_dAFplots_fig4/Summary_ChiSqr.test_Fig4.Formatted.Her_73_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMean1SD.AD.Neff.txt'
-#dAF_file <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/Population-contrasts/comparison_chisqr_dAFplots_fig4/Summary_ChiSqr.test_Fig3_4.Formatted.Her_73_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.Neff.txt'
-#dAF_file <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/Population-contrasts/comparison_chisqr_dAFplots_fig4/Summary_dAF.test_Fig3_4.Formatted.Her_73_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMode1half.72_Atl.AD.Neff.AF.txt'
-#dAF_file <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/Population-contrasts/comparison_chisqr_dAFplots_fig4/Summary_dAF.test_Fig3_4.Formatted.Her_73_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.72_Atl.AD.Neff.AF.txt'
-#dAF_file <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/08-2-outlier-detection_dAF/Summary_dAF.Herring_popGen2_contrasts_20201128_Salinity.Formatted.Her_73_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.72_Atl.AD.Neff.AF.txt'
-#AF_file <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/06-apply-Neff-calc-AF/Her_73_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPMode1half.AD.Neff.AF.txt'
-#AF_file <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/06-apply-Neff-calc-AF/Her_73_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.72_Atl.AD.Neff.AF.txt'
+#working_dir <- '<REDACTED_PATH>'
+#dAF_file <- '<REDACTED_PATH>'
+#dAF_file <- '<REDACTED_PATH>'
+#dAF_file <- '<REDACTED_PATH>'
+#dAF_file <- '<REDACTED_PATH>'
+#dAF_file <- '<REDACTED_PATH>'
+#dAF_file <- '<REDACTED_PATH>'
+#AF_file <- '<REDACTED_PATH>'
+#AF_file <- '<REDACTED_PATH>'
 #outputName <- 'Her_72_pools_SNPs_DPq5-99'
 #outputName <- 'Her_72_pools_SNPs_DPMode'
 #outputName <- 'Her_72_pools_SNPs_DPMean'
-#fai_sorted_file <- '~/Dropbox/PostDoc_UU/Projects/Herring/00_genome/Ch_v2.0.2.fasta.fai'
-#regionsInterest_file <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/analysis/08-2-outlier-detection_dAF/2020-03-25/Scaffolds_of_interest_HOM_dAF_2020-03-25.txt'
-#regionsInterest_file <- '~/Dropbox/PhD_Dal/2019-11_Reanalysis/analysis/08-2-outlier-detection_dAF/Informative_regions_dAF_2020-06-22.txt'
+#fai_sorted_file <- '<REDACTED_PATH>'
+#regionsInterest_file <- '<REDACTED_PATH>'
+#regionsInterest_file <- '<REDACTED_PATH>'
 #rollMeanWSwide <- 100
 #rollMeanWSzoom <- 100
 #sampleOrder  <- c('A_Kalix_Baltic_Spring','PB4_Hudiksvall_Baltic_Spring','PB5_Galve_Baltic_Spring','PB1_HastKar_Baltic_Spring','B_Vaxholm_Baltic_Spring','HGS1_Riga_Baltic_Spring','HGS2_Riga_Baltic_Spring','G_Gamleby_Baltic_Spring','PB11_Kalmar_Baltic_Spring','PB12_Karlskrona_Baltic_Spring','PN3_CentralBaltic_Baltic_Spring','HGS40_Gdansk_Baltic_Spring','PB6_Galve_Baltic_Summer','PB7_Galve_Baltic_Autumn','HGS3_Riga_Baltic_Autumn','HGS4_Riga_Baltic_Autumn','HGS12_BornholmBasin_Baltic_Autumn','TysklandS18_Germany_Baltic','HGS71_Rugen_Baltic_Spring','HGS72_Rugen_Baltic_Spring','HGS6_Schlei_Baltic_Spring','H_Fehmarn_Baltic_Autumn','HGS5_Schlei_Baltic_Autumn','J_Traslovslage_Baltic_Spring','PB9_Kattegat_Atlantic_Spring','HGS8_KattegatNorth_Atlantic_Spring','PB10_Skagerrak_Atlantic_Spring','O_Hamburgsund_Atlantic_Spring','HGS24_Landvik_Atlantic_Spring','HGS45_Strandfjorden_Atlantic_Spring','LandvikS17_Norway_Baltic_Spring','HGS44_Hovag_Atlantic_Spring','HGS11_RingkobingFjord_NorthSea_Spring','HGS15_NSSH_Atlantic_Spring','Q_Norway_Atlantic_Atlantic_Spring','HGS42_BergenSp_Atlantic_Spring','HGS43_BergenAut_Atlantic_Autumn','N_NorthSea_Atlantic_Autumn','HGS27_Gloppen_Atlantic_Spring','HGS26_Lusterfjorden_Atlantic_Spring','HGS25_Lindas_Atlantic_Spring','PB2_Iceland_Atlantic_Spring','HGS41_FaroeIsland_Atlantic_Autumn','HGS46_Minch_Atlantic_Spring','HGS20_CapeWrath_Atlantic_Spring','HGS23_Clyde_Atlantic_Spring','HGS36_MilfordHavenApr_Atlantic_Spring','HGS35_MilfordHavenFeb_Atlantic_Spring','HGS39_Tenby_Atlantic_Spring','HGS16_Orkney_NorthSea_Autumn','HGS32_NWCapeWrath_Atlantic_Autumn','HGS22_CapeWrath_Atlantic_Autumn','HGS21_Hebrides_Atlantic_Mixed','HGS33_Buchan_Atlantic_Autumn','HGS28_Banks_Atlantic_Autumn','HGS17_IsleOfMan_IrishSea_Autumn','HGS34_DouglasBank_Atlantic_Autumn','HGS19_TeelinBay_Atlantic_Winter','HGS30_BrucklessBay_Atlantic_Winter','HGS29_TeelinBayLateType_Atlantic_Winter','HGS31_CelticSea_Atlantic_Winter','HGS18_CelticSea_Atlantic_AutumnWinter','HGS38_Minehead_Atlantic_Winter','HGS37_Clovelly_Atlantic_Winter','HGS10_Downs_EnglishChannel_Winter','HGS9_Greenland_Atlantic_Spring','DalInB_Atlantic_Spring','DalNsS_Atlantic_Spring','DalFB_Atlantic_Spring','DalBoB_Atlantic_Autumn','DalNsF_Atlantic_Autumn','DalGeB_Atlantic_Autumn','PB8_Pacific_Pacific_Spring')
-#selection_regions <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/08-2-outlier-detection_dAF/Selection-regions/SNPs_selection_regions_SalinitySpawning4INV.RData'
-#selection_regions <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/08-2-outlier-detection_dAF/Selection-regions/joint_chi_dfs_selection_regions_Mats.RData'
-#selection_regions <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/08-2-outlier-detection_dAF/Selection-regions/selection_regions_GRanges_Mats.RData'
-#selection_regions <- '~/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/analysis/08-2-outlier-detection_dAF/Selection-regions/SNPs_selection_regions_SalinitySpawning4INV_uncorrectedPvalues.Rdata'
+#selection_regions <- '<REDACTED_PATH>'
+#selection_regions <- '<REDACTED_PATH>'
+#selection_regions <- '<REDACTED_PATH>'
+#selection_regions <- '<REDACTED_PATH>'
 #selection_regions_type <- 'loci' # 'ranges'
 
 ## For debugging (heatmap).
-#working_dir <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/analysis/08-2-outlier-detection_dAF'
-#dAF_file <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/analysis/08-2-outlier-detection_dAF/Summary_dAF.List_paired_comparisons_HOM_2020-02-21.HOM_12_pools.SNPs.hf.DP10-885.GQ10.mono.miss20.maf0.05.Neff.AF.500K.txt'
-#input_file2 <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/analysis/08-2-outlier-detection_dAF/Summary_dAF.List_paired_comparisons_HOM_2020-02-21.HOM_12_pools.SNPs.hf.DP10-885.GQ10.mono.miss20.maf0.05.Neff.AF.500K.txt'
-#input_file3 <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/analysis/08-2-outlier-detection_dAF/Summary_dAF.List_paired_comparisons_HOM_2020-02-21.HOM_12_pools.SNPs.hf.DP10-885.GQ10.mono.miss20.maf0.05.Neff.AF.500K.txt'
-#input_file4 <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/analysis/08-2-outlier-detection_dAF/Summary_dAF.List_paired_comparisons_HOM_2020-02-21.HOM_12_pools.SNPs.hf.DP10-885.GQ10.mono.miss20.maf0.05.Neff.AF.500K.txt'
-#fai_sorted_file <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/data/00-genome/v.2.0/fTraTra1_1.curated_primary.20200310.fa.fai'
-#fai_sorted_file <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/data/00-genome/v.1.0/fTraTra1.PB.asm1.purge1.scaff1.fa.fai'
+#working_dir <- '<REDACTED_PATH>'
+#dAF_file <- '<REDACTED_PATH>'
+#input_file2 <- '<REDACTED_PATH>'
+#input_file3 <- '<REDACTED_PATH>'
+#input_file4 <- '<REDACTED_PATH>'
+#fai_sorted_file <- '<REDACTED_PATH>'
+#fai_sorted_file <- '<REDACTED_PATH>'
 
-#regionsInterest_file <- '~/Dropbox/PostDoc_UU/Projects/HorseMackerel/Pool-seq/analysis/08-2-outlier-detection_dAF/2020-03-25/Scaffolds_of_interest_HOM_dAF.txt'
+#regionsInterest_file <- '<REDACTED_PATH>'
 
 print('# ------------- Set R objects from BASH command line: ------------- #')
 working_dir
@@ -987,8 +987,8 @@ CHROM_order <- fai[,1]
 ## 1. Generate a Manhattan plot for ALL chromosomes
 ## -----------------------------------------------------------------------------------------
 
-source('/proj/snic2020-2-19/private/herring/users/angela/Pool-seq/code/utility-code/make.ManhattanPlot_v2.R')
-#source('/Users/angfu103/Dropbox/PostDoc_UU/Projects/Herring/01_PopGen2/code/utility-code/make.ManhattanPlot_v2.R')
+source('<REDACTED_PATH>')
+#source('<REDACTED_PATH>')
 library(data.table)
 
 dAF_df <- fread(dAF_file, data.table = FALSE, header = TRUE, sep = '\t', stringsAsFactors = FALSE)
@@ -1100,7 +1100,7 @@ for(i in paired_comparisons){
   ## Save image.
   #png('test_ranges.png', height = 60, width = 169, units='mm', res = 300)
   png(paste0('ManhattanPlot_',outputName,'-',i,'.ws',rollMeanWSwide,'.allChr.png'), 
-      #png(paste0('/proj/snic2020-16-14/private/HorseMackerel/analysis/08-outlier-loci-detection/dAF/',dir_file,'/Manhattan_plot_dAF.',dir_file,'.',i,'.png'), 
+      #png(paste0('<REDACTED_PATH>',dir_file,'/Manhattan_plot_dAF.',dir_file,'.',i,'.png'),
       height = 60, width = 169, units='mm', res = 300
       #width = 950, height = 500   # width = 1900, height = 1000   #width = 10, height = 5, units='in', res = 150
   )
@@ -1121,15 +1121,15 @@ for(i in paired_comparisons){
 Script `08-3-dAF-plotting.sh`:
 ```bash
 #!/bin/bash
-#SBATCH -A snic2020-5-94
-#SBATCH -M snowy
+#SBATCH -A <REDACTED_PROJECT_CODE>
+#SBATCH -M <REDACTED_HPC_SITE>
 #SBATCH -p core -n 4
 #SBATCH -t 2-00:00:00
 #SBATCH -J dAF_plot
 #SBATCH -e dAF_plot_%J_%A_%a.err
 #SBATCH -o dAF_plot_%J_%A_%a.out
 #SBATCH --mail-type=all
-#SBATCH --mail-user=angela.fuentespardo@gmail.com
+#SBATCH --mail-user=<REDACTED_EMAIL>
 
 # Load required software.
 module load bioinfo-tools
@@ -1137,25 +1137,25 @@ module load R/3.6.1
 module load R_packages/3.6.1
 
 echo This is array job: $SLURM_ARRAY_TASK_ID
-DAF_FILE='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/08-outlier-loci-detection/dAF/dAF_files.txt'
+DAF_FILE='<REDACTED_PATH>'
 DAF_target=$(sed -n "$SLURM_ARRAY_TASK_ID"p $DAF_FILE)
-OUTPUTDIR_FILE='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/08-outlier-loci-detection/dAF/outputdir_dAF.txt'
+OUTPUTDIR_FILE='<REDACTED_PATH>'
 OUTPUTDIR_target=$(sed -n "$SLURM_ARRAY_TASK_ID"p $OUTPUTDIR_FILE)
 echo -e This is the DAF_target: ${DAF_FILE}
 echo -e This is the OUTPUTDIR_target: ${OUTPUTDIR_FILE}
 
 # Set environment variables.
 # Files.
-WORK_DIR='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/analysis/08-outlier-loci-detection/dAF/plots'
-FAI_FILE='/proj/snic2020-6-128/private/obtectus_poolseq/00-genome/A.obtectus_v2.0.fasta.fai'
+WORK_DIR='<REDACTED_PATH>'
+FAI_FILE='<REDACTED_PATH>'
 OUTPUT_NAME='OTT_16_pools_SNPs_DPq5-99'
 ROLLMEAN_WSWIDE='100'
 SELECTION_REGIONS='NA'
 SELECTION_REGIONS_TYPE='NA'
-#SELECTION_REGIONS='/proj/snic2020-2-19/private/herring/users/angela/Pool-seq/analysis/08-outlier-loci-detection/dAF/SNPs_selection_regions_SalinitySpawning4INV.RData'
+#SELECTION_REGIONS='<REDACTED_PATH>'
 #SELECTION_REGIONS_TYPE='loci'
 # Programs.
-R_CODE='/proj/snic2020-6-128/private/obtectus_poolseq/users/angela/code/utility-code/08-2-create-ManhatPlots-dAF-allChr.R'
+R_CODE='<REDACTED_PATH>'
 
 # Create directory for output files.
 if [ -d $WORK_DIR/$OUTPUTDIR_target ]; then echo "OUTPUTDIR_target/ already exists"; else mkdir $WORK_DIR/$OUTPUTDIR_target; fi
@@ -1166,7 +1166,7 @@ cd $WORK_DIR/$OUTPUTDIR_target
 Rscript $R_CODE $WORK_DIR/$OUTPUTDIR_target $DAF_target $OUTPUT_NAME $FAI_FILE $ROLLMEAN_WSWIDE $SELECTION_REGIONS $SELECTION_REGIONS_TYPE
 
 ```
-Submitted batch job 4351598 on cluster snowy
+Submitted batch job <REDACTED_JOB_ID> on cluster <REDACTED_HPC_SITE>
 **Runtime: 00-00:40:54**??
 
 
@@ -1186,9 +1186,9 @@ R script `findGenRegInterest_OTT.R`:
 rm(list = ls())
 
 # Set environmental variables
-working_dir <- '~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/08-2-outlier-detection_dAF'
-gtf_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/data/00-genome/annotation/rc3.1_obtectus.gff'
-dAF_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/analysis/08-2-outlier-detection_dAF/Summary_dAF.List_paired_comparisons_OTT_2020-09-01.OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.Neff.AF.20210319.txt'
+working_dir <- '<REDACTED_PATH>'
+gtf_file <- '<REDACTED_PATH>'
+dAF_file <- '<REDACTED_PATH>'
 
 # Set working directory
 setwd(working_dir)
@@ -1314,7 +1314,7 @@ write.table(df, "Metadata_of_genes_with_symbol_dAFgt0.9_OTT_16pools.txt", sep="\
 
 ### Option 2 ###
 # Load the metadata file listing the GO terms associated to each trancript
-#GO_df <- read.table('/Users/angfu103/Dropbox/PostDoc_UU/Projects/Beetles/data/00-genome/Ontology_term.txt', header=F, sep="\t")
+#GO_df <- read.table('<REDACTED_PATH>', header=F, sep="\t")
 #colnames(GO_df) <- c("transcript_id","GOterm")
 #head(GO_df)
 #GO_df$gene_id <- gsub("M","G",GO_df$gene_id)
@@ -1391,9 +1391,9 @@ rm(list=ls())
 
 # Set input parameters
 # For debugging
-working_dir <- '~/Dropbox/PostDoc_UU/Projects/Beetles/PopGen_poolseq/analysis/08-2-outlier-detection_dAF/rolling-mean'
-dAF_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/PopGen_poolseq/analysis/08-2-outlier-detection_dAF/Summary_dAF.List_paired_comparisons_OTT_2020-09-01.OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.Neff.AF.txt'
-Hp_file <- '~/Dropbox/PostDoc_UU/Projects/Beetles/PopGen_poolseq/analysis/07-1-popgen-stats/Hp-ZHp/Expected_Hp_OTT_16_pools.UG.SNPs.hf.GQ20.mono.miss20.mac3.DPq5-99.AD.Neff.AF.RDS'
+working_dir <- '<REDACTED_PATH>'
+dAF_file <- '<REDACTED_PATH>'
+Hp_file <- '<REDACTED_PATH>'
 
 # Set working directory
 setwd(working_dir)
